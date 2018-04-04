@@ -23,6 +23,18 @@ public class jfClientLobby extends javax.swing.JFrame {
      */
     public jfClientLobby() {
         initComponents();
+//        jpLogIn jpli = new jpLogIn();
+//        jpLobby jpl = new jpLobby();
+//        jpMatch jpm = new jpMatch();
+//        add(jpli);
+//        add(jpl);
+//        add(jpm);
+//        jpli.setEnabled(true);
+//        jpl.setEnabled(false);
+//        jpm.setEnabled(false);
+//        jpli.setVisible(true);
+//        jpl.setVisible(true);
+//        jpm.setVisible(true);
     }
 
     /**
@@ -35,16 +47,18 @@ public class jfClientLobby extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(960, 540));
+        setPreferredSize(new java.awt.Dimension(960, 540));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 960, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         pack();
