@@ -1,4 +1,6 @@
 
+package foursquare;
+
 import java.awt.*;
 
 /*

@@ -95,7 +95,7 @@ public class jpLogIn extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
-        // TODO add your handling code here:
+        jfClientLobby.nextCard();
     }//GEN-LAST:event_jbtnLogInActionPerformed
 
 

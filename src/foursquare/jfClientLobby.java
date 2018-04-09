@@ -5,6 +5,9 @@
  */
 package foursquare;
 
+import java.awt.CardLayout;
+import java.awt.Container;
+
 /**
  *
  * @author JSS5783
@@ -17,18 +20,27 @@ package foursquare;
  * 2018/03/25 -     Created. -JSS5783
  */
 public class jfClientLobby extends javax.swing.JFrame {
+    
+    public static CardLayout cl = new CardLayout();
+    public static Container cClient = new Container();
 
     /**
      * Creates new form ClientLobby
      */
     public jfClientLobby() {
         initComponents();
-//        jpLogIn jpli = new jpLogIn();
-//        jpLobby jpl = new jpLobby();
-//        jpMatch jpm = new jpMatch();
-//        add(jpli);
-//        add(jpl);
-//        add(jpm);
+        jpLogIn jpli = new jpLogIn();
+        jpLobby jpl = new jpLobby();
+        jpMatch jpm = new jpMatch();
+        
+        
+        cClient = this.getContentPane();
+        cClient.setLayout(cl);
+        
+        this.add(jpli);
+        this.add(jpl);
+        this.add(jpm);
+
 //        jpli.setEnabled(true);
 //        jpl.setEnabled(false);
 //        jpm.setEnabled(false);
@@ -98,6 +110,12 @@ public class jfClientLobby extends javax.swing.JFrame {
                 new jfClientLobby().setVisible(true);
             }
         });
+    }
+    
+    //TODO: temp
+    public static void nextCard()
+    {
+        cl.next(cClient);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

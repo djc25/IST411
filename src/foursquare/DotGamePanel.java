@@ -1,4 +1,6 @@
 
+package foursquare;
+
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class DotGamePanel extends javax.swing.JPanel {
      */
     ArrayList<Dots> myDots = new ArrayList();
     ArrayList<Lines> myLines = new ArrayList();
+    @Override
     public void paintComponent(Graphics g){
         for(int i = 0; i< myDots.size(); i++)
         {

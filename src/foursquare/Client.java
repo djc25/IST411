@@ -9,6 +9,9 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.LayoutManager;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,26 +26,29 @@ import javax.swing.JTextField;
  * 2018/04/09 -     Added basic components to GUI cards.
  *                  Renamed from Foursquare.java to Client.java to make its purpose clearer. -JSS5783
  * 
- * 2018/04/04 -      Beginning of hand-coded GUI, since teacher and I can't get the GUI-builder-built one working. -JSS5783
+ * 2018/04/04 -     Beginning of hand-coded GUI, since teacher and I can't get the GUI-builder-built one working. -JSS5783
  */
 public class Client {
-    public static Color PLAYER_1_COLOR = new Color(0, 128, 172);
-    public static Color PLAYER_2_COLOR = new Color(172, 128, 0);
+    public static Color PLAYER_1_COLOR = new Color(32, 192, 255);
+    public static Color PLAYER_2_COLOR = new Color(255, 192, 32);
     
     public Client()
     {    
         
         JFrame jfClientMain = new JFrame("Project 4Square (CLIENT)");
         JPanel jpClientLogIn = new JPanel();
+        jpClientLogIn.setLayout(new BoxLayout(jpClientLogIn, BoxLayout.Y_AXIS) );
             //declaration/initialization
             JLabel jlblTitle = new JLabel("Project 4Square");
+            jlblTitle.setFont(new Font("Tahoma", Font.PLAIN, 36));
             JLabel jlblUsername = new JLabel("Username: ");
-            JTextField jtxtfUsername = new JTextField();
+            JTextField jtxtfUsername = new JTextField(12);      //number of characters
             JButton jbtnLogIn = new JButton("Log In");
             JButton jbtnExit = new JButton("Exit");
-            jtxtfUsername.setMinimumSize(new Dimension(200, 15) );      //TODO: get textfield size working
+            jtxtfUsername.setMinimumSize(new Dimension(200, 20) );      //TODO: get textfield size working
             jtxtfUsername.setSize(new Dimension(200, 15) );
-            jtxtfUsername.setMaximumSize(new Dimension(200, 15) );
+            jtxtfUsername.setMaximumSize(new Dimension(200, 20) );
+ //          jtxtfUsername.setText("          ");
             
             //registration
             jpClientLogIn.add(jlblTitle);
@@ -94,15 +100,18 @@ public class Client {
 //        jpClientLobby.setBackground(Color.YELLOW);  //For testing which panel is showing
         jpClientMatch.setSize(200, 100);
 //        jpClientMatch.setBackground(Color.BLUE);    //For testing which panel is showing
-        jfClientMain.add(jpClientLogIn);
+//        jfClientMain.add(jpClientLogIn);
+        jfClientMain.add(jpClientLobby);
+            jpLogIn jpli = new jpLogIn();
+            jfClientMain.add(jpli);
         jfClientMain.add(jpClientLobby);
         jfClientMain.add(jpClientMatch);
-        
         jfClientMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jfClientMain.setVisible(true);
+//        jtxtfUsername.setText("");
 //        cl.show(jfClientMain, jpClientLobby.toString() );
-        cl.next(cClient);
-        cl.next(cClient);
+//        cl.next(cClient);
+//        cl.next(cClient);
       
       //CardLayout myCL = (CardLayout)jfClientMain.getLayout();
       //myCL.next(jfClientMain);
