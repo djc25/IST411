@@ -2,6 +2,7 @@
 package foursquare;
 
 import java.awt.Graphics;
+import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 
 
@@ -31,13 +32,18 @@ public class DotGamePanel extends javax.swing.JPanel {
             myDots.get(i).createDot(g);
             
         }
+        for(int i = 0; i< myLines.size(); i++)
+        {
+            myLines.get(i).drawLines(g);
+            
+        }
     }
     
     public DotGamePanel() {
         initComponents();
         
        
-        
+        /* for loop to create grid of dots*/
         for(int i = 100; i < 600; i = i+100)
         {
             for(int j = 100; j < 600; j = j+100)
@@ -48,16 +54,35 @@ public class DotGamePanel extends javax.swing.JPanel {
             }
         }
         
-        //Lines myLine = new Lines(myDots.get(0), myDots.get(3));
         
-       /* for (int i = 0; i< 5; i= i++)
+        System.out.println(sqrt(myDots.size()));
+        /* Below are two for loops to create the board of lines
+            the first for loop creates vertical lines while the second creates
+            Horizontal lines
+        */
+        for (int i = 0; i< sqrt(myDots.size()); i++)
         {
-            for( int j = 0; j <3; j = j++)
+            for (int j = 0; j<sqrt(myDots.size())-1; j++)
             {
-            Lines myLine = new Lines(myDots.get(i+j),myDots.get(i+j+1));
-            myLines.add(myLine);
+                int index = (int) (j + i*sqrt(myDots.size()));
+                System.out.println(index);
+                Lines myLine = new Lines(myDots.get(index), myDots.get(index +1));
+                myLines.add(myLine);
             }
-        }*/
+        }
+        
+        for (int i = 0; i< sqrt(myDots.size()); i++)
+        {
+            for (int j = 0; j<sqrt(myDots.size())-1; j++)
+            {
+                int index1 = (int) (j*sqrt(myDots.size())+i);
+                int index2 = (int) ((j+1)*sqrt(myDots.size())+i);
+                //System.out.println(index);
+                Lines myLine = new Lines(myDots.get(index1), myDots.get(index2));
+                myLines.add(myLine);
+            }
+        }
+        
         
         
         
