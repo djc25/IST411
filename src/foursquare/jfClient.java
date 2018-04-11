@@ -7,20 +7,25 @@ package foursquare;
 
 import java.awt.CardLayout;
 import java.awt.Container;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
  * @author JSS5783
  
  (Client)
- Client program. Player logs in (jpLogIn), then waits for match-making (jpLobby), and plays a match (jpMatch).
- Player returns to jpLobby upon conclusion of a match (win, lose, draw, or disconnect).
+ Client program. Player logs in (jpLogIn), then waits for match-making (jpLobby), plays a match (jpMatch), and views their current rank in the scoreboard (jpScoreboard).
+ Player returns to jpLobby after being disconnected on during a match, or after a match is fully concluded (win, lose, or draw all go to the scoreboard).
  Player returns to jpLogIn on disconnecting, voluntarily or otherwise.
  
  ----------[CHANGELOG]----------
- 2018/04/10 -     GUI built in GUI builder now, with custom components manually added since the drag-and-drop into the GUI builder doesn't work.
-                  Renamed variables to use clearer names:
-                      jfClientLobby -> jfClient
+ * 2018/04/11 -     Added jScoreboard1. -JSS5783
+ * 
+ * 2018/04/10 -     GUI built in GUI builder now, with custom components manually added since the drag-and-drop into the GUI builder doesn't work.
+ *                  Renamed variables to use clearer names:
+ *                      jfClientLobby -> jfClient
  *                      jpli -> jpLogin1
  *                      jpl -> jpLobby1
  *                      jpm -> jpMatch1
@@ -34,8 +39,13 @@ public class jfClient extends javax.swing.JFrame {
     private jpLogIn jpLogin1;
     private jpLobby jpLobby1;
     private jpMatch jpMatch1;
+    private jpScoreboard jpScoreboard1;
     private static CardLayout cl;
     private static Container cClient;
+    private static int intCurrentScreen = 0;    //0 = Login
+                                        //1 = Lobby
+                                        //2 = Match
+                                        //3 = Scoreboard
 
     /**
      * Creates new form ClientLobby
@@ -48,6 +58,7 @@ public class jfClient extends javax.swing.JFrame {
         jpLogin1 = new jpLogIn();
         jpMatch1  = new jpMatch();
         jpLobby1  = new jpLobby();
+        jpScoreboard1 = new jpScoreboard();
         cl  = new CardLayout();
         cClient = new Container();
         
@@ -59,6 +70,7 @@ public class jfClient extends javax.swing.JFrame {
         this.add(jpLogin1);
         this.add(jpLobby1);
         this.add(jpMatch1);
+        this.add(jpScoreboard1);
     }
 
     /**
@@ -73,6 +85,11 @@ public class jfClient extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Project 4Square (CLIENT)");
         setMinimumSize(new java.awt.Dimension(960, 540));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,6 +104,49 @@ public class jfClient extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Intercepts when the user closes the application (e.g., clicking on the "X" in the upper-right - or upper-left, if on iOS - corner of the window).
+     * Behavior varies depending on current screen:
+     *      Login: Asks if the user wants to quit, the same as the Exit button.
+     *      Lobby: Warns the user that they will be disconnected from the server. Otherwise is the same as Login.
+     *      Match: Warns the user that they will be disconnected from the server and that if they want to play again, they will need to log in again (this is to prevent selective win-farming). Otherwise is the same as Login.
+     *      Scoreboard: Same as Lobby.
+     * @param evt 
+     */
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+//        Object[] options = {"Yes", "No"};
+//        UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
+//
+//        int intResult = JOptionPane.showOptionDialog(this, "Are you sure you want to exit?", "Exit Application", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+        int intResult = 0;
+        
+        switch (intCurrentScreen)
+        {
+            case 0:
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit Application", JOptionPane.YES_NO_OPTION);
+                
+                break;
+            case 1: //TODO: comment, continue working on
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                
+        }
+        
+        if (intResult == JOptionPane.YES_OPTION)
+        {
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        }
+        else
+        {
+            this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        }
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -128,22 +188,42 @@ public class jfClient extends javax.swing.JFrame {
     
     /**
      * Changes to the next panel.
-     * Panel order: Login -> lobby -> match -> login.
+     * Panel order: Login -> lobby -> match -> scoreboard -> login.
+     * NOTE: This lists card order, not game order.
      */
     public static void nextCard()
     {
         cl.next(cClient);
+        
+        if (intCurrentScreen == 3)
+        {
+            intCurrentScreen = 0;
+        }
+        else
+        {
+            intCurrentScreen++;
+        }
     }   //END nextCard()
     
     
     
     /**
      * Changes to the previous panel.
-     * Panel order: Match -> lobby -> login -> match.
+     * Panel order: Scoreboard -> match -> lobby -> login -> match.
+     * NOTE: This lists card order, not game order.
      */
     public static void previousCard()
     {
         cl.previous(cClient);
+        
+        if (intCurrentScreen == 0)
+        {
+            intCurrentScreen = 3;
+        }
+        else
+        {
+            intCurrentScreen--;
+        }
     }   //END previousCard()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

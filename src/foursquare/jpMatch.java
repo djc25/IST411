@@ -67,6 +67,7 @@ JPanel jpPlayer1 = new JPanel();
         jlblPlayer2Username = new javax.swing.JLabel();
         jlblPlayer2Score = new javax.swing.JLabel();
         jpGrid = new javax.swing.JPanel();
+        jbtnDebugGoToMatch = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(960, 540));
         setMinimumSize(new java.awt.Dimension(960, 540));
@@ -131,15 +132,28 @@ JPanel jpPlayer1 = new JPanel();
 
         jpGrid.setBackground(java.awt.Color.lightGray);
 
+        jbtnDebugGoToMatch.setText("[DEBUG] Go to Scoreboard screen");
+        jbtnDebugGoToMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDebugGoToMatchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpGridLayout = new javax.swing.GroupLayout(jpGrid);
         jpGrid.setLayout(jpGridLayout);
         jpGridLayout.setHorizontalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 664, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGridLayout.createSequentialGroup()
+                .addContainerGap(276, Short.MAX_VALUE)
+                .addComponent(jbtnDebugGoToMatch)
+                .addGap(193, 193, 193))
         );
         jpGridLayout.setVerticalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jpGridLayout.createSequentialGroup()
+                .addGap(185, 185, 185)
+                .addComponent(jbtnDebugGoToMatch)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -161,8 +175,17 @@ JPanel jpPlayer1 = new JPanel();
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * ([EBUG] Go to scoreboard screen.
+     * @param evt 
+     */
+    private void jbtnDebugGoToMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDebugGoToMatchActionPerformed
+        jfClient.nextCard();
+    }//GEN-LAST:event_jbtnDebugGoToMatchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jbtnDebugGoToMatch;
     private javax.swing.JLabel jlblPlayer1Score;
     private javax.swing.JLabel jlblPlayer1Username;
     private javax.swing.JLabel jlblPlayer2Score;
