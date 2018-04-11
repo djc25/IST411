@@ -23,14 +23,15 @@ import javax.swing.JTextField;
  * @author Jason, JSS5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/10 -     (Class DEPRECATED) GUI built in GUI builder now.
+ *                  Moved public variables to PVar. -JSS5783
+ * 
  * 2018/04/09 -     Added basic components to GUI cards.
  *                  Renamed from Foursquare.java to Client.java to make its purpose clearer. -JSS5783
  * 
  * 2018/04/04 -     Beginning of hand-coded GUI, since teacher and I can't get the GUI-builder-built one working. -JSS5783
  */
 public class Client {
-    public static Color PLAYER_1_COLOR = new Color(32, 192, 255);
-    public static Color PLAYER_2_COLOR = new Color(255, 192, 32);
     
     public Client()
     {    
@@ -71,14 +72,14 @@ public class Client {
             JPanel jpPlayer1 = new JPanel();
                 JLabel jlblPlayer1Name = new JLabel("[PLAYER_1_NAME]");
                 JLabel jlblPlayer1Score = new JLabel("[PLAYER_1_SCORE]");
-                jpPlayer1.setBackground(PLAYER_1_COLOR);
+                jpPlayer1.setBackground(PVar.PLAYER_1_COLOR);
                 jpPlayer1.add(jlblPlayer1Name);
                 jpPlayer1.add(jlblPlayer1Score);
             DotGamePanel pnlGrid = new DotGamePanel();  //TODO: get this working. Can't get it to find the GUI.
             JPanel jpPlayer2 = new JPanel();
                 JLabel jlblPlayer2Name = new JLabel("[PLAYER_2_NAME]");
                 JLabel jlblPlayer2Score = new JLabel("[PLAYER_2_SCORE]");
-                jpPlayer2.setBackground(PLAYER_2_COLOR);
+                jpPlayer2.setBackground(PVar.PLAYER_2_COLOR);
                 jpPlayer2.add(jlblPlayer2Name);
                 jpPlayer2.add(jlblPlayer2Score);
             jpClientMatch.add(jpPlayer1);

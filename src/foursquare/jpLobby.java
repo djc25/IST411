@@ -9,9 +9,11 @@ package foursquare;
  *
  * @author JSS5783
  * 
- * (Client) Player idles here while waiting for a match to be be made. Client can log out from here.
+ * (Client) Player idles here while waiting for a match to be be made. Client can disconnect (log out) from here.
  * 
- * ---CHANGELOG---
+ * ----------[CHANGELOG]----------
+ * 2018/04/10 -     Connected screens together (a disconnect button and [DEBUG] match button). -JSS5783
+ * 
  * 2018/03/25 -     Created. -JSS5783
  */
 public class jpLobby extends javax.swing.JPanel {
@@ -32,14 +34,27 @@ public class jpLobby extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jbtnDisconnect = new javax.swing.JButton();
+        jlblMessage = new javax.swing.JLabel();
+        jbtnDebugGoToMatch = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(960, 540));
 
-        jButton1.setText("Disconnect from Server");
+        jbtnDisconnect.setText("Disconnect from Server");
+        jbtnDisconnect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDisconnectActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setText("Searching for other person to match you against...");
+        jlblMessage.setText("Searching for other person to match you against...");
+
+        jbtnDebugGoToMatch.setText("[DEBUG] Go to Match screen");
+        jbtnDebugGoToMatch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDebugGoToMatchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -49,26 +64,48 @@ public class jpLobby extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(338, 338, 338)
-                        .addComponent(jLabel1))
+                        .addComponent(jlblMessage))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(386, 386, 386)
-                        .addComponent(jButton1)))
+                        .addComponent(jbtnDisconnect))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(371, 371, 371)
+                        .addComponent(jbtnDebugGoToMatch)))
                 .addContainerGap(377, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(225, 225, 225)
-                .addComponent(jLabel1)
+                .addComponent(jlblMessage)
                 .addGap(121, 121, 121)
-                .addComponent(jButton1)
-                .addContainerGap(157, Short.MAX_VALUE))
+                .addComponent(jbtnDisconnect)
+                .addGap(42, 42, 42)
+                .addComponent(jbtnDebugGoToMatch)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Stop looking for someone to have a match with and disconnect (log out) from the server.
+     * @param evt 
+     */
+    private void jbtnDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDisconnectActionPerformed
+        jfClient.previousCard();
+    }//GEN-LAST:event_jbtnDisconnectActionPerformed
+
+    /**
+     * ([EBUG] Go to match screen.
+     * @param evt 
+     */
+    private void jbtnDebugGoToMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDebugGoToMatchActionPerformed
+        jfClient.nextCard();
+    }//GEN-LAST:event_jbtnDebugGoToMatchActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jbtnDebugGoToMatch;
+    private javax.swing.JButton jbtnDisconnect;
+    private javax.swing.JLabel jlblMessage;
     // End of variables declaration//GEN-END:variables
 }

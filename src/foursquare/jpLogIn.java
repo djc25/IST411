@@ -5,19 +5,23 @@
  */
 package foursquare;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author JSS5783
- * 
- * (Client) Login screen.
- * 
- * ---CHANGELOG---
- * 2018/03/25 -     Created. -JSS5783
+ 
+ (Client) Login screen. Player chooses username (currently a non-unique nickname) before connecting to the server.
+ 
+ ----------[CHANGELOG]----------
+ 2018/04/10 -     Added ActionEvent to btnExit. -JSS5783
+ 
+ 2018/03/25 -     Created. -JSS5783
  */
 public class jpLogIn extends javax.swing.JPanel {
 
     /**
-     * Creates new form jpLogIn
+     * Creates new form jpLogin
      */
     public jpLogIn() {
         initComponents();
@@ -52,6 +56,11 @@ public class jpLogIn extends javax.swing.JPanel {
         lblUsername.setText("Username:");
 
         jbtnExit.setText("Exit");
+        jbtnExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnExitActionPerformed(evt);
+            }
+        });
 
         jlblTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jlblTitle.setText("4Square");
@@ -95,8 +104,21 @@ public class jpLogIn extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
-        jfClientLobby.nextCard();
+        jfClient.nextCard();
     }//GEN-LAST:event_jbtnLogInActionPerformed
+
+    /**
+     * Asks the user if they want to quit.
+     * TODO: Figure out the custom dialog to get the default option to be "no".
+     */
+    private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
+
+        int intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
+        if (intResult == JOptionPane.YES_OPTION)
+        {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_jbtnExitActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -11,42 +11,54 @@ import java.awt.Container;
 /**
  *
  * @author JSS5783
+ 
+ (Client)
+ Client program. Player logs in (jpLogIn), then waits for match-making (jpLobby), and plays a match (jpMatch).
+ Player returns to jpLobby upon conclusion of a match (win, lose, draw, or disconnect).
+ Player returns to jpLogIn on disconnecting, voluntarily or otherwise.
+ 
+ ----------[CHANGELOG]----------
+ 2018/04/10 -     GUI built in GUI builder now, with custom components manually added since the drag-and-drop into the GUI builder doesn't work.
+                  Renamed variables to use clearer names:
+                      jfClientLobby -> jfClient
+ *                      jpli -> jpLogin1
+ *                      jpl -> jpLobby1
+ *                      jpm -> jpMatch1
+ *                  Added comments. -JSS5783
  * 
- * (Client)
- * jpLogin and jpLobby go here (probably not simultaneously). Client logs in and then waits for match-making.
- * Matches open in a separate window (jfMatch).
- * 
- * ---CHANGELOG---
  * 2018/03/25 -     Created. -JSS5783
  */
-public class jfClientLobby extends javax.swing.JFrame {
+public class jfClient extends javax.swing.JFrame {
     
-    public static CardLayout cl = new CardLayout();
-    public static Container cClient = new Container();
+    //declaration
+    private jpLogIn jpLogin1;
+    private jpLobby jpLobby1;
+    private jpMatch jpMatch1;
+    private static CardLayout cl;
+    private static Container cClient;
 
     /**
      * Creates new form ClientLobby
      */
-    public jfClientLobby() {
+    public jfClient()
+    {
         initComponents();
-        jpLogIn jpli = new jpLogIn();
-        jpLobby jpl = new jpLobby();
-        jpMatch jpm = new jpMatch();
         
+        //initialization
+        jpLogin1 = new jpLogIn();
+        jpMatch1  = new jpMatch();
+        jpLobby1  = new jpLobby();
+        cl  = new CardLayout();
+        cClient = new Container();
         
+        //set layout to CardLayout
         cClient = this.getContentPane();
         cClient.setLayout(cl);
         
-        this.add(jpli);
-        this.add(jpl);
-        this.add(jpm);
-
-//        jpli.setEnabled(true);
-//        jpl.setEnabled(false);
-//        jpm.setEnabled(false);
-//        jpli.setVisible(true);
-//        jpl.setVisible(true);
-//        jpm.setVisible(true);
+        //registration
+        this.add(jpLogin1);
+        this.add(jpLobby1);
+        this.add(jpMatch1);
     }
 
     /**
@@ -59,8 +71,8 @@ public class jfClientLobby extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Project 4Square (CLIENT)");
         setMinimumSize(new java.awt.Dimension(960, 540));
-        setPreferredSize(new java.awt.Dimension(960, 540));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,30 +105,46 @@ public class jfClientLobby extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(jfClientLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jfClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(jfClientLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jfClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(jfClientLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jfClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(jfClientLobby.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(jfClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new jfClientLobby().setVisible(true);
+                new jfClient().setVisible(true);
             }
         });
     }
     
-    //TODO: temp
+    /**
+     * Changes to the next panel.
+     * Panel order: Login -> lobby -> match -> login.
+     */
     public static void nextCard()
     {
         cl.next(cClient);
-    }
+    }   //END nextCard()
+    
+    
+    
+    /**
+     * Changes to the previous panel.
+     * Panel order: Match -> lobby -> login -> match.
+     */
+    public static void previousCard()
+    {
+        cl.previous(cClient);
+    }   //END previousCard()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
