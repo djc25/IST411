@@ -69,6 +69,7 @@ JPanel jpPlayer1 = new JPanel();
         jpGrid = new javax.swing.JPanel();
         jbtnDebugGoToMatch = new javax.swing.JButton();
 
+        setBackground(PVar.BACKGROUND_COLOR);
         setMaximumSize(new java.awt.Dimension(960, 540));
         setMinimumSize(new java.awt.Dimension(960, 540));
 
@@ -85,7 +86,7 @@ JPanel jpPlayer1 = new JPanel();
         jpPlayer1Layout.setHorizontalGroup(
             jpPlayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPlayer1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(jpPlayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlblPlayer1Score)
                     .addComponent(jlblPlayer1Username))
@@ -94,7 +95,7 @@ JPanel jpPlayer1 = new JPanel();
         jpPlayer1Layout.setVerticalGroup(
             jpPlayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPlayer1Layout.createSequentialGroup()
-                .addGap(244, 244, 244)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(jlblPlayer1Username)
                 .addGap(26, 26, 26)
                 .addComponent(jlblPlayer1Score)
@@ -113,27 +114,30 @@ JPanel jpPlayer1 = new JPanel();
         jpPlayer2.setLayout(jpPlayer2Layout);
         jpPlayer2Layout.setHorizontalGroup(
             jpPlayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPlayer2Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPlayer2Layout.createSequentialGroup()
+                .addContainerGap(44, Short.MAX_VALUE)
                 .addGroup(jpPlayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlblPlayer2Username)
                     .addComponent(jlblPlayer2Score))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jpPlayer2Layout.setVerticalGroup(
             jpPlayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPlayer2Layout.createSequentialGroup()
-                .addGap(237, 237, 237)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPlayer2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlblPlayer2Username)
                 .addGap(30, 30, 30)
                 .addComponent(jlblPlayer2Score)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jpGrid.setBackground(java.awt.Color.lightGray);
+        jpGrid.setBackground(PVar.BACKGROUND_COLOR);
 
         jbtnDebugGoToMatch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnDebugGoToMatch.setText("[DEBUG] Go to Scoreboard screen");
+        jbtnDebugGoToMatch.setMaximumSize(new java.awt.Dimension(250, 35));
+        jbtnDebugGoToMatch.setMinimumSize(new java.awt.Dimension(250, 35));
+        jbtnDebugGoToMatch.setPreferredSize(new java.awt.Dimension(250, 35));
         jbtnDebugGoToMatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnDebugGoToMatchActionPerformed(evt);
@@ -145,15 +149,15 @@ JPanel jpPlayer1 = new JPanel();
         jpGridLayout.setHorizontalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGridLayout.createSequentialGroup()
-                .addGap(208, 208, 208)
-                .addComponent(jbtnDebugGoToMatch)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addGap(200, 200, 200)
+                .addComponent(jbtnDebugGoToMatch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(211, Short.MAX_VALUE))
         );
         jpGridLayout.setVerticalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGridLayout.createSequentialGroup()
                 .addGap(245, 245, 245)
-                .addComponent(jbtnDebugGoToMatch)
+                .addComponent(jbtnDebugGoToMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

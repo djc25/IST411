@@ -86,6 +86,7 @@ public class jfClient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Project 4Square (CLIENT)");
+        setBackground(PVar.BACKGROUND_COLOR);
         setMinimumSize(new java.awt.Dimension(960, 540));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -130,15 +131,15 @@ public class jfClient extends javax.swing.JFrame {
                 
                 break;
             case 1: //TODO: comment, continue working on
-                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
                 
                 break;
             case 2:
-                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to forfeit and exit?\nYour session will be closed and you will no longer be update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to forfeit and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
                 
                 break;
             case 3:
-                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
                 
                 break;
             default:

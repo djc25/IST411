@@ -40,6 +40,7 @@ public class jpLobby extends javax.swing.JPanel {
         jlblMessage = new javax.swing.JLabel();
         jbtnDebugGoToMatch = new javax.swing.JButton();
 
+        setBackground(PVar.BACKGROUND_COLOR);
         setMinimumSize(new java.awt.Dimension(960, 540));
 
         jbtnDisconnect.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -65,17 +66,17 @@ public class jpLobby extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(371, Short.MAX_VALUE)
-                .addComponent(jbtnDebugGoToMatch)
-                .addContainerGap(380, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 320, Short.MAX_VALUE)
                 .addComponent(jlblMessage)
+                .addContainerGap(329, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtnDisconnect)
+                .addComponent(jbtnDebugGoToMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,11 +84,11 @@ public class jpLobby extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(221, Short.MAX_VALUE)
                 .addComponent(jlblMessage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                .addComponent(jbtnDisconnect)
-                .addGap(43, 43, 43)
-                .addComponent(jbtnDebugGoToMatch)
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addComponent(jbtnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(jbtnDebugGoToMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(97, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -101,7 +102,7 @@ public class jpLobby extends javax.swing.JPanel {
      * TODO: Figure out the custom dialog to get the default option to be "no".
      */
     private void jbtnDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDisconnectActionPerformed
-        int intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect?\nYour session will be closed and you will no longer be update that session's score.", "Disconnect", JOptionPane.YES_NO_OPTION);
+        int intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect?\nYour session will be closed and you will no longer be able to update that session's score.", "Disconnect", JOptionPane.YES_NO_OPTION);
         if (intResult == JOptionPane.YES_OPTION)
         {
             jfClient.previousCard();
