@@ -48,7 +48,7 @@ public class Dots {
      * @return the intX_coord
      */
     public int getIntX_coord() {
-        return intX_coord;
+        return intX_coord+DIAMTR/2;
     }
 
     /**
@@ -62,7 +62,7 @@ public class Dots {
      * @return the intY_coord
      */
     public int getIntY_coord() {
-        return intY_coord;
+        return intY_coord+DIAMTR/2;
     }
 
     /**
