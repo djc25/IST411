@@ -5,6 +5,8 @@
  */
 package foursquare;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +16,11 @@ import javax.swing.JOptionPane;
  (Client) Login screen. Player chooses username (currently a non-unique nickname) before connecting to the server.
  
  ----------[CHANGELOG]----------
- 2018/04/10 -     Added ActionEvent to btnExit. -JSS5783
- 
- 2018/03/25 -     Created. -JSS5783
+ * 2018/04/15 -     Checks for valid username. -JSS5783
+ * 
+ * 2018/04/10 -     Added ActionEvent to btnExit. -JSS5783
+ * 
+ * 2018/03/25 -     Created. -JSS5783
  */
 public class jpLogIn extends javax.swing.JPanel {
 
@@ -39,13 +43,15 @@ public class jpLogIn extends javax.swing.JPanel {
         jbtnLogIn = new javax.swing.JButton();
         lblUsername = new javax.swing.JLabel();
         jbtnExit = new javax.swing.JButton();
-        jtxtUsername = new javax.swing.JTextField();
+        jtxtfUsername = new javax.swing.JTextField();
         jlblTitle = new javax.swing.JLabel();
+        jlblInstructions = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(960, 540));
         setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(960, 540));
 
+        jbtnLogIn.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnLogIn.setText("Log In");
         jbtnLogIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,8 +59,10 @@ public class jpLogIn extends javax.swing.JPanel {
             }
         });
 
+        lblUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblUsername.setText("Username:");
 
+        jbtnExit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnExit.setText("Exit");
         jbtnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,8 +70,13 @@ public class jpLogIn extends javax.swing.JPanel {
             }
         });
 
+        jtxtfUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jlblTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jlblTitle.setText("4Square");
+
+        jlblInstructions.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblInstructions.setText("Enter a username 1 to 8 characters in length. Characters must all be alphanumeric (A-Z, 0-9).");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -82,19 +95,24 @@ public class jpLogIn extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(319, 319, 319)
                         .addComponent(lblUsername)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtxtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(380, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtxtfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jlblInstructions)))
+                .addContainerGap(205, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(110, 110, 110)
                 .addComponent(jlblTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(jlblInstructions)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblUsername)
-                    .addComponent(jtxtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxtfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(80, 80, 80)
                 .addComponent(jbtnLogIn)
                 .addGap(18, 18, 18)
@@ -104,7 +122,27 @@ public class jpLogIn extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
-        jfClient.nextCard();
+        try
+        {
+            String strUsername = jtxtfUsername.getText().trim();   //removes leading and ending whitespace before processing, at least, but might read as inconsistent to the player
+            Pattern patAlphanumeric = Pattern.compile("^[a-zA-Z0-9]*$");
+            Matcher mat = patAlphanumeric.matcher(strUsername);
+            boolean bIsAlphanumeric = mat.matches();
+            
+            if (strUsername.isEmpty() == false && strUsername.length() <= 8 && bIsAlphanumeric == true)
+            {
+                //TODO: make connection to server and pass relevant data (username, IP, anything else needed, like passwords later)
+                jfClient.nextCard();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Enter a username 1 to 8 characters in length. Characters must all be alphanumeric (A-Z, 0-9).", "Error", JOptionPane.WARNING_MESSAGE);   //more of a warning, but also user input error
+            }
+        }
+        catch (Exception ex)
+        {
+            
+        }
     }//GEN-LAST:event_jbtnLogInActionPerformed
 
     /**
@@ -124,8 +162,9 @@ public class jpLogIn extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbtnExit;
     private javax.swing.JButton jbtnLogIn;
+    private javax.swing.JLabel jlblInstructions;
     private javax.swing.JLabel jlblTitle;
-    private javax.swing.JTextField jtxtUsername;
+    private javax.swing.JTextField jtxtfUsername;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
 }

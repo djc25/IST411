@@ -8,6 +8,11 @@ package foursquare;
 /**
  *
  * @author jss5783
+ * 
+ * ----------[CHANGELOG]----------
+ * 2018/04/16 -     Added table, label, and back button.  -JSS5783
+ * 
+ * 2018/04/11 -     Created. -JSS5783
  */
 public class jpScoreboard extends javax.swing.JPanel {
 
@@ -27,21 +32,83 @@ public class jpScoreboard extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jbtnReturnToLobby = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+
         setMinimumSize(new java.awt.Dimension(960, 540));
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        jbtnReturnToLobby.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jbtnReturnToLobby.setText("Return to Lobby");
+        jbtnReturnToLobby.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnReturnToLobbyActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText("Scoreboard");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 960, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(403, 403, 403)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(411, 411, 411)
+                        .addComponent(jbtnReturnToLobby)))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnReturnToLobby)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Switches back to the lobby screen.
+     * @param evt 
+     */
+    private void jbtnReturnToLobbyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReturnToLobbyActionPerformed
+        jfClient.nextCard();
+        jfClient.nextCard();
+    }//GEN-LAST:event_jbtnReturnToLobbyActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbtnReturnToLobby;
     // End of variables declaration//GEN-END:variables
 }

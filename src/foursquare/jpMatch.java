@@ -132,6 +132,7 @@ JPanel jpPlayer1 = new JPanel();
 
         jpGrid.setBackground(java.awt.Color.lightGray);
 
+        jbtnDebugGoToMatch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnDebugGoToMatch.setText("[DEBUG] Go to Scoreboard screen");
         jbtnDebugGoToMatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,15 +144,15 @@ JPanel jpPlayer1 = new JPanel();
         jpGrid.setLayout(jpGridLayout);
         jpGridLayout.setHorizontalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGridLayout.createSequentialGroup()
-                .addContainerGap(276, Short.MAX_VALUE)
+            .addGroup(jpGridLayout.createSequentialGroup()
+                .addGap(208, 208, 208)
                 .addComponent(jbtnDebugGoToMatch)
-                .addGap(193, 193, 193))
+                .addContainerGap(213, Short.MAX_VALUE))
         );
         jpGridLayout.setVerticalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGridLayout.createSequentialGroup()
-                .addGap(185, 185, 185)
+                .addGap(245, 245, 245)
                 .addComponent(jbtnDebugGoToMatch)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

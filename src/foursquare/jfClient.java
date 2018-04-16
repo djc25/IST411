@@ -21,6 +21,8 @@ import javax.swing.UIManager;
  Player returns to jpLogIn on disconnecting, voluntarily or otherwise.
  
  ----------[CHANGELOG]----------
+ * 2018/04/15 -     Continued working on formWindowClosing method. -JSS5783
+ * 
  * 2018/04/11 -     Added jScoreboard1. -JSS5783
  * 
  * 2018/04/10 -     GUI built in GUI builder now, with custom components manually added since the drag-and-drop into the GUI builder doesn't work.
@@ -43,9 +45,9 @@ public class jfClient extends javax.swing.JFrame {
     private static CardLayout cl;
     private static Container cClient;
     private static int intCurrentScreen = 0;    //0 = Login
-                                        //1 = Lobby
-                                        //2 = Match
-                                        //3 = Scoreboard
+                                                //1 = Lobby
+                                                //2 = Match
+                                                //3 = Scoreboard
 
     /**
      * Creates new form ClientLobby
@@ -119,7 +121,7 @@ public class jfClient extends javax.swing.JFrame {
 //        UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
 //
 //        int intResult = JOptionPane.showOptionDialog(this, "Are you sure you want to exit?", "Exit Application", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-        int intResult = 0;
+        int intResult = JOptionPane.NO_OPTION;  //default is "no"
         
         switch (intCurrentScreen)
         {
@@ -128,12 +130,22 @@ public class jfClient extends javax.swing.JFrame {
                 
                 break;
             case 1: //TODO: comment, continue working on
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                
                 break;
             case 2:
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to forfeit and exit?\nYour session will be closed and you will no longer be update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                
                 break;
             case 3:
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                
                 break;
             default:
+                if (PVar.bDebugMode == true)
+                {
+                    System.out.println("[DEBUG] Error: Unhandled screen. Please report to the repository on Github.");
+                }
                 
         }
         
