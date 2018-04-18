@@ -5,6 +5,7 @@
  */
 package foursquare;
 
+import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -16,6 +17,13 @@ import javax.swing.JOptionPane;
  (Client) Login screen. Player chooses username (currently a non-unique nickname) before connecting to the server.
  
  ----------[CHANGELOG]----------
+ * 2018/04/18 -     Split login method into dedicated logIn() method.
+ *                  Modified jbtnLogInActionPerformed to use logIn().
+ *                  Added jtxtfUsernameKeyPressed for using logIn(). -JSS5783
+ * 
+ * 2018/04/18 -     Readjusted component positioning, as it didn't want to stick for some reason.
+ *                  Removed btnExit's confirmation dialog for smoother operation - it just closes now. -JSS5783
+ * 
  * 2018/04/18 -     Readjusted component positioning, as it didn't want to stick for some reason.
  *                  Removed btnExit's confirmation dialog for smoother operation - it just closes now. -JSS5783
  * 
@@ -78,6 +86,11 @@ public class jpLogIn extends javax.swing.JPanel {
         });
 
         jtxtfUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jtxtfUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtxtfUsernameKeyPressed(evt);
+            }
+        });
 
         jlblTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jlblTitle.setText("4Square");
@@ -99,16 +112,17 @@ public class jpLogIn extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtxtfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(195, Short.MAX_VALUE)
-                .addComponent(jlblInstructions)
-                .addContainerGap(196, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbtnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jlblInstructions)
+                        .addContainerGap(196, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbtnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +143,44 @@ public class jpLogIn extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Attempts to log the user in when jbtnLogIn is pressed.
+     * @param evt 
+     */
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
+        logIn();
+    }//GEN-LAST:event_jbtnLogInActionPerformed
+
+    /**
+     * Closes the application.
+     */
+    private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
+
+        //Ask nothing, as there's no user data to lose
+//        int intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
+//        if (intResult == JOptionPane.YES_OPTION)
+//        {
+            System.exit(0);
+//        }
+    }//GEN-LAST:event_jbtnExitActionPerformed
+
+    /**
+     * Attempts to log the user in when the Enter key is pressed in jtxtfUsername.
+     * @param evt 
+     */
+    private void jtxtfUsernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtfUsernameKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)  //if key pressed is Enter
+        {
+            logIn();
+        }
+    }//GEN-LAST:event_jtxtfUsernameKeyPressed
+
+    
+    /**
+     * Log the user into the server if the user has a valid username.
+     */
+    private void logIn()
+    {
         try
         {
             String strUsername = jtxtfUsername.getText().trim();   //removes leading and ending whitespace before processing, at least, but might read as inconsistent to the player
@@ -149,23 +200,9 @@ public class jpLogIn extends javax.swing.JPanel {
         }
         catch (Exception ex)
         {
-            
+            System.err.println(ex.toString() );
         }
-    }//GEN-LAST:event_jbtnLogInActionPerformed
-
-    /**
-     * Closes the application.
-     */
-    private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
-
-        //Ask nothing, as there's no user data to lose
-//        int intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
-//        if (intResult == JOptionPane.YES_OPTION)
-//        {
-            System.exit(0);
-//        }
-    }//GEN-LAST:event_jbtnExitActionPerformed
-
+    }   //END logIn()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbtnExit;
