@@ -10,6 +10,8 @@ package foursquare;
  * @author jss5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/18 -     Continued designing GUI.    -JSS5783
+ * 
  * 2018/04/16 -     Created. -JSS5783
  */
 public class jfServer extends javax.swing.JPanel {
@@ -30,85 +32,154 @@ public class jfServer extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jbtnStartStopServer = new javax.swing.JButton();
+        jpnlConsoleOutput = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtxtaConsoleOutput = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
-        jpnlConnection1 = new javax.swing.JPanel();
-        jlblConnection1UsernameUserID = new javax.swing.JLabel();
-        jlblConnection1Status = new javax.swing.JLabel();
-        jbtnConnection1Disconnect = new javax.swing.JButton();
-        jbtnConnection1ForceWin = new javax.swing.JButton();
+        jpnlConnection4 = new javax.swing.JPanel();
+        jlblConnection3UsernameUserID = new javax.swing.JLabel();
+        jlblConnection3Status = new javax.swing.JLabel();
+        jbtnConnection3Disconnect = new javax.swing.JButton();
+        jbtnConnection3ForceWin = new javax.swing.JButton();
+        jpnlConnection6 = new javax.swing.JPanel();
+        jlblConnection4UsernameUserID = new javax.swing.JLabel();
+        jlblConnection4Status = new javax.swing.JLabel();
+        jbtnConnection4Disconnect = new javax.swing.JButton();
+        jbtnConnection4ForceWin = new javax.swing.JButton();
         jpnlConnection2 = new javax.swing.JPanel();
         jlblConnection2UsernameUserID = new javax.swing.JLabel();
         jlblConnection2Status = new javax.swing.JLabel();
         jbtnConnection2Disconnect = new javax.swing.JButton();
         jbtnConnection2ForceWin = new javax.swing.JButton();
+        jpnlConnection1 = new javax.swing.JPanel();
+        jlblConnection1UsernameUserID = new javax.swing.JLabel();
+        jlblConnection1Status = new javax.swing.JLabel();
+        jbtnConnection1Disconnect = new javax.swing.JButton();
+        jbtnConnection1ForceWin = new javax.swing.JButton();
 
-        jButton1.setText("Start Server");
-        jButton1.setPreferredSize(new java.awt.Dimension(100, 35));
+        jbtnStartStopServer.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnStartStopServer.setText("Start Server");
+        jbtnStartStopServer.setPreferredSize(new java.awt.Dimension(100, 35));
 
+        jpnlConsoleOutput.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Console Output", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        jtxtaConsoleOutput.setBackground(new java.awt.Color(0, 0, 0));
         jtxtaConsoleOutput.setColumns(20);
+        jtxtaConsoleOutput.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
+        jtxtaConsoleOutput.setForeground(new java.awt.Color(255, 255, 255));
         jtxtaConsoleOutput.setRows(5);
         jScrollPane1.setViewportView(jtxtaConsoleOutput);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Matches", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
+        javax.swing.GroupLayout jpnlConsoleOutputLayout = new javax.swing.GroupLayout(jpnlConsoleOutput);
+        jpnlConsoleOutput.setLayout(jpnlConsoleOutputLayout);
+        jpnlConsoleOutputLayout.setHorizontalGroup(
+            jpnlConsoleOutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 247, Short.MAX_VALUE)
+        jpnlConsoleOutputLayout.setVerticalGroup(
+            jpnlConsoleOutputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
         );
 
-        jpnlConnection1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Connection 1", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+        jPanel1.setBackground(PVar.BACKGROUND_COLOR);
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Connections", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        jlblConnection1UsernameUserID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jlblConnection1UsernameUserID.setText("Username (User ID): 12345678");
+        jpnlConnection4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Connection 3", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
-        jlblConnection1Status.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jlblConnection1Status.setText("Status: Lobby (cooldown)");
+        jlblConnection3UsernameUserID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblConnection3UsernameUserID.setText("Username (User ID): 12345678");
 
-        jbtnConnection1Disconnect.setText("Disconnect");
-        jbtnConnection1Disconnect.setPreferredSize(new java.awt.Dimension(100, 35));
+        jlblConnection3Status.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblConnection3Status.setText("Status: Lobby (cooldown)");
 
-        jbtnConnection1ForceWin.setText("Force Win");
-        jbtnConnection1ForceWin.setPreferredSize(new java.awt.Dimension(100, 35));
+        jbtnConnection3Disconnect.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnConnection3Disconnect.setText("Disconnect");
+        jbtnConnection3Disconnect.setPreferredSize(new java.awt.Dimension(100, 35));
 
-        javax.swing.GroupLayout jpnlConnection1Layout = new javax.swing.GroupLayout(jpnlConnection1);
-        jpnlConnection1.setLayout(jpnlConnection1Layout);
-        jpnlConnection1Layout.setHorizontalGroup(
-            jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnlConnection1Layout.createSequentialGroup()
-                .addGroup(jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpnlConnection1Layout.createSequentialGroup()
+        jbtnConnection3ForceWin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnConnection3ForceWin.setText("Force Win");
+        jbtnConnection3ForceWin.setPreferredSize(new java.awt.Dimension(100, 35));
+
+        javax.swing.GroupLayout jpnlConnection4Layout = new javax.swing.GroupLayout(jpnlConnection4);
+        jpnlConnection4.setLayout(jpnlConnection4Layout);
+        jpnlConnection4Layout.setHorizontalGroup(
+            jpnlConnection4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlConnection4Layout.createSequentialGroup()
+                .addGroup(jpnlConnection4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnlConnection4Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jlblConnection1Status))
-                    .addGroup(jpnlConnection1Layout.createSequentialGroup()
+                        .addComponent(jlblConnection3Status))
+                    .addGroup(jpnlConnection4Layout.createSequentialGroup()
                         .addGap(62, 62, 62)
-                        .addGroup(jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jbtnConnection1ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtnConnection1Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jpnlConnection1Layout.createSequentialGroup()
+                        .addGroup(jpnlConnection4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbtnConnection3ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnConnection3Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpnlConnection4Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jlblConnection1UsernameUserID)))
+                        .addComponent(jlblConnection3UsernameUserID)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
-        jpnlConnection1Layout.setVerticalGroup(
-            jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpnlConnection1Layout.createSequentialGroup()
+        jpnlConnection4Layout.setVerticalGroup(
+            jpnlConnection4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlConnection4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlblConnection1UsernameUserID)
+                .addComponent(jlblConnection3UsernameUserID)
                 .addGap(18, 18, 18)
-                .addComponent(jlblConnection1Status)
+                .addComponent(jlblConnection3Status)
                 .addGap(18, 18, 18)
-                .addComponent(jbtnConnection1ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbtnConnection3ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbtnConnection1Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbtnConnection3Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jpnlConnection6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Connection 4", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        jlblConnection4UsernameUserID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblConnection4UsernameUserID.setText("Username (User ID): 12345678");
+
+        jlblConnection4Status.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblConnection4Status.setText("Status: Lobby (cooldown)");
+
+        jbtnConnection4Disconnect.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnConnection4Disconnect.setText("Disconnect");
+        jbtnConnection4Disconnect.setPreferredSize(new java.awt.Dimension(100, 35));
+
+        jbtnConnection4ForceWin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnConnection4ForceWin.setText("Force Win");
+        jbtnConnection4ForceWin.setPreferredSize(new java.awt.Dimension(100, 35));
+
+        javax.swing.GroupLayout jpnlConnection6Layout = new javax.swing.GroupLayout(jpnlConnection6);
+        jpnlConnection6.setLayout(jpnlConnection6Layout);
+        jpnlConnection6Layout.setHorizontalGroup(
+            jpnlConnection6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlConnection6Layout.createSequentialGroup()
+                .addGroup(jpnlConnection6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnlConnection6Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jlblConnection4Status))
+                    .addGroup(jpnlConnection6Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addGroup(jpnlConnection6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbtnConnection4ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnConnection4Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpnlConnection6Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jlblConnection4UsernameUserID)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        jpnlConnection6Layout.setVerticalGroup(
+            jpnlConnection6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlConnection6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlblConnection4UsernameUserID)
+                .addGap(18, 18, 18)
+                .addComponent(jlblConnection4Status)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnConnection4ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnConnection4Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -120,9 +191,11 @@ public class jfServer extends javax.swing.JPanel {
         jlblConnection2Status.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jlblConnection2Status.setText("Status: Lobby (cooldown)");
 
+        jbtnConnection2Disconnect.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jbtnConnection2Disconnect.setText("Disconnect");
         jbtnConnection2Disconnect.setPreferredSize(new java.awt.Dimension(100, 35));
 
+        jbtnConnection2ForceWin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jbtnConnection2ForceWin.setText("Force Win");
         jbtnConnection2ForceWin.setPreferredSize(new java.awt.Dimension(100, 35));
 
@@ -159,58 +232,147 @@ public class jfServer extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jpnlConnection1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Connection 1", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
+
+        jlblConnection1UsernameUserID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblConnection1UsernameUserID.setText("Username (User ID): 12345678");
+
+        jlblConnection1Status.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jlblConnection1Status.setText("Status: Lobby (cooldown)");
+
+        jbtnConnection1Disconnect.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnConnection1Disconnect.setText("Disconnect");
+        jbtnConnection1Disconnect.setPreferredSize(new java.awt.Dimension(100, 35));
+
+        jbtnConnection1ForceWin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbtnConnection1ForceWin.setText("Force Win");
+        jbtnConnection1ForceWin.setPreferredSize(new java.awt.Dimension(100, 35));
+
+        javax.swing.GroupLayout jpnlConnection1Layout = new javax.swing.GroupLayout(jpnlConnection1);
+        jpnlConnection1.setLayout(jpnlConnection1Layout);
+        jpnlConnection1Layout.setHorizontalGroup(
+            jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlConnection1Layout.createSequentialGroup()
+                .addGroup(jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnlConnection1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jlblConnection1Status))
+                    .addGroup(jpnlConnection1Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addGroup(jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jbtnConnection1ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnConnection1Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpnlConnection1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jlblConnection1UsernameUserID)))
+                .addContainerGap(25, Short.MAX_VALUE))
+        );
+        jpnlConnection1Layout.setVerticalGroup(
+            jpnlConnection1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlConnection1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlblConnection1UsernameUserID)
+                .addGap(18, 18, 18)
+                .addComponent(jlblConnection1Status)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnConnection1ForceWin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnConnection1Disconnect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jpnlConnection1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpnlConnection2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jpnlConnection4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpnlConnection6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpnlConnection1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpnlConnection2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jpnlConnection4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpnlConnection6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jpnlConsoleOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jpnlConnection1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jpnlConnection2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(316, 316, 316)
+                        .addComponent(jbtnStartStopServer, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpnlConnection1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpnlConnection2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpnlConsoleOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnStartStopServer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnConnection1Disconnect;
     private javax.swing.JButton jbtnConnection1ForceWin;
     private javax.swing.JButton jbtnConnection2Disconnect;
+    private javax.swing.JButton jbtnConnection2Disconnect1;
+    private javax.swing.JButton jbtnConnection2Disconnect3;
     private javax.swing.JButton jbtnConnection2ForceWin;
+    private javax.swing.JButton jbtnConnection2ForceWin1;
+    private javax.swing.JButton jbtnConnection2ForceWin3;
+    private javax.swing.JButton jbtnConnection3Disconnect;
+    private javax.swing.JButton jbtnConnection3ForceWin;
+    private javax.swing.JButton jbtnConnection4Disconnect;
+    private javax.swing.JButton jbtnConnection4ForceWin;
+    private javax.swing.JButton jbtnStartStopServer;
     private javax.swing.JLabel jlblConnection1Status;
     private javax.swing.JLabel jlblConnection1UsernameUserID;
     private javax.swing.JLabel jlblConnection2Status;
+    private javax.swing.JLabel jlblConnection2Status1;
+    private javax.swing.JLabel jlblConnection2Status3;
     private javax.swing.JLabel jlblConnection2UsernameUserID;
+    private javax.swing.JLabel jlblConnection2UsernameUserID1;
+    private javax.swing.JLabel jlblConnection2UsernameUserID3;
+    private javax.swing.JLabel jlblConnection3Status;
+    private javax.swing.JLabel jlblConnection3UsernameUserID;
+    private javax.swing.JLabel jlblConnection4Status;
+    private javax.swing.JLabel jlblConnection4UsernameUserID;
     private javax.swing.JPanel jpnlConnection1;
     private javax.swing.JPanel jpnlConnection2;
+    private javax.swing.JPanel jpnlConnection3;
+    private javax.swing.JPanel jpnlConnection4;
+    private javax.swing.JPanel jpnlConnection5;
+    private javax.swing.JPanel jpnlConnection6;
+    private javax.swing.JPanel jpnlConsoleOutput;
     private javax.swing.JTextArea jtxtaConsoleOutput;
     // End of variables declaration//GEN-END:variables
 }

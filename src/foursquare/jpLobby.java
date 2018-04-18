@@ -14,6 +14,13 @@ import javax.swing.JOptionPane;
  * (Client) Player idles here while waiting for a match to be be made. Client can disconnect (log out) from here.
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/18 -     Added progress bar jpbMatchmaking.
+ *                  Hide jbtnDebugGoToMatch if DEBUG_MODE not enabled.
+ *                  Readjusted component positioning, as it didn't want to stick for some reason. -JSS5783
+ * 
+ * 2018/04/16 -     Adjusted background color.
+ *                  Adjusted component positioning. -JSS5783
+ * 
  * 2018/04/10 -     Connected screens together (a disconnect button and [DEBUG] match button). -JSS5783
  * 
  * 2018/03/25 -     Created. -JSS5783
@@ -25,6 +32,12 @@ public class jpLobby extends javax.swing.JPanel {
      */
     public jpLobby() {
         initComponents();
+        jpbMatchmaking.setIndeterminate(true);
+        
+        if (PVar.DEBUG_MODE == false)
+        {
+            jbtnDebugGoToMatch.setVisible(false);
+        }
     }
 
     /**
@@ -39,6 +52,7 @@ public class jpLobby extends javax.swing.JPanel {
         jbtnDisconnect = new javax.swing.JButton();
         jlblMessage = new javax.swing.JLabel();
         jbtnDebugGoToMatch = new javax.swing.JButton();
+        jpbMatchmaking = new javax.swing.JProgressBar();
 
         setBackground(PVar.BACKGROUND_COLOR);
         setMinimumSize(new java.awt.Dimension(960, 540));
@@ -62,6 +76,8 @@ public class jpLobby extends javax.swing.JPanel {
             }
         });
 
+        jpbMatchmaking.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,9 +86,13 @@ public class jpLobby extends javax.swing.JPanel {
                 .addGap(0, 320, Short.MAX_VALUE)
                 .addComponent(jlblMessage)
                 .addContainerGap(329, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpbMatchmaking, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addComponent(jbtnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -84,11 +104,13 @@ public class jpLobby extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(221, Short.MAX_VALUE)
                 .addComponent(jlblMessage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jpbMatchmaking, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jbtnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnDebugGoToMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,5 +144,6 @@ public class jpLobby extends javax.swing.JPanel {
     private javax.swing.JButton jbtnDebugGoToMatch;
     private javax.swing.JButton jbtnDisconnect;
     private javax.swing.JLabel jlblMessage;
+    private javax.swing.JProgressBar jpbMatchmaking;
     // End of variables declaration//GEN-END:variables
 }
