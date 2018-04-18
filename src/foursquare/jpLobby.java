@@ -5,6 +5,8 @@
  */
 package foursquare;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author JSS5783
@@ -12,6 +14,13 @@ package foursquare;
  * (Client) Player idles here while waiting for a match to be be made. Client can disconnect (log out) from here.
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/18 -     Added progress bar jpbMatchmaking.
+ *                  Hide jbtnDebugGoToMatch if DEBUG_MODE not enabled.
+ *                  Readjusted component positioning, as it didn't want to stick for some reason. -JSS5783
+ * 
+ * 2018/04/16 -     Adjusted background color.
+ *                  Adjusted component positioning. -JSS5783
+ * 
  * 2018/04/10 -     Connected screens together (a disconnect button and [DEBUG] match button). -JSS5783
  * 
  * 2018/03/25 -     Created. -JSS5783
@@ -23,6 +32,12 @@ public class jpLobby extends javax.swing.JPanel {
      */
     public jpLobby() {
         initComponents();
+        jpbMatchmaking.setIndeterminate(true);
+        
+        if (PVar.DEBUG_MODE == false)
+        {
+            jbtnDebugGoToMatch.setVisible(false);
+        }
     }
 
     /**
@@ -37,9 +52,12 @@ public class jpLobby extends javax.swing.JPanel {
         jbtnDisconnect = new javax.swing.JButton();
         jlblMessage = new javax.swing.JLabel();
         jbtnDebugGoToMatch = new javax.swing.JButton();
+        jpbMatchmaking = new javax.swing.JProgressBar();
 
+        setBackground(PVar.BACKGROUND_COLOR);
         setMinimumSize(new java.awt.Dimension(960, 540));
 
+        jbtnDisconnect.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnDisconnect.setText("Disconnect from Server");
         jbtnDisconnect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,8 +65,10 @@ public class jpLobby extends javax.swing.JPanel {
             }
         });
 
+        jlblMessage.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jlblMessage.setText("Searching for other person to match you against...");
 
+        jbtnDebugGoToMatch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnDebugGoToMatch.setText("[DEBUG] Go to Match screen");
         jbtnDebugGoToMatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,42 +76,59 @@ public class jpLobby extends javax.swing.JPanel {
             }
         });
 
+        jpbMatchmaking.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 320, Short.MAX_VALUE)
+                .addComponent(jlblMessage)
+                .addContainerGap(329, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jpbMatchmaking, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(338, 338, 338)
-                        .addComponent(jlblMessage))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(386, 386, 386)
-                        .addComponent(jbtnDisconnect))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(371, 371, 371)
-                        .addComponent(jbtnDebugGoToMatch)))
-                .addContainerGap(377, Short.MAX_VALUE))
+                        .addGap(133, 133, 133)
+                        .addComponent(jbtnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnDebugGoToMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(225, 225, 225)
+                .addContainerGap(221, Short.MAX_VALUE)
                 .addComponent(jlblMessage)
-                .addGap(121, 121, 121)
-                .addComponent(jbtnDisconnect)
-                .addGap(42, 42, 42)
-                .addComponent(jbtnDebugGoToMatch)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jpbMatchmaking, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(jbtnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbtnDebugGoToMatch, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(109, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Stop looking for someone to have a match with and disconnect (log out) from the server.
+     * 
      * @param evt 
      */
+    /**
+     * Asks the user if they want to disconnect.
+     * If yes, then stop looking for someone to have a match with and disconnect (log out) from the server.
+     * TODO: Figure out the custom dialog to get the default option to be "no".
+     */
     private void jbtnDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDisconnectActionPerformed
-        jfClient.previousCard();
+        int intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect?\nYour session will be closed and you will no longer be able to update that session's score.", "Disconnect", JOptionPane.YES_NO_OPTION);
+        if (intResult == JOptionPane.YES_OPTION)
+        {
+            jfClient.previousCard();
+        }
     }//GEN-LAST:event_jbtnDisconnectActionPerformed
 
     /**
@@ -107,5 +144,6 @@ public class jpLobby extends javax.swing.JPanel {
     private javax.swing.JButton jbtnDebugGoToMatch;
     private javax.swing.JButton jbtnDisconnect;
     private javax.swing.JLabel jlblMessage;
+    private javax.swing.JProgressBar jpbMatchmaking;
     // End of variables declaration//GEN-END:variables
 }

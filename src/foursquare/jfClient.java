@@ -17,10 +17,17 @@ import javax.swing.UIManager;
  
  (Client)
  Client program. Player logs in (jpLogIn), then waits for match-making (jpLobby), plays a match (jpMatch), and views their current rank in the scoreboard (jpScoreboard).
- Player returns to jpLobby after being disconnected on during a match, or after a match is fully concluded (win, lose, or draw all go to the scoreboard).
+ Player returns to jpLobby after being disconnected on during a match, or after a match is fully concluded (win, lose, or draw, all go to the scoreboard).
  Player returns to jpLogIn on disconnecting, voluntarily or otherwise.
  
  ----------[CHANGELOG]----------
+ * 2018/04/18 -     Added comments.
+ *                  formWindowClosing now closes without confirmation dialog if on the login screen for a smoother experience. -JSS5783
+ * 
+ * 2018/04/16 -     Adjusted background color.  -JSS5783
+ * 
+ * 2018/04/15 -     Continued working on formWindowClosing method. -JSS5783
+ * 
  * 2018/04/11 -     Added jScoreboard1. -JSS5783
  * 
  * 2018/04/10 -     GUI built in GUI builder now, with custom components manually added since the drag-and-drop into the GUI builder doesn't work.
@@ -43,9 +50,9 @@ public class jfClient extends javax.swing.JFrame {
     private static CardLayout cl;
     private static Container cClient;
     private static int intCurrentScreen = 0;    //0 = Login
-                                        //1 = Lobby
-                                        //2 = Match
-                                        //3 = Scoreboard
+                                                //1 = Lobby
+                                                //2 = Match
+                                                //3 = Scoreboard
 
     /**
      * Creates new form ClientLobby
@@ -84,6 +91,7 @@ public class jfClient extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Project 4Square (CLIENT)");
+        setBackground(PVar.BACKGROUND_COLOR);
         setMinimumSize(new java.awt.Dimension(960, 540));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -119,21 +127,32 @@ public class jfClient extends javax.swing.JFrame {
 //        UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
 //
 //        int intResult = JOptionPane.showOptionDialog(this, "Are you sure you want to exit?", "Exit Application", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-        int intResult = 0;
+        int intResult = JOptionPane.NO_OPTION;  //default is "no"
         
         switch (intCurrentScreen)
         {
-            case 0:
-                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit Application", JOptionPane.YES_NO_OPTION);
+            case 0:     //Login screen
+//                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit Application", JOptionPane.YES_NO_OPTION);
+                //auto-confirm, as there's no user data to lose
+                intResult = JOptionPane.YES_OPTION;
+                break;
+            case 1:     //Lobby screen
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
                 
                 break;
-            case 1: //TODO: comment, continue working on
+            case 2:     //Match screen
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to forfeit and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                
                 break;
-            case 2:
-                break;
-            case 3:
+            case 3:     //Scoreboard screen
+                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
+                
                 break;
             default:
+                if (PVar.DEBUG_MODE == true)
+                {
+                    System.out.println("[DEBUG] Error: Unhandled screen. Please report to the repository on Github.");
+                }
                 
         }
         
@@ -186,8 +205,9 @@ public class jfClient extends javax.swing.JFrame {
         });
     }
     
+    
     /**
-     * Changes to the next panel.
+     * Changes to the next panel. Tracks which card is active.
      * Panel order: Login -> lobby -> match -> scoreboard -> login.
      * NOTE: This lists card order, not game order.
      */
@@ -195,7 +215,7 @@ public class jfClient extends javax.swing.JFrame {
     {
         cl.next(cClient);
         
-        if (intCurrentScreen == 3)
+        if (intCurrentScreen == 3)  //overflow from end of "card deck" to beginning
         {
             intCurrentScreen = 0;
         }
@@ -208,7 +228,7 @@ public class jfClient extends javax.swing.JFrame {
     
     
     /**
-     * Changes to the previous panel.
+     * Changes to the previous panel. Tracks which card is active.
      * Panel order: Scoreboard -> match -> lobby -> login -> match.
      * NOTE: This lists card order, not game order.
      */
@@ -216,7 +236,7 @@ public class jfClient extends javax.swing.JFrame {
     {
         cl.previous(cClient);
         
-        if (intCurrentScreen == 0)
+        if (intCurrentScreen == 0)  //overflow from beginning of "card deck" to end
         {
             intCurrentScreen = 3;
         }

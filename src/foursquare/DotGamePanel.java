@@ -1,7 +1,11 @@
 
 package foursquare;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 
@@ -23,6 +27,7 @@ public class DotGamePanel extends javax.swing.JPanel {
     /**
      * Creates new form DotGamePanel
      */
+    int counter = 0;
     ArrayList<Dots> myDots = new ArrayList();
     ArrayList<Lines> myLines = new ArrayList();
     @Override
@@ -41,7 +46,9 @@ public class DotGamePanel extends javax.swing.JPanel {
     
     public DotGamePanel() {
         initComponents();
-        
+        Handlerclass mouseHandler = new Handlerclass();
+        this.addMouseListener(mouseHandler);
+        this.addMouseMotionListener(mouseHandler);
        
         /* for loop to create grid of dots*/
         for(int i = 100; i < 600; i = i+100)
@@ -83,6 +90,90 @@ public class DotGamePanel extends javax.swing.JPanel {
             }
         }
         
+        
+        
+        
+    }
+    private class Handlerclass implements MouseListener, MouseMotionListener
+    {
+        public void mouseClicked(MouseEvent event){
+            System.out.println(String.format("Clicked at %d,%d", event.getX() , event.getY() ));
+            /*if (myLines.get(0).getxStart()==myLines.get(0).getxEnd())
+                {
+                   if((event.getX()< myLines.get(1).getxStart() + 20)&&(event.getX()> myLines.get(0).getxStart() - 20)
+                           && (event.getY()> (myLines.get(0).getyStart()))
+                           && (event.getY()< (myLines.get(0).getyEnd()))
+                           /*&&(event.getY()> (myLines.get(i).getyEnd()-20))
+                           &&(event.getY()< (myLines.get(i).getyEnd()+20)))
+                       counter++;
+                       
+                       myLines.get(0).setMyColor(Color.yellow);
+                       
+                   repaint();
+                }*/
+            //myLines.get(5).setMyColor(Color.yellow);
+            //repaint();
+            for(int i = 0; i <myLines.size(); i++)
+            {
+                if (myLines.get(i).getxStart()==myLines.get(i).getxEnd())
+                {
+                    if((event.getX()< myLines.get(i).getxStart() + 20)&&(event.getX()> myLines.get(i).getxStart() - 20)
+                           && (event.getY()> (myLines.get(i).getyStart()))
+                           && (event.getY()< (myLines.get(i).getyEnd())))
+                    {       
+                            if(counter%2 == 0)
+                            {
+                                myLines.get(i).setMyColor(Color.red);
+                            }
+                            else
+                            {
+                                myLines.get(i).setMyColor(Color.blue);
+                            }
+                            repaint();
+                            counter++;
+                    }
+                }
+                
+                else if(myLines.get(i).getyStart()==myLines.get(i).getyEnd())
+                {
+                    if((event.getY()< myLines.get(i).getyStart() + 20)&&(event.getY()> myLines.get(i).getyStart() - 20)
+                           && (event.getX()> (myLines.get(i).getxStart()))
+                           && (event.getX()< (myLines.get(i).getxEnd())))
+                    {
+                       if(counter%2 == 0)
+                            {
+                                myLines.get(i).setMyColor(Color.red);
+                            }
+                            else
+                            {
+                                myLines.get(i).setMyColor(Color.blue);
+                            }
+                            repaint();
+                            counter++;
+                    }
+                       
+                   
+                }
+            }
+        }
+        public void mousePressed(MouseEvent event){
+            System.out.println("mouse pressed");
+        }
+        public void mouseReleased(MouseEvent event){
+            System.out.println("Mouse Released");
+        }
+        public void mouseEntered(MouseEvent event){
+            System.out.println("Mouse Entered");
+        }
+        public void mouseExited(MouseEvent event){
+            System.out.println("Mouse Exited");
+        }
+        public void mouseDragged(MouseEvent event){
+            System.out.println("Mouse Dragged");
+        }
+        public void mouseMoved(MouseEvent event){
+            //System.out.println("Mouse Moved");
+        }
         
         
         
