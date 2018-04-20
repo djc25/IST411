@@ -13,6 +13,12 @@ import javax.swing.JPanel;
  * @author JSS5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/18 -     Hide jbtnDebugGoToScoreboard if DEBUG_MODE not enabled.
+ *                  Renamed jbtnDebugGoToMatch to jbtnDebugGoToScoreboard.
+ *                  Commented out random code for adding hand-coded components. -JSS5783
+ * 
+ * 2018/04/16 -     Adjusted background color. -JSS5783
+ * 
  * 2018/04/10 -     Added DotGamePanel. -JSS5783
  *                          (BUG) Doesn't show right now for some reason, even using the working code from Client.java.
  * 
@@ -26,29 +32,33 @@ public class jpMatch extends javax.swing.JPanel {
      */
     public jpMatch() {
         initComponents();
+        if (PVar.DEBUG_MODE == false)
+        {
+            jbtnDebugGoToScoreboard.setVisible(false);
+        }
         
-//        grid = new DotGamePanel();
+        grid = new DotGamePanel();
 ////        jpGrid = grid;
-//        this.add(grid);
+        this.add(grid);
 
-//copied from Client.java to try to get DotGamePanelto show.
+//copied from Client.java to try to get DotGamePanel to show.
 //TODO: get it working
-JPanel jpPlayer1 = new JPanel();
-                JLabel jlblPlayer1Name = new JLabel("[PLAYER_1_NAME]");
-                JLabel jlblPlayer1Score = new JLabel("[PLAYER_1_SCORE]");
-                jpPlayer1.setBackground(PVar.PLAYER_1_COLOR);
-                jpPlayer1.add(jlblPlayer1Name);
-                jpPlayer1.add(jlblPlayer1Score);
-            DotGamePanel pnlGrid = new DotGamePanel();
-            JPanel jpPlayer2 = new JPanel();
-                JLabel jlblPlayer2Name = new JLabel("[PLAYER_2_NAME]");
-                JLabel jlblPlayer2Score = new JLabel("[PLAYER_2_SCORE]");
-                jpPlayer2.setBackground(PVar.PLAYER_2_COLOR);
-                jpPlayer2.add(jlblPlayer2Name);
-                jpPlayer2.add(jlblPlayer2Score);
-            this.add(jpPlayer1);
-            this.add(pnlGrid);
-            this.add(jpPlayer2);
+//JPanel jpPlayer1 = new JPanel();
+//                JLabel jlblPlayer1Name = new JLabel("[PLAYER_1_NAME]");
+//                JLabel jlblPlayer1Score = new JLabel("[PLAYER_1_SCORE]");
+//                jpPlayer1.setBackground(PVar.PLAYER_1_COLOR);
+//                jpPlayer1.add(jlblPlayer1Name);
+//                jpPlayer1.add(jlblPlayer1Score);
+//            DotGamePanel pnlGrid = new DotGamePanel();
+//            JPanel jpPlayer2 = new JPanel();
+//                JLabel jlblPlayer2Name = new JLabel("[PLAYER_2_NAME]");
+//                JLabel jlblPlayer2Score = new JLabel("[PLAYER_2_SCORE]");
+//                jpPlayer2.setBackground(PVar.PLAYER_2_COLOR);
+//                jpPlayer2.add(jlblPlayer2Name);
+//                jpPlayer2.add(jlblPlayer2Score);
+//            this.add(jpPlayer1);
+//            this.add(pnlGrid);
+//            this.add(jpPlayer2);
     }
 
     /**
@@ -67,8 +77,9 @@ JPanel jpPlayer1 = new JPanel();
         jlblPlayer2Username = new javax.swing.JLabel();
         jlblPlayer2Score = new javax.swing.JLabel();
         jpGrid = new javax.swing.JPanel();
-        jbtnDebugGoToMatch = new javax.swing.JButton();
+        jbtnDebugGoToScoreboard = new javax.swing.JButton();
 
+        setBackground(PVar.BACKGROUND_COLOR);
         setMaximumSize(new java.awt.Dimension(960, 540));
         setMinimumSize(new java.awt.Dimension(960, 540));
 
@@ -85,7 +96,7 @@ JPanel jpPlayer1 = new JPanel();
         jpPlayer1Layout.setHorizontalGroup(
             jpPlayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPlayer1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(jpPlayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jlblPlayer1Score)
                     .addComponent(jlblPlayer1Username))
@@ -94,7 +105,7 @@ JPanel jpPlayer1 = new JPanel();
         jpPlayer1Layout.setVerticalGroup(
             jpPlayer1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPlayer1Layout.createSequentialGroup()
-                .addGap(244, 244, 244)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(jlblPlayer1Username)
                 .addGap(26, 26, 26)
                 .addComponent(jlblPlayer1Score)
@@ -113,30 +124,33 @@ JPanel jpPlayer1 = new JPanel();
         jpPlayer2.setLayout(jpPlayer2Layout);
         jpPlayer2Layout.setHorizontalGroup(
             jpPlayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPlayer2Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPlayer2Layout.createSequentialGroup()
+                .addContainerGap(44, Short.MAX_VALUE)
                 .addGroup(jpPlayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlblPlayer2Username)
                     .addComponent(jlblPlayer2Score))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jpPlayer2Layout.setVerticalGroup(
             jpPlayer2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpPlayer2Layout.createSequentialGroup()
-                .addGap(237, 237, 237)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPlayer2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlblPlayer2Username)
                 .addGap(30, 30, 30)
                 .addComponent(jlblPlayer2Score)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jpGrid.setBackground(java.awt.Color.lightGray);
+        jpGrid.setBackground(PVar.BACKGROUND_COLOR);
 
-        jbtnDebugGoToMatch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jbtnDebugGoToMatch.setText("[DEBUG] Go to Scoreboard screen");
-        jbtnDebugGoToMatch.addActionListener(new java.awt.event.ActionListener() {
+        jbtnDebugGoToScoreboard.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jbtnDebugGoToScoreboard.setText("[DEBUG] Go to Scoreboard screen");
+        jbtnDebugGoToScoreboard.setMaximumSize(new java.awt.Dimension(250, 35));
+        jbtnDebugGoToScoreboard.setMinimumSize(new java.awt.Dimension(250, 35));
+        jbtnDebugGoToScoreboard.setPreferredSize(new java.awt.Dimension(250, 35));
+        jbtnDebugGoToScoreboard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnDebugGoToMatchActionPerformed(evt);
+                jbtnDebugGoToScoreboardActionPerformed(evt);
             }
         });
 
@@ -145,15 +159,15 @@ JPanel jpPlayer1 = new JPanel();
         jpGridLayout.setHorizontalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGridLayout.createSequentialGroup()
-                .addGap(208, 208, 208)
-                .addComponent(jbtnDebugGoToMatch)
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addGap(200, 200, 200)
+                .addComponent(jbtnDebugGoToScoreboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(211, Short.MAX_VALUE))
         );
         jpGridLayout.setVerticalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGridLayout.createSequentialGroup()
                 .addGap(245, 245, 245)
-                .addComponent(jbtnDebugGoToMatch)
+                .addComponent(jbtnDebugGoToScoreboard, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -180,13 +194,13 @@ JPanel jpPlayer1 = new JPanel();
      * ([EBUG] Go to scoreboard screen.
      * @param evt 
      */
-    private void jbtnDebugGoToMatchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDebugGoToMatchActionPerformed
+    private void jbtnDebugGoToScoreboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDebugGoToScoreboardActionPerformed
         jfClient.nextCard();
-    }//GEN-LAST:event_jbtnDebugGoToMatchActionPerformed
+    }//GEN-LAST:event_jbtnDebugGoToScoreboardActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jbtnDebugGoToMatch;
+    private javax.swing.JButton jbtnDebugGoToScoreboard;
     private javax.swing.JLabel jlblPlayer1Score;
     private javax.swing.JLabel jlblPlayer1Username;
     private javax.swing.JLabel jlblPlayer2Score;

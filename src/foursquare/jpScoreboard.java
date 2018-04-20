@@ -10,6 +10,11 @@ package foursquare;
  * @author jss5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/18 -     Readjusted component positioning, as it didn't want to stick for some reason.   -JSS5783
+ * 
+ * 2018/04/16 -     Adjusted background color.
+ *                  Adjusted component positioning. -JSS5783
+ * 
  * 2018/04/16 -     Added table, label, and back button.  -JSS5783
  * 
  * 2018/04/11 -     Created. -JSS5783
@@ -33,14 +38,15 @@ public class jpScoreboard extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtblScoreboard = new javax.swing.JTable();
         jbtnReturnToLobby = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jlblTitle = new javax.swing.JLabel();
 
+        setBackground(PVar.BACKGROUND_COLOR);
         setMinimumSize(new java.awt.Dimension(960, 540));
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtblScoreboard.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jtblScoreboard.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,47 +57,49 @@ public class jpScoreboard extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtblScoreboard);
 
         jbtnReturnToLobby.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnReturnToLobby.setText("Return to Lobby");
+        jbtnReturnToLobby.setMaximumSize(new java.awt.Dimension(150, 35));
+        jbtnReturnToLobby.setMinimumSize(new java.awt.Dimension(150, 35));
+        jbtnReturnToLobby.setPreferredSize(new java.awt.Dimension(150, 35));
         jbtnReturnToLobby.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnReturnToLobbyActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("Scoreboard");
+        jlblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jlblTitle.setText("Scoreboard");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 246, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(262, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnReturnToLobby, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(403, 403, 403)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(411, 411, 411)
-                        .addComponent(jbtnReturnToLobby)))
-                .addContainerGap(414, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlblTitle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
+                .addComponent(jlblTitle)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnReturnToLobby)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jbtnReturnToLobby, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -106,9 +114,9 @@ public class jpScoreboard extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbtnReturnToLobby;
+    private javax.swing.JLabel jlblTitle;
+    private javax.swing.JTable jtblScoreboard;
     // End of variables declaration//GEN-END:variables
 }
