@@ -104,6 +104,7 @@ public class Lines {
      */
     public void setMyColor(Color myColor) {
         this.myColor = myColor;
+        this.isConnected = true;
     }
 
     /**

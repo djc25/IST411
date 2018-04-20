@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 
@@ -28,8 +29,10 @@ public class DotGamePanel extends javax.swing.JPanel {
      * Creates new form DotGamePanel
      */
     int counter = 0;
+    int sqrtOfList;
     ArrayList<Dots> myDots = new ArrayList();
     ArrayList<Lines> myLines = new ArrayList();
+    ArrayList<Boxes> myBoxes = new ArrayList();
     @Override
     public void paintComponent(Graphics g){
         for(int i = 0; i< myDots.size(); i++)
@@ -42,6 +45,23 @@ public class DotGamePanel extends javax.swing.JPanel {
             myLines.get(i).drawLines(g);
             
         }
+        for(int i = 0; i<myBoxes.size();i++)
+        {
+            if(myBoxes.get(i).getClosed() == true)
+            {
+                
+            }
+            else{
+            if(counter%2 ==0)
+                g.setColor(Color.RED);
+            
+            else{
+                g.setColor(Color.BLUE);
+            
+            }
+            myBoxes.get(i).isClosed(g);
+        }
+        }
     }
     
     public DotGamePanel() {
@@ -51,29 +71,41 @@ public class DotGamePanel extends javax.swing.JPanel {
         this.addMouseMotionListener(mouseHandler);
        
         /* for loop to create grid of dots*/
-        for(int i = 100; i < 600; i = i+100)
+        for(int i = 50; i < 400; i = i+100)
         {
-            for(int j = 100; j < 600; j = j+100)
+            for(int j = 50; j < 400; j = j+100)
             {
                 Dots myDot = new Dots(i,j);
                 myDots.add(myDot);
                // System.out.println(i + " " +j);
             }
+           
+            
+        }
+         sqrtOfList = (int) sqrt(myDots.size());
+       /*VERTICAL LINES*/
+        for (int i = 0; i< sqrtOfList; i++)
+        {
+            for (int j = 0; j<sqrtOfList-1; j++)
+            {
+                int index = (int) (j + i*sqrtOfList);
+                //System.out.println(index);
+                Lines myLine = new Lines(myDots.get(index), myDots.get(index +1));
+                myLines.add(myLine);
+            }
         }
         
         
-        System.out.println(sqrt(myDots.size()));
-        /* Below are two for loops to create the board of lines
-            the first for loop creates vertical lines while the second creates
-            Horizontal lines
-        */
-        for (int i = 0; i< sqrt(myDots.size()); i++)
+       
+         /*HORIZONTAL LINES*/
+        for (int i = 0; i< sqrtOfList; i++)
         {
-            for (int j = 0; j<sqrt(myDots.size())-1; j++)
+            for (int j = 0; j<sqrtOfList-1; j++)
             {
-                int index = (int) (j + i*sqrt(myDots.size()));
-                System.out.println(index);
-                Lines myLine = new Lines(myDots.get(index), myDots.get(index +1));
+                int index1 = (int) (j*sqrtOfList+i);
+                int index2 = (int) ((j+1)*sqrtOfList+i);
+                //System.out.println(index);
+                Lines myLine = new Lines(myDots.get(index1), myDots.get(index2));
                 myLines.add(myLine);
             }
         }
@@ -90,29 +122,34 @@ public class DotGamePanel extends javax.swing.JPanel {
             }
         }
         
+        /*BOXES*/
+        for(int i = 0; i<pow(sqrtOfList-1,2);i++)
+        {
+            Boxes myBox = new Boxes();
+            myBox.setLeftLine(myLines.get(i));
+            myBox.setRightLine(myLines.get(i+(sqrtOfList-1)));
+            myBoxes.add(myBox);
+        }
+        for(int i = 0; i<sqrtOfList-1; i++)
+        {
+            
+            for(int j = 0; j<sqrtOfList -1; j++)
+            {
+               myBoxes.get(i+j*(sqrtOfList-1)).setTopLine(myLines.get(i*(sqrtOfList-1)+j+sqrtOfList*(sqrtOfList-1)));
+               myBoxes.get(i+j*(sqrtOfList-1)).setBotLine(myLines.get((i+1)*(sqrtOfList-1)+j+sqrtOfList*(sqrtOfList-1)));
+            }
+        }
+        
         
         
         
     }
+    
     private class Handlerclass implements MouseListener, MouseMotionListener
     {
         public void mouseClicked(MouseEvent event){
             System.out.println(String.format("Clicked at %d,%d", event.getX() , event.getY() ));
-            /*if (myLines.get(0).getxStart()==myLines.get(0).getxEnd())
-                {
-                   if((event.getX()< myLines.get(1).getxStart() + 20)&&(event.getX()> myLines.get(0).getxStart() - 20)
-                           && (event.getY()> (myLines.get(0).getyStart()))
-                           && (event.getY()< (myLines.get(0).getyEnd()))
-                           /*&&(event.getY()> (myLines.get(i).getyEnd()-20))
-                           &&(event.getY()< (myLines.get(i).getyEnd()+20)))
-                       counter++;
-                       
-                       myLines.get(0).setMyColor(Color.yellow);
-                       
-                   repaint();
-                }*/
-            //myLines.get(5).setMyColor(Color.yellow);
-            //repaint();
+            
             for(int i = 0; i <myLines.size(); i++)
             {
                 if (myLines.get(i).getxStart()==myLines.get(i).getxEnd())
@@ -130,6 +167,7 @@ public class DotGamePanel extends javax.swing.JPanel {
                                 myLines.get(i).setMyColor(Color.blue);
                             }
                             repaint();
+                         
                             counter++;
                     }
                 }
