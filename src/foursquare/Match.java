@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author jss5783
  * 
- * For now, keep both client and server match code together.
+ * For now, keep bBottomLineh client and server match code together.
  *
  * ----------CHANGELOG----------
  * 2018/04/18 -     Created. -JSS5783

@@ -12,152 +12,203 @@ import java.awt.Graphics;
 /**
  *
  * @author DRACOX
+ * 
+ * ----------CHANGELOG----------
+ * 2018/04/23 -     Started renaming variables and adding comments to comply with coding conventions. -JSS5783
  */
+
+
+
 public class Boxes {
     
-    private boolean top;
-    private boolean bot;
-    private boolean left;
-    private boolean right;
-    private boolean closeMe = false;
-    private Lines topLine;
-    private Lines botLine;
-    private Lines leftLine;
-    private Lines rightLine;
+    /*
+        A Box knows the status (true [checked] /false [unchecked]) of its own four sides (left, right, up, and down).
+        It also knows which lines it's connected to (Lines) and their relative positions (left, right, up, and down).
+        Finally, it knows whether or not it's closed (i.e., all four sides are closed.
+    */
     
+    //declaration
+    private boolean bTopSide;
+    private boolean bBottomSide;
+    private boolean bLeftSide;
+    private boolean bRightSide;
+    private boolean bIsClosed;
+    private Lines lineTop;
+    private Lines lineBottom;
+    private Lines lineLeft;
+    private Lines lineRight;
+    
+    
+    
+    /**
+     * Default Box constructor.
+     * 
+     * Lines are not initialized and thus not registered.
+     */
     public Boxes()
     {
-        top = bot = left = right = false;
+        //initialization
+        bTopSide = bBottomSide = bLeftSide = bRightSide = false;
+        bIsClosed = false;
     }
 
+    
+    
     /**
-     * @return the top
+     * @return bTopSide - returns true if the Box's top side is checked, and false if not.
      */
     public boolean isTop() {
-        return top;
+        return bTopSide;
     }
 
     /**
-     * @param top the top to set
+     * @param bInTopLine - sets the Box's top side to checked if true, and unchecked if false.
      */
-    public void setTop(boolean top) {
-        this.top = top;
+    public void setTop(boolean bInTopLine) {
+        bTopSide = bInTopLine;
     }
 
+    
+    
     /**
-     * @return the bot
+     * @return bBottomSide - returns true if the Box's bottom side is checked, and false if not.
      */
     public boolean isBot() {
-        return bot;
+        return bBottomSide;
     }
 
     /**
-     * @param bot the bot to set
+     * @param bInBottomLine - sets the Box's bottom side to checked if true, and unchecked if false.
      */
-    public void setBot(boolean bot) {
-        this.bot = bot;
+    public void setBot(boolean bInBottomLine) {
+        bBottomSide = bInBottomLine;
     }
 
+    
+    
     /**
-     * @return the left
+     * @return bLeftSide - returns true if the Box's left side is checked, and false if not.
      */
     public boolean isLeft() {
-        return left;
+        return bLeftSide;
     }
 
     /**
-     * @param left the left to set
+     * @param bInLeftLine - sets the Box's left side to checked if true, and unchecked if false.
      */
-    public void setLeft(boolean left) {
-        this.left = left;
+    public void setLeft(boolean bInLeftLine) {
+        bLeftSide = bInLeftLine;
     }
 
+    
+    
     /**
-     * @return the right
+     * @return bRightSide - returns true if the Box's right side is checked, and false if not.
      */
     public boolean isRight() {
-        return right;
+        return bRightSide;
     }
 
     /**
-     * @param right the right to set
+     * @param bInRightLine - sets the Box's right side to checked if true, and unchecked if false.
      */
-    public void setRight(boolean right) {
-        this.right = right;
+    public void setRight(boolean bInRightLine) {
+        bRightSide = bInRightLine;
     }
 
+    
+    
     /**
-     * @return the topLine
+     * @return the lineTop
      */
     public Lines getTopLine() {
-        return topLine;
+        return lineTop;
     }
 
     /**
-     * @param topLine the topLine to set
+     * @param lineInTop - the Line that the Box's top line should be set to.
      */
-    public void setTopLine(Lines topLine) {
-        this.topLine = topLine;
+    public void setTopLine(Lines lineInTop) {
+        lineTop = lineInTop;
     }
 
+    
+    
     /**
-     * @return the botLine
+     * @return the lineBottom
      */
     public Lines getBotLine() {
-        return botLine;
+        return lineBottom;
     }
 
     /**
-     * @param botLine the botLine to set
+     * @param lineInBottom - the Line that the Box's bottom line should be set to.
      */
-    public void setBotLine(Lines botLine) {
-        this.botLine = botLine;
+    public void setBotLine(Lines lineInBottom) {
+        lineBottom = lineInBottom;
     }
 
+    
+    
     /**
-     * @return the leftLine
+     * @return the lineLeft
      */
     public Lines getLeftLine() {
-        return leftLine;
+        return lineLeft;
     }
 
     /**
-     * @param leftLine the leftLine to set
+     * @param lineInLeft - the Line that the Box's left line should be set to.
      */
-    public void setLeftLine(Lines leftLine) {
-        this.leftLine = leftLine;
+    public void setLeftLine(Lines lineInLeft) {
+        lineLeft = lineInLeft;
     }
 
+    
+    
     /**
-     * @return the rightLine
+     * @return the lineRight
      */
     public Lines getRightLine() {
-        return rightLine;
+        return lineRight;
     }
 
     /**
-     * @param rightLine the rightLine to set
+     * @param lineInRight - the Line that the Box's right line should be set to.
      */
-    public void setRightLine(Lines rightLine) {
-        this.rightLine = rightLine;
-    }
-    public boolean getClosed()
-    {
-        return this.closeMe;
+    public void setRightLine(Lines lineInRight) {
+        lineRight = lineInRight;
     }
     
+    
+    
+    /**
+     * @return bIsClosed - returns true if the Box is closed, and false if it is not.
+     */
+    public boolean getClosed()
+    {
+        return bIsClosed;
+    }
+    
+    /**
+     * Checks if the Box is closed.
+     * If closed, then the box graphic is filled in.
+     * Sets bIsClosed to true if the Box is closed, and false if it is not.
+     * TODO: Should probably be split into setClosed and drawClosed methods or something to cut down on unnecessary redraws.
+     * @param g 
+     */
     public void isClosed(Graphics g)
     {
         
-        if(topLine.isIsConnected()&&botLine.isIsConnected()&&leftLine.isIsConnected()&&rightLine.isIsConnected())
+        if(lineTop.isIsConnected()&&lineBottom.isIsConnected()&&lineLeft.isIsConnected()&&lineRight.isIsConnected())
         {
-            g.fillRect(topLine.getxStart(), topLine.getyStart(), 100, 100);
-            closeMe =true;
+            g.fillRect(lineTop.getxStart(), lineTop.getyStart(), 100, 100);
+            bIsClosed = true;
             
         }
         else
         {
-            closeMe = false;
+            bIsClosed = false;
         }
     }
     
