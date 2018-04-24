@@ -9,9 +9,9 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.Scanner;
+import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
  *
@@ -22,35 +22,33 @@ public class ServerConnection
     
     Socket connection;
     ServerSocket server;
-    public static void main(String[] args) throws IOException 
-    {
-        int svrQ = 10;
-       
-        
-       
-        Scanner in = new Scanner(System.in);
-        //ObjectInputStream cin = new ObjectInputStream(connection.getInputStream);
-     
-           
-       // Socket connection = server.accept();
-        System.out.println("Server is running");
-        
-        
-        
-    }
+    int counter = 1;
+    final int maxClients = 10;
+    final int portNumber = 16000;
     
-    public void runServer()
+    ObjectInputStream OIS;
+    ObjectOutputStream OOS;
+    
+    boolean test = true; 
+   
+    
+    
+//    
+    public void serverConnection() throws ClassNotFoundException
     {
-        int svrQ = 10;
+      
+        
         try
         {
-            ServerSocket server = new ServerSocket(60000, svrQ); //ServerSocket Creation
+            server = new ServerSocket(portNumber, maxClients); //ServerSocket Creation
             
-            while(true)
+            while(true) //Condition for server to listen, get info., process info. or close connection
             {
                 try
                 {
                     listenForConnection();
+                    getStreams();
+                    processConnection();
                 }
                 catch(EOFException eofExeption)
                 {
@@ -60,41 +58,75 @@ public class ServerConnection
                 finally
                 {
                     endServerConnection();
-                    
-                }
-            }
+                    ++counter;
+                } 
+            } // Try block 
         }catch(IOException ioException)
         {
             ioException.printStackTrace();
         }
         
         
-    } // starts connection
+    } // Starts connection method
     
-    public void endServerConnection()
+    public void endServerConnection() throws IOException 
     {
+          
         
-    } //ends connection 
+        OIS.close();
+        OOS.close();
+        connection.close();
+    } //ends connection to the server 
     
-    public void listenForConnection()
+    public void listenForConnection() throws IOException
     {
         System.out.println("Waiting for connection\n ");
         connection = server.accept();
+    
     }
     
     public void getStreams() throws IOException
     {
-        ObjectOutputStream outStream = new ObjectOutputStream(connection.getOutputStream());
-        outStream.flush();
+        ObjectOutputStream OOS = new ObjectOutputStream(connection.getOutputStream());
+        OOS.flush();
         
-        ObjectInputStream inputStream = new ObjectInputStream(connection.getInputStream());
+        ObjectInputStream OIS = new ObjectInputStream(connection.getInputStream());
+        System.out.println("OIS = " + OIS);
         //System.out.println("Got here");
     } //end of getStream method 
     
-    public void processConnection()
+    public void processConnection() throws IOException, ClassNotFoundException 
     {
-        
+       if(test == true)
+       {
+           System.out.println("Made it to processConnection");  
+       }
+       String temp = (String) OIS.readObject();
+        System.out.println("temp = " + temp);
+//        do 
+//        {
+//            System.out.println("send info");
+//            
+//        }while(!message.equals("Terminate"));
     }
     
     
+   
+    public static void main(String[] args) throws IOException, ClassNotFoundException 
+    {
+//        int svrQ = 10;
+//       
+//        
+//       
+//        Scanner in = new Scanner(System.in);
+//        ObjectInputStream cin = new ObjectInputStream(connection.getInputStream);
+//     
+//           
+//        Socket connection = server.accept();
+//        System.out.println("Server is running");
+        ServerConnection SC = new ServerConnection();
+        SC.serverConnection();
+        
+        
+    }
 }
