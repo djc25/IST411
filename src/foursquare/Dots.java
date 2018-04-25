@@ -7,70 +7,91 @@ package foursquare;
  * and open the template in the editor.
  */
 
+import java.awt.*;
+
 /**
  *
  * @author DRACOX
+ * 
+ * ----------CHANGELOG----------
+ * 2018/04/25 -     Added DOT_COLOR variable.
+ *                  Renamed variables and added comments to comply with coding conventions. -JSS5783
  */
-import java.awt.*;
-public class Dots {
+
+public class Dots
+{
+    private static final int DIAMETER = 10;
+    private static final Color DOT_COLOR = Color.BLACK;
+    private int intPosX;
+    private int intPosY;
     
-    private static final int DIAMTR = 10;
-    private int intX_coord;
-    private int intY_coord;
     
-    public Dots(int x, int y)
+    
+    /**
+     * Dots constructor.
+     * Sets x and y coordinates for the upper-left corner of the Dots.
+     * 
+     * @param intInPosX
+     * @param intInPosY
+     */
+    public Dots(int intInPosX, int intInPosY)
     {
-        intX_coord = x;
-        intY_coord = y;
-        
-        
-    }
+        intPosX = intInPosX;
+        intPosY = intInPosY;
+    }   //END Dots(int intInPosX, int intInPosY)
     
     
+    
+    /**
+     * Draws a dot at the Dots's coordinates.
+     * @param g 
+     */
     public void createDot(Graphics g)
     {
-        g.setColor(Color.BLACK);
-        g.fillOval(intX_coord, intY_coord, DIAMTR, DIAMTR);
-        
-        
-    }
-
-    /**
-     * @return the myDot
-     */
-
-    /**
-     * @param myDot the myDot to set
-     */
+        g.setColor(DOT_COLOR);
+        g.fillOval(intPosX, intPosY, DIAMETER, DIAMETER);
+    }   //END createDot(Graphics g)
  
+    
 
     /**
-     * @return the intX_coord
+     * Gets the x coordinate for the center of the Dots.
+     * @return intPosX
      */
-    public int getIntX_coord() {
-        return intX_coord+DIAMTR/2;
-    }
+    public int getIntX_coord()
+    {
+        return intPosX + (DIAMETER / 2);
+    }   //END getIntX_coord()
 
     /**
-     * @param intX_coord the intX_coord to set
+     * Sets the x coordinate for the upper-left corner of the Dots.
+     * @param intInPosX
      */
-    public void setIntX_coord(int intX_coord) {
-        this.intX_coord = intX_coord;
-    }
+    public void setIntX_coord(int intInPosX)
+    {
+        intPosX = intInPosX;
+    }   //END setIntX_coord(int intInPosX)
 
-    /**
-     * @return the intY_coord
-     */
-    public int getIntY_coord() {
-        return intY_coord+DIAMTR/2;
-    }
-
-    /**
-     * @param intY_coord the intY_coord to set
-     */
-    public void setIntY_coord(int intY_coord) {
-        this.intY_coord = intY_coord;
-    }
     
     
-}
+    /**
+     * Gets the y coordinate for the center of the Dots.
+     * @return intPosY
+     */
+    public int getIntY_coord()
+    {
+        return intPosY + (DIAMETER / 2);
+    }   //END getIntY_coord()
+
+    /**
+     * Sets the y coordinate for the upper-left corner of the Dots.
+     * @param intInPosY
+     */
+    public void setIntY_coord(int intInPosY)
+    {
+        intPosY = intInPosY;
+    }   //END setIntY_coord(int intInPosY)
+    
+    
+    
+}   //END Dots
