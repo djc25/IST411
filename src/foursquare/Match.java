@@ -12,9 +12,11 @@ import java.util.Random;
  *
  * @author jss5783
  * 
- * For now, keep bBottomLineh client and server match code together.
+ * For now, keep both client and server match code together.
  *
  * ----------CHANGELOG----------
+ * 2018/04/25 -     Added getters/setters (auto-generated, and then cleaned up method signatures). -JSS5783
+ * 
  * 2018/04/18 -     Created. -JSS5783
  *
  */
@@ -68,5 +70,167 @@ public class Match
         bAlreadyObtainedExtraTurn = false;
         
     }   //END Match()
+
+    
+    
+    /**
+     * @return strPlayer1Username
+     */
+    public String getPlayer1Username()
+    {
+        return strPlayer1Username;
+    }
+
+    /**
+     * @param strInPlayer1Username
+     */
+    public void setPlayer1Username(String strInPlayer1Username)
+    {
+        strPlayer1Username = strInPlayer1Username;
+    }
+
+    
+    
+    /**
+     * @return strPlayer2Username
+     */
+    public String getPlayer2Username() 
+    {
+        return strPlayer2Username;
+    }
+
+    /**
+     * @param strInPlayer2Username
+     */
+    public void setPlayer2Username(String strInPlayer2Username)
+    {
+        strPlayer2Username = strInPlayer2Username;
+    }
+
+    
+    
+    /**
+     * @return intPlayer1ID
+     */
+    public int getPlayer1ID()
+    {
+        return intPlayer1ID;
+    }
+
+    /**
+     * @param intInPlayer1ID
+     */
+    public void setPlayer1ID(int intInPlayer1ID)
+    {
+        intPlayer1ID = intInPlayer1ID;
+    }
+
+    
+    
+    /**
+     * @return intPlayer2ID
+     */
+    public int getPlayer2ID()
+    {
+        return intPlayer2ID;
+    }
+
+    /**
+     * @param intInPlayer2ID
+     */
+    public void setPlayer2ID(int intInPlayer2ID)
+    {
+        intPlayer2ID = intInPlayer2ID;
+    }
+
+    
+    
+    /**
+     * @return the intPlayer1Score
+     */
+    public int getPlayer1Score()
+    {
+        return intPlayer1Score;
+    }
+
+    /**
+     * @param intInPlayer1Score
+     */
+    public void setPlayer1Score(int intInPlayer1Score)
+    {
+        intPlayer1Score = intInPlayer1Score;
+    }
+
+    
+    
+    /**
+     * @return intPlayer2Score
+     */
+    public int getPlayer2Score()
+    {
+        return intPlayer2Score;
+    }
+
+    /**
+     * @param intInPlayer2Score
+     */
+    public void setIntPlayer2Score(int intInPlayer2Score)
+    {
+        intPlayer2Score = intInPlayer2Score;
+    }
+
+    
+    
+    /**
+     * @return intWhoseTurn
+     */
+    public int getWhoseTurn()
+    {
+        return intWhoseTurn;
+    }
+
+    /**
+     * @param intInWhoseTurn
+     */
+    public void setWhoseTurn(int intInWhoseTurn)
+    {
+        intWhoseTurn = intInWhoseTurn;
+    }
+
+    
+    
+    /**
+     * @return bHasExtraTurn
+     */
+    public boolean getHasExtraTurn()
+    {
+        return bHasExtraTurn;
+    }
+
+    /**
+     * @param bInHasExtraTurn
+     */
+    public void setHasExtraTurn(boolean bInHasExtraTurn)
+    {
+        bHasExtraTurn = bInHasExtraTurn;
+    }
+
+    
+    
+    /**
+     * @return bAlreadyObtainedExtraTurn
+     */
+    public boolean getAlreadyObtainedExtraTurn()
+    {
+        return bAlreadyObtainedExtraTurn;
+    }
+
+    /**
+     * @param bInAlreadyObtainedExtraTurn
+     */
+    public void setAlreadyObtainedExtraTurn(boolean bInAlreadyObtainedExtraTurn)
+    {
+        bAlreadyObtainedExtraTurn = bInAlreadyObtainedExtraTurn;
+    }
 
 }   //END Match
