@@ -82,15 +82,15 @@ public class ServerConnection
     {
         System.out.println("Waiting for connection\n ");
         connection = server.accept();
-        
+    
     }
     
     public void getStreams() throws IOException
     {
-        OOS = new ObjectOutputStream(connection.getOutputStream());
+        ObjectOutputStream OOS = new ObjectOutputStream(connection.getOutputStream());
         OOS.flush();
         
-        OIS = new ObjectInputStream(connection.getInputStream());
+        ObjectInputStream OIS = new ObjectInputStream(connection.getInputStream());
         System.out.println("OIS = " + OIS);
         //System.out.println("Got here");
     } //end of getStream method 

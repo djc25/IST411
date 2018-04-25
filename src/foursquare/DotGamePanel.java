@@ -30,14 +30,16 @@ public class DotGamePanel extends javax.swing.JPanel {
      */
     int counter = 0;
     int sqrtOfList;
-    boolean player;
     ArrayList<Dots> myDots = new ArrayList();
     ArrayList<Lines> myLines = new ArrayList();
     ArrayList<Boxes> myBoxes = new ArrayList();
     @Override
     public void paintComponent(Graphics g){
-        
-        super.paintComponent(g);
+        for(int i = 0; i< myDots.size(); i++)
+        {
+            myDots.get(i).createDot(g);
+            
+        }
         for(int i = 0; i< myLines.size(); i++)
         {
             myLines.get(i).drawLines(g);
@@ -45,26 +47,20 @@ public class DotGamePanel extends javax.swing.JPanel {
         }
         for(int i = 0; i<myBoxes.size();i++)
         {
-            myBoxes.get(i).isClosed();
             if(myBoxes.get(i).getClosed() == true)
             {
-                myBoxes.get(i).drawBox(g);
+                
             }
             else{
-            if(player)
-                myBoxes.get(i).setMyColor(Color.RED);
+            if(counter%2 ==0)
+                g.setColor(Color.RED);
             
             else{
-                myBoxes.get(i).setMyColor(Color.BLUE);
+                g.setColor(Color.BLUE);
             
             }
-            //myBoxes.get(i).isClosed();
+            myBoxes.get(i).isClosed(g);
         }
-        }
-        for(int i = 0; i< myDots.size(); i++)
-        {
-            myDots.get(i).createDot(g);
-            
         }
     }
     
@@ -148,10 +144,6 @@ public class DotGamePanel extends javax.swing.JPanel {
         
         
     }
-    public boolean colorChange (Lines line1, Lines line2)
-    {
-        return line1.getMyColor() != line2.getMyColor();
-    }
     
     private class Handlerclass implements MouseListener, MouseMotionListener
     {
@@ -160,32 +152,23 @@ public class DotGamePanel extends javax.swing.JPanel {
             
             for(int i = 0; i <myLines.size(); i++)
             {
-                Lines prevLine = new Lines(myLines.get(i).getxStart(),myLines.get(i).getyStart(),
-                myLines.get(i).getxEnd(),
-                myLines.get(i).getyEnd());
-                prevLine.setMyColor(myLines.get(i).getMyColor());
                 if (myLines.get(i).getxStart()==myLines.get(i).getxEnd())
                 {
                     if((event.getX()< myLines.get(i).getxStart() + 20)&&(event.getX()> myLines.get(i).getxStart() - 20)
                            && (event.getY()> (myLines.get(i).getyStart()))
                            && (event.getY()< (myLines.get(i).getyEnd())))
                     {       
-                            if(player)
+                            if(counter%2 == 0)
                             {
                                 myLines.get(i).setMyColor(Color.red);
-                                //System.out.println(myLines.get(i).getMyColor());
                             }
                             else
                             {
                                 myLines.get(i).setMyColor(Color.blue);
-                                //System.out.println(myLines.get(i).getMyColor());
                             }
                             repaint();
-                            System.out.println(colorChange(myLines.get(i), prevLine));
-                            if(colorChange(myLines.get(i), prevLine))
-                            {
-                                player = !player;
-                            }
+                         
+                            counter++;
                     }
                 }
                 
@@ -195,7 +178,7 @@ public class DotGamePanel extends javax.swing.JPanel {
                            && (event.getX()> (myLines.get(i).getxStart()))
                            && (event.getX()< (myLines.get(i).getxEnd())))
                     {
-                       if(player)
+                       if(counter%2 == 0)
                             {
                                 myLines.get(i).setMyColor(Color.red);
                             }
@@ -203,14 +186,8 @@ public class DotGamePanel extends javax.swing.JPanel {
                             {
                                 myLines.get(i).setMyColor(Color.blue);
                             }
-                       
                             repaint();
-                            System.out.println(colorChange(myLines.get(i), prevLine));
-                            if(colorChange(myLines.get(i), prevLine))
-                            {
-                                player = !player;
-                            }
-                            
+                            counter++;
                     }
                        
                    

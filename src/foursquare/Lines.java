@@ -30,14 +30,6 @@ public class Lines {
         yEnd = dot2.getIntY_coord();
         
     }
-    public Lines (int x1, int y1, int x2, int y2)
-    {
-        xStart = x1;
-        yStart = y1;
-        xEnd = x2;
-        yEnd = y2;
-        
-    }
     public void drawLines (Graphics g)
     {
         g.setColor(myColor);
@@ -111,10 +103,7 @@ public class Lines {
      * @param myColor the myColor to set
      */
     public void setMyColor(Color myColor) {
-        if(this.isConnected == false)
-        {
-            this.myColor = myColor;
-        }
+        this.myColor = myColor;
         this.isConnected = true;
     }
 
