@@ -7,9 +7,9 @@ package foursquare;
 
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 
 /**
  *
@@ -21,6 +21,9 @@ import javax.swing.UIManager;
  Player returns to jpLogIn on disconnecting, voluntarily or otherwise.
  
  ----------[CHANGELOG]----------
+ * 2018/04/28 -     Added ClientConnection client.
+ *                  Added disconnect() and associated code to formWindowClosing. -JSS5783
+ * 
  * 2018/04/18 -     Added comments.
  *                  formWindowClosing now closes without confirmation dialog if on the login screen for a smoother experience. -JSS5783
  * 
@@ -53,6 +56,7 @@ public class jfClient extends javax.swing.JFrame {
                                                 //1 = Lobby
                                                 //2 = Match
                                                 //3 = Scoreboard
+    public static ClientConnection client;     //public for now
 
     /**
      * Creates new form ClientLobby
@@ -158,7 +162,16 @@ public class jfClient extends javax.swing.JFrame {
         
         if (intResult == JOptionPane.YES_OPTION)
         {
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            if (intCurrentScreen > 0)   //if not at the lobby (i.e., if connected to the server)
+            try
+            {
+                client.disconnect();
+                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            }
+            catch (IOException ioe)
+            {
+                JOptionPane.showMessageDialog(this, ioe.toString(), "Error", JOptionPane.ERROR);    //TODO: not sure what would trigger an error here, so just pop the stack-trace... maybe better to dump to console then
+            }
         }
         else
         {
