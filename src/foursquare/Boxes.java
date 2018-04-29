@@ -1,6 +1,7 @@
 package foursquare;
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 /*
@@ -39,6 +40,7 @@ public class Boxes
     private Lines lineBottom;
     private Lines lineLeft;
     private Lines lineRight;
+    private Color myColor;
     
     
     
@@ -230,12 +232,12 @@ public class Boxes
      * TODO: Should probably be split into setClosed and drawClosed methods or something to cut down on unnecessary redraws.
      * @param g 
      */
-    public void isClosed(Graphics g)
+    public void isClosed()
     {
         
         if(lineTop.isIsConnected() && lineBottom.isIsConnected() && lineLeft.isIsConnected() && lineRight.isIsConnected() )   //if all lines are checked
         {
-            g.fillRect(lineTop.getxStart(), lineTop.getyStart(), 100, 100);
+            
             bIsClosed = true;
             
         }
@@ -243,8 +245,16 @@ public class Boxes
         {
             bIsClosed = false;
         }
-    }   //END isClosed(Graphics g)
+    }
+    public void setMyColor(Color thisColor)
+    {
+        myColor = thisColor;
+    }
+    public void drawBox(Graphics g)
+    {
+        g.setColor(myColor);
+        g.fillRect(lineTop.getxStart(), lineTop.getyStart(), 100, 100);
+    }
     
     
-    
-}   //END Boxes
+}
