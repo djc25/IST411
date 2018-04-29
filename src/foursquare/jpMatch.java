@@ -78,6 +78,7 @@ public class jpMatch extends javax.swing.JPanel {
         jlblPlayer2Score = new javax.swing.JLabel();
         jpGrid = new javax.swing.JPanel();
         jbtnDebugGoToScoreboard = new javax.swing.JButton();
+        dotGamePanel1 = new foursquare.DotGamePanel();
 
         setBackground(PVar.BACKGROUND_COLOR);
         setMaximumSize(new java.awt.Dimension(960, 540));
@@ -154,21 +155,39 @@ public class jpMatch extends javax.swing.JPanel {
             }
         });
 
+        javax.swing.GroupLayout dotGamePanel1Layout = new javax.swing.GroupLayout(dotGamePanel1);
+        dotGamePanel1.setLayout(dotGamePanel1Layout);
+        dotGamePanel1Layout.setHorizontalGroup(
+            dotGamePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 408, Short.MAX_VALUE)
+        );
+        dotGamePanel1Layout.setVerticalGroup(
+            dotGamePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jpGridLayout = new javax.swing.GroupLayout(jpGrid);
         jpGrid.setLayout(jpGridLayout);
         jpGridLayout.setHorizontalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpGridLayout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(jbtnDebugGoToScoreboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(211, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE)
+                .addGroup(jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGridLayout.createSequentialGroup()
+                        .addComponent(jbtnDebugGoToScoreboard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(193, 193, 193))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGridLayout.createSequentialGroup()
+                        .addComponent(dotGamePanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(118, 118, 118))))
         );
         jpGridLayout.setVerticalGroup(
             jpGridLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpGridLayout.createSequentialGroup()
-                .addGap(245, 245, 245)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpGridLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(dotGamePanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(34, 34, 34)
                 .addComponent(jbtnDebugGoToScoreboard, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -200,6 +219,7 @@ public class jpMatch extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private foursquare.DotGamePanel dotGamePanel1;
     private javax.swing.JButton jbtnDebugGoToScoreboard;
     private javax.swing.JLabel jlblPlayer1Score;
     private javax.swing.JLabel jlblPlayer1Username;
