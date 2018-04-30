@@ -5,15 +5,23 @@
  */
 package foursquare;
 
+import java.sql.ResultSet;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableModel;
+import net.proteanit.sql.DbUtils;
 /**
  *
  * @author jss5783
  * 
  * ----------[CHANGELOG]----------
- * 2018/04/18 -     Readjusted component positioning, as it didn't want to stick for some reason.   -JSS5783
+ * 2018/04/30 -     Optimize Parameter for jpScoreboard, added Picture and additional labels - Jason
  * 
- * 2018/04/16 -     Adjusted background color.
- *                  Adjusted component positioning. -JSS5783
+ * 2018/04/25 -     Finalize populatePersonal table, added Rank Label- Jason
+ * 
+ * 2018/04/19 -     Optimize Code that aren't necessary in populateTable - Jason
+ * 
+ * 2018/04/18 -     Created Table connector to display ResultSet -Jason
  * 
  * 2018/04/16 -     Added table, label, and back button.  -JSS5783
  * 
@@ -21,12 +29,82 @@ package foursquare;
  */
 public class jpScoreboard extends javax.swing.JPanel {
 
+    int intColumnNo;
     /**
      * Creates new form jScoreboard
+     * @param rsTopTen
+     * @param rsPersonalRank
+     * @param intRank
      */
-    public jpScoreboard() {
+    
+    public jpScoreboard(ResultSet rsTopTen, ResultSet rsPersonalRank, int intRank) 
+    {
         initComponents();
-    }
+        populateTopTen(rsTopTen);
+        populatePersonal(rsPersonalRank);
+        setRankLabel(intRank);
+    } // constructor
+    
+    public jpScoreboard()
+    {
+        
+    } // alternative constructor
+    
+    public final void populateTopTen(ResultSet rsIn) 
+    {
+        // set resultset to table
+        TableModel tmResults = DbUtils.resultSetToTableModel(rsIn);
+        jtTopTen.setModel(tmResults);
+        
+        // set column width
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(SwingConstants.CENTER);
+        jtTopTen.getColumnModel().getColumn(0).setPreferredWidth(200);
+        jtTopTen.getColumnModel().getColumn(1).setPreferredWidth(1);
+        jtTopTen.getColumnModel().getColumn(2).setPreferredWidth(2);
+        jtTopTen.getColumnModel().getColumn(3).setPreferredWidth(75);
+        jtTopTen.getColumnModel().getColumn(0).setCellRenderer(center);
+        jtTopTen.getColumnModel().getColumn(1).setCellRenderer(center);
+        jtTopTen.getColumnModel().getColumn(2).setCellRenderer(center);
+        jtTopTen.getColumnModel().getColumn(3).setCellRenderer(center);
+        
+        jtTopTen.setEnabled(false);
+        jtTopTen.setAutoCreateRowSorter(true);
+        jScrollPanel.doLayout();
+        jtTopTen.doLayout();
+    } // populateTable
+    
+    public final void populatePersonal(ResultSet rsIn2)
+    {
+        // set resultset to table
+        TableModel tmResults = DbUtils.resultSetToTableModel(rsIn2);
+        jtPersonal.setModel(tmResults);
+        
+        // set column width
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(SwingConstants.CENTER);
+        jtPersonal.getColumnModel().getColumn(0).setPreferredWidth(200);
+        jtPersonal.getColumnModel().getColumn(1).setPreferredWidth(1);
+        jtPersonal.getColumnModel().getColumn(2).setPreferredWidth(2);
+        jtPersonal.getColumnModel().getColumn(3).setPreferredWidth(75);
+        jtPersonal.getColumnModel().getColumn(0).setCellRenderer(center);
+        jtPersonal.getColumnModel().getColumn(1).setCellRenderer(center);
+        jtPersonal.getColumnModel().getColumn(2).setCellRenderer(center);
+        jtPersonal.getColumnModel().getColumn(3).setCellRenderer(center);
+        
+        jtPersonal.setEnabled(false);
+        jtPersonal.setAutoCreateRowSorter(true);
+        jtPersonal.doLayout();
+        jtPersonal.doLayout();
+    } // populatePersonal
+    
+    public final void setRankLabel(int intIn)
+    {
+        jlPersonal.setText(Integer.toString(intIn));
+        jlPersonal2.setText(Integer.toString(intIn));
+        jlUpper.setText(Integer.toString(intIn - 1));
+        jlLower.setText(Integer.toString(intIn + 1));
+    } // setRankLabel
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,16 +115,34 @@ public class jpScoreboard extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jtblScoreboard = new javax.swing.JTable();
+        jScrollPanel = new javax.swing.JScrollPane();
+        jtTopTen = new javax.swing.JTable();
         jbtnReturnToLobby = new javax.swing.JButton();
-        jlblTitle = new javax.swing.JLabel();
+        jlScoreboard = new javax.swing.JLabel();
+        jtPersonal = new javax.swing.JTable();
+        jl1 = new javax.swing.JLabel();
+        jl2 = new javax.swing.JLabel();
+        jl3 = new javax.swing.JLabel();
+        jl4 = new javax.swing.JLabel();
+        jl5 = new javax.swing.JLabel();
+        jl6 = new javax.swing.JLabel();
+        jl7 = new javax.swing.JLabel();
+        jl8 = new javax.swing.JLabel();
+        jl9 = new javax.swing.JLabel();
+        jl10 = new javax.swing.JLabel();
+        jlLower = new javax.swing.JLabel();
+        jlUpper = new javax.swing.JLabel();
+        jlPersonal = new javax.swing.JLabel();
+        jlArtist = new javax.swing.JLabel();
+        jlThanks = new javax.swing.JLabel();
+        jlRank = new javax.swing.JLabel();
+        jlPersonal2 = new javax.swing.JLabel();
+        jlPicture = new javax.swing.JLabel();
 
-        setBackground(PVar.BACKGROUND_COLOR);
         setMinimumSize(new java.awt.Dimension(960, 540));
 
-        jtblScoreboard.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jtblScoreboard.setModel(new javax.swing.table.DefaultTableModel(
+        jtTopTen.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jtTopTen.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,51 +153,203 @@ public class jpScoreboard extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jtblScoreboard);
+        jtTopTen.setRowHeight(30);
+        jScrollPanel.setViewportView(jtTopTen);
 
         jbtnReturnToLobby.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbtnReturnToLobby.setText("Return to Lobby");
-        jbtnReturnToLobby.setMaximumSize(new java.awt.Dimension(150, 35));
-        jbtnReturnToLobby.setMinimumSize(new java.awt.Dimension(150, 35));
-        jbtnReturnToLobby.setPreferredSize(new java.awt.Dimension(150, 35));
         jbtnReturnToLobby.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnReturnToLobbyActionPerformed(evt);
             }
         });
 
-        jlblTitle.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jlblTitle.setText("Scoreboard");
+        jlScoreboard.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jlScoreboard.setText("Scoreboard");
+
+        jtPersonal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jtPersonal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jtPersonal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jtPersonal.setRowHeight(30);
+
+        jl1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl1.setText("1");
+
+        jl2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl2.setText("2");
+
+        jl3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl3.setText("3");
+
+        jl4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl4.setText("4");
+
+        jl5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl5.setText("5");
+
+        jl6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl6.setText("6");
+
+        jl7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl7.setText("7");
+
+        jl8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl8.setText("8");
+
+        jl9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl9.setText("9");
+
+        jl10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jl10.setText("10");
+
+        jlLower.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlLower.setText("x");
+
+        jlUpper.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlUpper.setText("x");
+
+        jlPersonal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlPersonal.setText("x");
+
+        jlArtist.setText("Ladfa-B");
+
+        jlThanks.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlThanks.setText("Thanks for Playing!");
+
+        jlRank.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jlRank.setText("Your Rank is: ");
+
+        jlPersonal2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jlPersonal2.setText("X");
+
+        jlPicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foursquare/images/chibi_bunny_girl__rosa_by_ladf.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 246, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(262, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jbtnReturnToLobby, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jlblTitle)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(347, 347, 347)
+                        .addComponent(jlScoreboard)
+                        .addGap(44, 44, 44))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlPersonal)
+                            .addComponent(jlUpper)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jl9)
+                                        .addComponent(jl10))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jl2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jl1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addComponent(jl5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jl4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jl3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jl6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jl7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jl8, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jlLower, javax.swing.GroupLayout.Alignment.TRAILING)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 45, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlRank)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jlPersonal2))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jbtnReturnToLobby)
+                                            .addGap(100, 100, 100))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jlThanks)
+                                            .addGap(91, 91, 91)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jlArtist)
+                                    .addComponent(jlPicture))
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jlblTitle)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jbtnReturnToLobby, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlRank)
+                            .addComponent(jlPersonal2))
+                        .addGap(18, 18, 18)
+                        .addComponent(jlThanks)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jbtnReturnToLobby))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlScoreboard)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jl1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jl2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jl3)
+                                .addGap(11, 11, 11)
+                                .addComponent(jl4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jl5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jl6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jl7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jl8)
+                                .addGap(11, 11, 11)
+                                .addComponent(jl9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jl10))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlPicture)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jlArtist))
+                                    .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(jlUpper)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlPersonal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlLower))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
+
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -115,9 +363,28 @@ public class jpScoreboard extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JButton jbtnReturnToLobby;
-    private javax.swing.JLabel jlblTitle;
-    private javax.swing.JTable jtblScoreboard;
+    private javax.swing.JLabel jl1;
+    private javax.swing.JLabel jl10;
+    private javax.swing.JLabel jl2;
+    private javax.swing.JLabel jl3;
+    private javax.swing.JLabel jl4;
+    private javax.swing.JLabel jl5;
+    private javax.swing.JLabel jl6;
+    private javax.swing.JLabel jl7;
+    private javax.swing.JLabel jl8;
+    private javax.swing.JLabel jl9;
+    private javax.swing.JLabel jlArtist;
+    private javax.swing.JLabel jlLower;
+    private javax.swing.JLabel jlPersonal;
+    private javax.swing.JLabel jlPersonal2;
+    private javax.swing.JLabel jlPicture;
+    private javax.swing.JLabel jlRank;
+    private javax.swing.JLabel jlScoreboard;
+    private javax.swing.JLabel jlThanks;
+    private javax.swing.JLabel jlUpper;
+    private javax.swing.JTable jtPersonal;
+    private javax.swing.JTable jtTopTen;
     // End of variables declaration//GEN-END:variables
 }

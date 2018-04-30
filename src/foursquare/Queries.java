@@ -10,54 +10,74 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Jason
+ *
+ *
+ ************************** MODIFICATION LOG ********************************
+ * 4/13/18- Created Class and supporting PreparedStatements and Methods 
+ * 4/16/18-Added more PreparedStatements 
+ * 4/18/18- Added getAllEntry PreparedStatement and supporting Method
+ * 4/25/18- Added getTopTenEntry PreparedStatement and supporting Method
+ * 4/30/18- Resolved SQL Errors and updated getEntry and supporting getLastEntryInfo
+ *          Made some changes in wording for readability
+ *
+ ****************************************************************************
  */
+public class Queries {
 
-/************************MODIFICATION LOG ************************************
-4/13/18- Created Class and supporting PreparedStatements and Methods
-4/16/18- Added more PreparedStatements
-
-*****************************************************************************/
-
-public class Queries 
-{
     public static void main(String[] args) throws SQLException 
     {
-        // Make Connection
+        // Get connection from SQLiteConnection
         Connection connect;
         SQLiteConnection sc = new SQLiteConnection();
         connect = sc.getConnection();
         
-        // Get Queries from Connection
+        // Initialize output
+        ResultSet top10;
+        ResultSet personalRank;
+        int rankLabel;
+
+        // Get queries from connection
         Queries q = new Queries(connect);
-        q.setEntry("Justin", 100);
-        //q.updateEntry(2);
-        q.getLastEntry();
-        //q.getDataDebugging();
+        q.setEntryInfo("Jackie",45);
+        q.updateEntryInfo(20);
+        rankLabel = q.getLastEntryRank();
+        personalRank = q.getLastEntryInfo(rankLabel);
         
-    } // main
+        top10 = q.getTopTen();
     
-    private Connection connect;
-    private Statement stment;
+        // Temporary JFrame, Panel object
+        jpScoreboard panel = new jpScoreboard(top10, personalRank, rankLabel);
+
+        JFrame frame = new JFrame();
+        frame.add(panel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(500, 250, 960, 600);
+        frame.setVisible(true);
+
+    } // main (Temporary will need to integrate into main program)
+
+    private final Connection connect;
+    private final Date datex;
     private ResultSet result;
-    private ResultSet keyid;
-    private Date datex;
-    
+    private ResultSet keyID;
     
     private final PreparedStatement newEntry;
     private final PreparedStatement updateEntry;
     private final PreparedStatement getEntry;
+    private final PreparedStatement getTopTenEntry;
+    private final PreparedStatement getAllEntry;
     
     public Queries(Connection connectIn) throws SQLException
     {
-        // Get connection established from SQLiteConnection
+        // Make connection via SQLiteConnection
         connect = connectIn;
         
         // Initialize new Date object
@@ -66,96 +86,138 @@ public class Queries
 /////////////////////////PREPARED_STATEMENTS////////////////////////////////////
         //create new entry row after first game ends in a session
         newEntry = connect.prepareStatement(
-            "INSERT INTO RANK(name, score, timex) " +
-            "VALUES( ?, ?, ?)");
+                "INSERT INTO RANK(strUserName, intScore, intGameWon, timex) "
+                + "VALUES( ?, ?, ?, ?)");
         
-        //update last entry row in the session
+        //update entry row in the current session based on keyID by adding
         updateEntry = connect.prepareStatement(
-            "UPDATE Rank\n" +
-            "SET score = (score + ?) \n" +
-            "WHERE playid = ?");
+                "UPDATE Rank\n"
+                + "SET intScore = (intScore + ?), intGameWon = (intGameWon + 1) \n"
+                + "WHERE intID = ?");
         
-        //get last entry row information
+        //get information on entry row and the rows above and below based on rank
         getEntry = connect.prepareStatement(
-            "SELECT name, score, timex\n" +
-            "FROM Rank\n" +
-            "WHERE playid = ?");
+                "SELECT strUserName, intScore, intGameWon, timex\n"
+                + "FROM Rank\n"
+                + "ORDER BY intScore desc\n"
+                + "LIMIT 3 OFFSET (?-2);");
         
+        //get top ten entries ordered from high to lowest score
+        getTopTenEntry = connect.prepareStatement(
+                "SELECT strUserName as Username, intScore as Score, "
+                + "intGameWon as Win, timex as Date\n"
+                + "FROM Rank\n"
+                + "ORDER BY intScore desc\n"
+                + "LIMIT 0,10;");
+        
+        //get all entries ordered from high to lowest score
+        getAllEntry = connect.prepareStatement(
+                "SELECT *\n"
+                + "FROM Rank\n"
+                + "ORDER BY intScore desc;");
+
     } // constructor
 
-    public void setEntry(String NameIn, int ScoreIn)
+    public void setEntryInfo(String NameIn, int ScoreIn) 
     {
         try 
         {
             newEntry.setString(1, NameIn);
             newEntry.setInt(2, ScoreIn);
-            newEntry.setString(3, datex.toString());
+            newEntry.setInt(3, 1);
+            newEntry.setString(4, datex.toString());
             newEntry.executeUpdate();
             
-            // update result variable to get auto-increment number
-            keyid = newEntry.getGeneratedKeys();
-            //System.out.println(result.getString(1));
+            // get get last auto-increment number
+            keyID = newEntry.getGeneratedKeys();
+            System.out.println("KeyID = " + keyID.getString(1));
         } // try
-        catch (SQLException ex) {
+        catch (SQLException ex) 
+        {
             Logger.getLogger(Queries.class.getName()).log(Level.SEVERE, null, ex);
         } // catch     
-    } // setEntry
     
-    public void updateEntry(int ScoreIn)
+    } // setEntryInfo
+
+    public void updateEntryInfo(int ScoreIn) 
     {
         try 
         {
             updateEntry.setInt(1, ScoreIn);
-            updateEntry.setInt(2, keyid.getInt(1));
+            updateEntry.setInt(2, keyID.getInt(1));
             updateEntry.executeUpdate();
         } // try
-        catch (SQLException ex) {
+        catch (SQLException ex) 
+        {
             Logger.getLogger(Queries.class.getName()).log(Level.SEVERE, null, ex);
         } // catch     
-    } // setEntry
     
-    public ResultSet getLastEntry()
+    } // updateEntryInfo
+    
+    public ResultSet getLastEntryInfo(int intRank) 
     {
         try 
         {
-            getEntry.setInt(1, keyid.getInt(1));
+            getEntry.setInt(1, intRank);
             result = getEntry.executeQuery();
         } // try
-        catch (SQLException ex) {
+        catch (SQLException ex) 
+        {
             Logger.getLogger(Queries.class.getName()).log(Level.SEVERE, null, ex);
         } // catch  
         
         return result;
-    } // getLastEntry
+    } // getLastEntryInfo
     
-    public void getTopTen()
+    public int getLastEntryRank() 
     {
-        
-    } // getTopTen
+        int intRowCount = -1;
+        boolean bFoundTarget = false;
     
-    public void getDataDebugging()
-    {
         try 
         {
-            //PreparedStatement ps = connect.prepareStatement("select * from course");
-            //result = ps.executeQuery();
-            
-            stment = connect.createStatement();
-            String query = "select * from rank";
-            result = stment.executeQuery(query);
-
-            // output out to output console
-            System.out.println("LeaderBoard");
-            while (result.next())
+            result = getAllEntry.executeQuery();
+            if (result != null) 
             {
-                String name = result.getString("name");
-                String score = result.getString("score");
-                System.out.println("Name:" + name + "\tScore:" + score);
-            } // while
+                intRowCount = 1;
+                while (result.next() && (bFoundTarget == false)) 
+                {
+                    if (result.getString("intID").equalsIgnoreCase(keyID.getString(1))) 
+                    {
+                        bFoundTarget = true;
+                    } // if intID equals the last auto-generated id
+                    else 
+                    {
+                        intRowCount++;
+                    } // else
+                } // while
+            } // if RS is not null
         } // try
         catch (SQLException ex) 
         {
-            Logger.getLogger(SQLiteConnection.class.getName()).log(Level.SEVERE, null, ex);
-        } // catch // catch
-    } // getData
-}
+            Logger.getLogger(Queries.class.getName()).log(Level.SEVERE, null, ex);
+        } // catch
+    
+        if (bFoundTarget == false) 
+        {
+            intRowCount = -1;
+        } // if keyID was not found -1 is returned instead
+
+        return intRowCount;
+    } // getLastEntryRank
+
+    public ResultSet getTopTen() 
+    {
+        try 
+        {
+            result = getTopTenEntry.executeQuery();
+        } // try
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(Queries.class.getName()).log(Level.SEVERE, null, ex);
+        } // catch
+
+        return result;
+    } // getTopTen
+    
+} // end of class Queries

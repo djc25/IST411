@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 *****************************************************************************/
 
-public class SQLiteConnection 
+public final class SQLiteConnection 
 {    
     private Connection connect;
     
