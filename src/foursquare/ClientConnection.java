@@ -5,17 +5,23 @@
  */
 package foursquare;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.net.Socket;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Darwin
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/29 -     Major changes:
+ *                      Added codes.
+ *                      Added client-server code modified from already-modified code from Deitel's Cryptography assignment. -JSS5783
+ * 
  * 2018/04/28 -     Added strUsername and client codes (CONNECT_CODE, DISCONNECT_CODE, USERNAME_CODE).
  *                  Added ClientConnection(String strInUsername), connect(), disconnect(), and sendData(Object obj).
  *                  Added comments.
@@ -38,9 +44,14 @@ public class ClientConnection
     //client codes for sending key words to the server
     //general format for commands is "CLIENT_CODE_" + command phrase
     //general format for passing parameters is "CLIENT_CODE_PASS_" + variable (not actual name in code) + "="
-    private final static String CONNECT_CODE = "CLIENT_CODE_INITIATE_CONNECT";
-    private final static String DISCONNECT_CODE = "CLIENT_CODE_INITIATE_DISCONNECT";    //something verbose that won't be sent accidentally (can't be sent as a username, even, just in case)
-    private final static String USERNAME_CODE = "CLIENT_CODE_PASS_USERNAME=";           //if we aren't passing entire "Player" objects or something, we'll need codes for passing information
+    final static String CONNECT_CODE = "CLIENT_CODE_INITIATE_CONNECT";
+    final static String DISCONNECT_CODE = "CLIENT_CODE_INITIATE_DISCONNECT";    //something verbose that won't be sent accidentally (can't be sent as a username, even, just in case)
+    final static String USERNAME_CODE = "CLIENT_CODE_PASS_USERNAME=";           //if we aren't passing entire "Player" objects or something, we'll need codes for passing information
+    final static String ACKNOWLEDGMENT_CODE = "CLIENT_CODE_ACKNOWLEDGMENT";     //neutral acknowledgment, like "okay (will wait)"
+    final static String LOBBY_CODE = "CLIENT_CODE_ENTERED_LOBBY";
+    final static String MATCH_CODE = "CLIENT_CODE_ENTERED_MATCH";
+    final static String MATCH_FINISHED_CODE = "CLIENT_CODE_MATCH_FINISHED_SCORE=";        //just derive the other client's score for now from (maximum number of squares on grid - sending client's score)
+    final static String SCOREBOARD_CODE = "CLIENT_CODE_ENTERED_SCOREBOARD";
     
     
     
@@ -68,9 +79,8 @@ public class ClientConnection
      */
     public ClientConnection(String strInUsername) throws UnknownHostException, ConnectException, IOException
     {
-        connect();
-        
         strUsername = strInUsername;
+        connect();
     }   //END ClientConnection()
     
     
@@ -91,18 +101,30 @@ public class ClientConnection
         
         try
         {
-            if (tconn == true)
-            {
-                System.out.println("We are making progress " + clientConn.toString() );
-            }
+//            if (tconn == true)
+//            {
+//                System.out.println("We are making progress " + clientConn.toString() );
+//            }
             
             OIS = new ObjectInputStream(clientConn.getInputStream() );
-                System.out.println("OIS = " + OIS);
+//                System.out.println("OIS = " + OIS);
 
             OOS = new ObjectOutputStream(clientConn.getOutputStream() );
-                System.out.println("OOS = " + OOS);
+//                System.out.println("OOS = " + OOS);
 
-            sendData(ClientConnection.CONNECT_CODE);    //request to be connected to the server
+
+
+
+//                // set up output stream for objects
+//                OOS = new ObjectOutputStream( clientConn.getOutputStream() );
+//
+//                // flush output buffer to send header information
+//                OOS.flush();
+//
+//                // set up input stream for objects
+//                OIS = new ObjectInputStream( clientConn.getInputStream() );
+
+//            sendData(ClientConnection.CONNECT_CODE);    //request to be connected to the server
             //TODO: wait for acknowledgment from the server
             sendData(ClientConnection.USERNAME_CODE + strUsername);
             //TODO: wait for the server to report that the client-server connection is complete
@@ -113,6 +135,133 @@ public class ClientConnection
             System.out.println("Failed with ioexception - " + ioexception.getLocalizedMessage());
         }
     }   //END connect()
+    
+    
+    
+    // connect to server, get streams, process connection
+    /**
+     * From Deitel's code, modified by JSS5783 for the Cryptography assignment, and then modified further.
+     */
+      public void run()
+      {
+            try
+            {
+
+//                System.out.println( "Connected to server");
+
+//                bIsConnected = true;  //connection is good, so set connected status to true
+
+//                // set up output stream for objects
+//                output = new ObjectOutputStream( client.getOutputStream() );
+//
+//                // flush output buffer to send header information
+//                output.flush();
+//
+//                // set up input stream for objects
+//                input = new ObjectInputStream( client.getInputStream() );
+
+//                System.out.println("\nGot I/O streams\n");
+//                sendData(ClientConnection.USERNAME_CODE + strUsername);
+
+
+                Object objInput = new Object();
+                String strCode = "";
+                sendData(ClientConnection.LOBBY_CODE);  //entering lobby
+                
+                // process messages sent from server
+                do
+                {
+
+                    // read message and display it
+                    try
+                    {
+                        
+                        //TODO: handle specific codes and such
+                        if (objInput instanceof String)
+                        {
+                            strCode = (String) OIS.readObject();
+                            if (strCode.contains(ServerConnection.MATCH_LOST_CODE) )
+                            {
+                                //TODO: display lose pop-up
+                                sendData(ClientConnection.SCOREBOARD_CODE);
+                                jfClient.nextCard();
+                            }
+                            else if (strCode.contains(ServerConnection.MATCH_WON_CODE) )
+                            {
+                                //TODO: display win pop-up
+                                sendData(ClientConnection.SCOREBOARD_CODE);
+                                jfClient.nextCard();
+                            }
+                            else if (strCode.contains(ServerConnection.MATCH_DRAW_CODE) )
+                            {
+                                //TODO: display draw pop-up
+                                sendData(ClientConnection.SCOREBOARD_CODE);
+                                jfClient.nextCard();
+                            }
+                            System.out.println( "\nSERVER sent \"" + strCode + "\".");
+                        }
+                        else if (objInput instanceof Match)
+                        {
+                            //TODO: store in Match object(s)
+                            if (jfClient.getCurrentScreen() == jfClient.LOBBY)
+                            {
+                                jfClient.nextCard();
+                            }
+                            System.out.println( "\nSERVER sent a Match object.");
+                        }
+                        
+                        
+                    }
+
+                    // catch problems reading from server
+                    catch ( ClassNotFoundException classNotFoundException ) {
+                        System.out.println( "\n[ERROR] Unknown object type received." );
+                   }
+
+                }  while (strCode.equals(ServerConnection.DISCONNECT_CODE) == false);
+
+                System.out.println( "\nSERVER has shut down.\n" );
+
+                disconnect();
+
+                System.out.println( "Client connection to the server has been terminated." );
+           }   //END try
+            catch (UnknownHostException uhe)    //if the given IP address for the server doesn't work
+            {
+                JOptionPane.showMessageDialog(null, "Could not find the server.\nIs the IP address for the server correctly formatted and accurate?", "Invalid Server Address", JOptionPane.ERROR_MESSAGE);
+//                System.err.println(uhe.toString() );
+            }
+            catch (ConnectException ce) //if the server isn't running when the client tries to connect
+            {
+                JOptionPane.showMessageDialog(null, "Connection refused.\nIs the server running and accepting connections?", "Invalid Server Address", JOptionPane.ERROR_MESSAGE);
+//                System.err.println(ce.toString() );
+            }
+//           catch(ClassNotFoundException cnf)
+//           {
+//                System.err.println(cnf.toString() );
+//           }
+
+           catch ( EOFException eofException ) {
+              System.err.println( "Server terminated connection" );
+           }
+
+           // process problems communicating with server
+           catch ( IOException ioException ) {           
+               ioException.printStackTrace();
+           }
+           catch (NullPointerException npe)
+           {
+               System.err.println(npe.toString() );
+           }
+           catch (Exception ex)
+           {
+               System.err.println(ex.toString() );
+           }
+
+         // server closed connection
+
+
+      }     //END runClient()
     
     
     
@@ -128,6 +277,10 @@ public class ClientConnection
     public void disconnect() throws IOException
     {
         sendData(ClientConnection.DISCONNECT_CODE);
+         // close streams and socket
+          OOS.close();
+          OIS.close();
+          clientConn.close();
         //TODO: disconnect
     }   //END disconnect()
     
@@ -142,7 +295,7 @@ public class ClientConnection
     {
         if (PVar.DEBUG_MODE == true)
         {
-            System.out.println("Reached " + this.getClass().getSimpleName() );
+            System.out.println("Reached sendData(Object obj)");
         }
         
         OOS.writeObject(obj);

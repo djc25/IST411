@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
  (Client) Login screen. Player chooses username (currently a non-unique nickname) before connecting to the server.
  
  ----------[CHANGELOG]----------
+ * 2018/04/29 -     [FIX] Fixed message pop-up errors (JptionPane.ERROR was used instead of JOptionPane.ERROR_MESSAGE). -JSS5783
+ * 
  * 2018/04/28 -     Added client connection code to logIn(). -JSS5783
  * 
  * 2018/04/18 -     Split login method into dedicated logIn() method.
@@ -199,25 +201,26 @@ public class jpLogIn extends javax.swing.JPanel {
                 try
                 {
                     jfClient.client = new ClientConnection(strUsername);    //try to connect with the server (passing relevant data like username, password TODO: implement later, etc.)
+                    jfClient.client.run();
                     jfClient.nextCard();                                    //then switch to the lobby after connecting
                 }
                 catch (UnknownHostException uhe)    //if the given IP address for the server doesn't work
                 {
-                    JOptionPane.showMessageDialog(this, "Could not connect to the server.\nIs the IP address for the server correct?", "Invalid Server Address", JOptionPane.ERROR);
+                    JOptionPane.showMessageDialog(this, "Could not connect to the server.\nIs the IP address for the server correct?", "Invalid Server Address", JOptionPane.ERROR_MESSAGE);
     //                System.err.println(uhe.toString() );
                 }
                 catch (ConnectException ce)         //if the server isn't running when the client tries to connect
                 {
-                    JOptionPane.showMessageDialog(this, "Connection refused.\nIs the server running and accepting connections?", "Invalid Server Address", JOptionPane.ERROR);
+                    JOptionPane.showMessageDialog(this, "Connection refused.\nIs the server running and accepting connections?", "Invalid Server Address", JOptionPane.ERROR_MESSAGE);
     //                System.err.println(ce.toString() );
                 }
                 catch (IOException ioe)             //if could not connect to the server for other reasons
                 {
-                    JOptionPane.showMessageDialog(this, "Could not connect to the server.\n" + ioe.toString(), "Error", JOptionPane.ERROR);   //more of a warning, but also user input error
+                    JOptionPane.showMessageDialog(this, "Could not connect to the server.\n" + ioe.toString(), "Error", JOptionPane.ERROR_MESSAGE);   //more of a warning, but also user input error
                 }
                 catch (IllegalArgumentException iae)    //if somehow a connection is attempted without a username being passed
                 {
-                    JOptionPane.showMessageDialog(this, iae.toString(), "Error", JOptionPane.ERROR);
+                    JOptionPane.showMessageDialog(this, iae.toString(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
             else

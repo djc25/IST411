@@ -18,9 +18,10 @@ import javax.swing.JOptionPane;
  (Client)
  Client program. Player logs in (jpLogIn), then waits for match-making (jpLobby), plays a match (jpMatch), and views their current rank in the scoreboard (jpScoreboard).
  Player returns to jpLobby after being disconnected on during a match, or after a match is fully concluded (win, lose, or draw, all go to the scoreboard).
- Player returns to jpLogIn on disconnecting, voluntarily or otherwise.
  
  ----------[CHANGELOG]----------
+ * 2018/04/29 -     Added getCurrentScreen() and associated constants. Updated bare integers to their constant versions. -JSS5783
+ * 
  * 2018/04/28 -     Added ClientConnection client.
  *                  Added disconnect() and associated code to formWindowClosing. -JSS5783
  * 
@@ -52,10 +53,11 @@ public class jfClient extends javax.swing.JFrame {
     private jpScoreboard jpScoreboard1;
     private static CardLayout cl;
     private static Container cClient;
-    private static int intCurrentScreen = 0;    //0 = Login
-                                                //1 = Lobby
-                                                //2 = Match
-                                                //3 = Scoreboard
+    private static int intCurrentScreen = 0;
+    static final int LOGIN = 0;
+    static final int LOBBY = 1;
+    static final int MATCH = 2;
+    static final int SCOREBOARD = 3;
     public static ClientConnection client;     //public for now
 
     /**
@@ -135,20 +137,20 @@ public class jfClient extends javax.swing.JFrame {
         
         switch (intCurrentScreen)
         {
-            case 0:     //Login screen
+            case LOGIN:     //Login screen
 //                intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Exit Application", JOptionPane.YES_NO_OPTION);
                 //auto-confirm, as there's no user data to lose
                 intResult = JOptionPane.YES_OPTION;
                 break;
-            case 1:     //Lobby screen
+            case LOBBY:     //Lobby screen
                 intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
                 
                 break;
-            case 2:     //Match screen
+            case MATCH:     //Match screen
                 intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to forfeit and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
                 
                 break;
-            case 3:     //Scoreboard screen
+            case SCOREBOARD:     //Scoreboard screen
                 intResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to disconnect and exit?\nYour session will be closed and you will no longer be able to update that session's score.", "Exit Application", JOptionPane.YES_NO_OPTION);
                 
                 break;
@@ -162,7 +164,7 @@ public class jfClient extends javax.swing.JFrame {
         
         if (intResult == JOptionPane.YES_OPTION)
         {
-            if (intCurrentScreen > 0)   //if not at the lobby (i.e., if connected to the server)
+            if (intCurrentScreen > LOBBY)   //if not at the lobby (i.e., if connected to the server)
             try
             {
                 client.disconnect();
@@ -170,7 +172,11 @@ public class jfClient extends javax.swing.JFrame {
             }
             catch (IOException ioe)
             {
-                JOptionPane.showMessageDialog(this, ioe.toString(), "Error", JOptionPane.ERROR);    //TODO: not sure what would trigger an error here, so just pop the stack-trace... maybe better to dump to console then
+                JOptionPane.showMessageDialog(this, ioe.toString(), "Error", JOptionPane.ERROR_MESSAGE);    //TODO: not sure what would trigger an error here, so just pop the stack-trace... maybe better to dump to console then
+            }
+            catch (Exception ex)
+            {
+                System.err.println(ex.toString() );
             }
         }
         else
@@ -228,9 +234,9 @@ public class jfClient extends javax.swing.JFrame {
     {
         cl.next(cClient);
         
-        if (intCurrentScreen == 3)  //overflow from end of "card deck" to beginning
+        if (intCurrentScreen == SCOREBOARD)  //overflow from end of "card deck" to beginning
         {
-            intCurrentScreen = 0;
+            intCurrentScreen = LOGIN;
         }
         else
         {
@@ -249,15 +255,28 @@ public class jfClient extends javax.swing.JFrame {
     {
         cl.previous(cClient);
         
-        if (intCurrentScreen == 0)  //overflow from beginning of "card deck" to end
+        if (intCurrentScreen == LOGIN)  //overflow from beginning of "card deck" to end
         {
-            intCurrentScreen = 3;
+            intCurrentScreen = SCOREBOARD;
         }
         else
         {
             intCurrentScreen--;
         }
     }   //END previousCard()
+    
+    
+    
+        
+    
+    /**
+     * Returns the current screen as an integer.
+     * @return 
+     */
+    public static int getCurrentScreen()
+    {
+        return intCurrentScreen;
+    }   //END getCurrentScreen()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

@@ -15,6 +15,8 @@ import java.util.Random;
  * For now, keep both client and server match code together.
  *
  * ----------CHANGELOG----------
+ * 2018/04/29 -     Added Match(String strUsername1, String strUsername2). Doesn't set primary IDs, but getting things working is more important. -JSS5783
+ * 
  * 2018/04/25 -     Added getters/setters (auto-generated, and then cleaned up method signatures). -JSS5783
  * 
  * 2018/04/18 -     Created. -JSS5783
@@ -69,7 +71,39 @@ public class Match
         bHasExtraTurn = false;
         bAlreadyObtainedExtraTurn = false;
         
-    }   //END Match()
+    }   //END Match(String strUsername1, String strUsername2, int intUserID1, int intUserID2)
+    
+    
+    
+    /**
+     * Initializes variables and determines who is player 1 (who always goes first).
+     * @param strUsername1
+     * @param strUsername2
+     */
+    public Match(String strUsername1, String strUsername2)
+    {
+        Random rng = new Random();
+        if (rng.nextBoolean() == true)  //"approximately equal probability" is good enough for now
+        {
+            //User 1 goes first
+            
+            //So set User 1 as Player 1
+            strPlayer1Username = strUsername1;
+            strPlayer2Username = strUsername2;
+        }
+        else
+        {
+            strPlayer1Username = strUsername2;
+            strPlayer2Username = strUsername1;
+        }
+        
+        intPlayer1Score = 0;
+        intPlayer2Score = 0;
+        intWhoseTurn = PLAYER_1_TURN;
+        bHasExtraTurn = false;
+        bAlreadyObtainedExtraTurn = false;
+        
+    }   //END Match(String strUsername1, String strUsername2)
 
     
     
