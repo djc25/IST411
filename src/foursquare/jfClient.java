@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
  Player returns to jpLobby after being disconnected on during a match, or after a match is fully concluded (win, lose, or draw, all go to the scoreboard).
  
  ----------[CHANGELOG]----------
+ * 2018/04/30 -     Added updateGame(Match inMatch). -JSS5783
+ * 
  * 2018/04/29 -     Added getCurrentScreen() and associated constants. Updated bare integers to their constant versions. -JSS5783
  * 
  * 2018/04/28 -     Added ClientConnection client.
@@ -47,10 +49,10 @@ import javax.swing.JOptionPane;
 public class jfClient extends javax.swing.JFrame {
     
     //declaration
-    private jpLogIn jpLogin1;
-    private jpLobby jpLobby1;
-    private jpMatch jpMatch1;
-    private jpScoreboard jpScoreboard1;
+    private static jpLogIn jpLogin1;
+    private static jpLobby jpLobby1;
+    private static jpMatch jpMatch1;
+    private static jpScoreboard jpScoreboard1;
     private static CardLayout cl;
     private static Container cClient;
     private static int intCurrentScreen = 0;
@@ -277,6 +279,22 @@ public class jfClient extends javax.swing.JFrame {
     {
         return intCurrentScreen;
     }   //END getCurrentScreen()
+    
+    
+    
+    
+    
+    /**
+     * Updates dotGamePanel1 with the passed Match.
+     * @param inMatch
+     */
+    public static void updateGame(Match inMatch)
+    {
+        jpMatch1.getDotGamePanel().setMatch(inMatch);
+    }   //END updateGame(Match inMatch)
+    
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

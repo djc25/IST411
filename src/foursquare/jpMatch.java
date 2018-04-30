@@ -5,6 +5,9 @@
  */
 package foursquare;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -13,6 +16,8 @@ import javax.swing.JPanel;
  * @author JSS5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/30 -     Added getDotGamePanel() and comments.   -JSS5783
+ * 
  * 2018/04/18 -     Hide jbtnDebugGoToScoreboard if DEBUG_MODE not enabled.
  *                  Renamed jbtnDebugGoToMatch to jbtnDebugGoToScoreboard.
  *                  Commented out random code for adding hand-coded components. -JSS5783
@@ -26,20 +31,21 @@ import javax.swing.JPanel;
  */
 public class jpMatch extends javax.swing.JPanel {
 
-    private DotGamePanel grid;
+//    private DotGamePanel grid;
     /**
-     * Creates new form jpMatch
+     * Default constructor for jpMatch.
      */
-    public jpMatch() {
+    public jpMatch()
+    {
         initComponents();
         if (PVar.DEBUG_MODE == false)
         {
             jbtnDebugGoToScoreboard.setVisible(false);
         }
         
-        grid = new DotGamePanel();
+//        grid = new DotGamePanel();
 ////        jpGrid = grid;
-        this.add(grid);
+//        this.add(grid);
 
 //copied from Client.java to try to get DotGamePanel to show.
 //TODO: get it working
@@ -59,7 +65,7 @@ public class jpMatch extends javax.swing.JPanel {
 //            this.add(jpPlayer1);
 //            this.add(pnlGrid);
 //            this.add(jpPlayer2);
-    }
+    }   //END jpMatch()
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -210,13 +216,27 @@ public class jpMatch extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * ([EBUG] Go to scoreboard screen.
+     * (DEBUG] Go to scoreboard screen.
      * @param evt 
      */
     private void jbtnDebugGoToScoreboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDebugGoToScoreboardActionPerformed
         jfClient.nextCard();
     }//GEN-LAST:event_jbtnDebugGoToScoreboardActionPerformed
 
+    
+    
+    
+    /**
+     * Returns dotGamePanel1.
+     * 
+     * @return 
+     */
+    public DotGamePanel getDotGamePanel()
+    {
+        return dotGamePanel1;
+    }   //END getDotGamePanel()
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private foursquare.DotGamePanel dotGamePanel1;

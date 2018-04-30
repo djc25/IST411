@@ -46,15 +46,18 @@ public class Queries {
 
         // Get queries from connection
         Queries q = new Queries(connect);
-        q.setEntryInfo("Jackie",45);
-        q.updateEntryInfo(20);
-        rankLabel = q.getLastEntryRank();
+        //q.setEntryInfo("Jackie",45);
+        //q.updateEntryInfo(20);
+        
+        //rankLabel = q.getLastEntryRank();
+        rankLabel = 6; // testing purposes
         personalRank = q.getLastEntryInfo(rankLabel);
         
         top10 = q.getTopTen();
     
         // Temporary JFrame, Panel object
         jpScoreboard panel = new jpScoreboard(top10, personalRank, rankLabel);
+        //jpScoreboard panel = new jpScoreboard();
 
         JFrame frame = new JFrame();
         frame.add(panel);

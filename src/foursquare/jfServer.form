@@ -122,18 +122,13 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jbtnConnection3ForceWin" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jbtnConnection3Disconnect" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jlblConnection3UsernameUserID" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jlblConnection3Status" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jlblConnection3UsernameUserID" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblConnection3Status" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -305,18 +300,13 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jbtnConnection2ForceWin" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="jbtnConnection2Disconnect" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jlblConnection2UsernameUserID" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jlblConnection2Status" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jlblConnection2UsernameUserID" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlblConnection2Status" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="85" max="32767" attributes="0"/>
@@ -395,15 +385,10 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlblConnection1UsernameUserID" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jlblConnection1Status" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jlblConnection1UsernameUserID" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlblConnection1Status" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="85" max="32767" attributes="0"/>
                   </Group>

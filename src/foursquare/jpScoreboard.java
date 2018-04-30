@@ -47,7 +47,7 @@ public class jpScoreboard extends javax.swing.JPanel {
     
     public jpScoreboard()
     {
-        
+        initComponents();
     } // alternative constructor
     
     public final void populateTopTen(ResultSet rsIn) 
