@@ -15,9 +15,11 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Darwin
+ * @author Darwin, JSS5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/30 -     Added win/lose/draw messages. Match objects are now passed to the client.   -JSS5783
+ * 
  * 2018/04/30 -     Client works. Just need to finish passing Match object back and forth and transmit win codes/etc. -JSS5783
  * 
  * 2018/04/29 -     Made asynchronous LocalThread class. -JSS5783
@@ -163,6 +165,10 @@ private class LocalThread extends Thread
     // connect to server, get streams, process connection
     /**
      * From Deitel's code, modified by JSS5783 for the Cryptography assignment, and then modified further.
+     * 
+     * Connects to the server and sets up I/O streams,
+     * informs the server that the client is in the Lobby screen and is ready to receive further instructions,
+     * and then loops to process server input until the server terminates the connection (or the client calls disconnect() elsewhere).
      */
       public void run()
       {
@@ -194,12 +200,9 @@ private class LocalThread extends Thread
 //                jfClient guiClient = new jfClient();
 //                guiClient.setVisible(true);
                 
-                // process messages sent from server
-                do
+                do  //process objects sent from server
                 {
-
-                    // read message and display it
-                    try
+                    try     //try to read and process message
                     {
                         Object objInput = OIS.readObject();     //DO NOT TOUCH - must declare object INSIDE for some reason for ClientConnection only
                         System.out.println("[DEBUG] objInput.getClass=" + objInput.getClass() + " == match.class=" + Match.class + "?");
@@ -211,49 +214,50 @@ private class LocalThread extends Thread
                                 sendData(ClientConnection.MATCH_CODE);
                                 jfClient.nextCard();
                             }
+                            jfClient.updateGame((Match) objInput);
                             System.out.println( "\nSERVER sent a Match object.");
                         }
-                        else if (objInput.getClass().getSimpleName() instanceof String)    //TODO: handle specific codes and such
+                        else if (objInput.getClass().getSimpleName() instanceof String)     //if obj is a String, then process codes appropriately
                         {
                             strCode = (String) OIS.readObject();
-                            if (strCode.contains(ServerConnection.MATCH_LOST_CODE) )
+                            System.out.println( "[DEBUG] SERVER sent \"" + strCode + "\".");
+                            
+                            if (strCode.contains(ServerConnection.MATCH_LOST_CODE) )    //if player lost
                             {
-                                //TODO: display lose pop-up
+                                JOptionPane.showMessageDialog(null, "Sorry, you lose!", "Match Results - LOSE", JOptionPane.ERROR_MESSAGE);
                                 sendData(ClientConnection.SCOREBOARD_CODE);
                                 jfClient.nextCard();
                             }
-                            else if (strCode.contains(ServerConnection.MATCH_WON_CODE) )
+                            else if (strCode.contains(ServerConnection.MATCH_WON_CODE) )    //if player won
                             {
-                                //TODO: display win pop-up
+                                JOptionPane.showMessageDialog(null, "Congratulations, you won!", "Match Results - WIN", JOptionPane.ERROR_MESSAGE);
                                 sendData(ClientConnection.SCOREBOARD_CODE);
                                 jfClient.nextCard();
                             }
-                            else if (strCode.contains(ServerConnection.MATCH_DRAW_CODE) )
+                            else if (strCode.contains(ServerConnection.MATCH_DRAW_CODE) )   //if player had a draw (i.e., no one won)
                             {
-                                //TODO: display draw pop-up
+                                JOptionPane.showMessageDialog(null, "Sorry, no one won!", "Match Results - DRAW", JOptionPane.ERROR_MESSAGE);
                                 sendData(ClientConnection.SCOREBOARD_CODE);
                                 jfClient.nextCard();
                             }
-                            System.out.println( "\nSERVER sent \"" + strCode + "\".");
-                        }
+                        }   //END if obj is a String, then process codes appropriately
                         
                         
-                        
-                    }
+                    }   //END try to read and process message
 
                     // catch problems reading from server
                     catch ( ClassNotFoundException classNotFoundException ) {
                         System.out.println( "\n[ERROR] Unknown object type received." );
                    }
 
-                }  while (strCode.equals(ServerConnection.DISCONNECT_CODE) == false);
+                }  while (strCode.equals(ServerConnection.DISCONNECT_CODE) == false);   //while server has not sent its disconnect code
 
-                System.out.println( "\nSERVER has shut down.\n" );
+                System.out.println( "\n[DEBUG] SERVER has shut down.\n" );
 
-                disconnect();
+                disconnect();   //close client-side socket - might already have been closed by the server, but best to err on the safe side
 
                 System.out.println( "Client connection to the server has been terminated." );
-           }   //END try
+           }   //END try to read and process message
             catch (UnknownHostException uhe)    //if the given IP address for the server doesn't work
             {
                 JOptionPane.showMessageDialog(null, "Could not find the server.\nIs the IP address for the server correctly formatted and accurate?", "Invalid Server Address", JOptionPane.ERROR_MESSAGE);
@@ -270,22 +274,22 @@ private class LocalThread extends Thread
 //           }
 
            catch ( EOFException eofException ) {
-              System.err.println( "Server terminated connection" );
-           }
+                System.err.println( "Server terminated connection" );
+            }
 
            // process problems communicating with server
            catch ( IOException ioException ) {           
-               ioException.printStackTrace();
-           }
+                ioException.printStackTrace();
+             }
            catch (NullPointerException npe)
-           {
-               System.err.println(npe.toString() );
-           }
+            {
+                System.err.println(npe.toString() );
+            }
            catch (Exception ex)
-           {
-               System.err.println(ex.toString() );
-               ex.printStackTrace();
-           }
+            {
+                System.err.println(ex.toString() );
+                ex.printStackTrace();
+            }
 
          // server closed connection
 
@@ -305,19 +309,20 @@ private class LocalThread extends Thread
      */
     public void disconnect() throws IOException
     {
-        sendData(ClientConnection.DISCONNECT_CODE);
-         // close streams and socket
+        sendData(ClientConnection.DISCONNECT_CODE);     //tell server to close its side of the connection
+        
+        // close streams and socket
         OOS.close();
         OIS.close();
         clientConn.close();
-        //TODO: disconnect
+        System.out.println("[DEBUG] Client has disconnected from the server.");
     }   //END disconnect()
     
     
     
     /**
      * Sends data to the server.
-     * @param obj
+     * @param obj - Object (e.g., String code, Match) to send.
      * @throws java.io.IOException
      */
     public void sendData(Object obj) throws IOException

@@ -16,7 +16,7 @@ import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
  *
- * @author Darwin
+ * @author Darwin, JSS5783
  * 
  * ----------[CHANGELOG]----------
  * 2018/04/30 -     Server works. Just need to finish passing Match object back and forth and transmit win codes/etc. -JSS5783

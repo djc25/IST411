@@ -21,9 +21,15 @@ import java.util.ArrayList;
 
 /**
  *
- * @author DRACOX
+ * @author DRACOX, JSS5783
+ * 
+ * 
+ * ----------[CHANGELOG]----------
+ * 2018/04/30 -     Added setMatch(Match inMatch), getMatch(), and match1, though they still need to be fully implemented. -JSS5783
+ * 
  */
-public class DotGamePanel extends javax.swing.JPanel {
+public class DotGamePanel extends javax.swing.JPanel
+{
 
     /**
      * Creates new form DotGamePanel
@@ -35,6 +41,9 @@ public class DotGamePanel extends javax.swing.JPanel {
     ArrayList<Dots> myDots = new ArrayList();
     ArrayList<Lines> myLines = new ArrayList();
     ArrayList<Boxes> myBoxes = new ArrayList();
+    Match match1;
+    
+    
     @Override
     public void paintComponent(Graphics g){
         
@@ -243,6 +252,27 @@ public class DotGamePanel extends javax.swing.JPanel {
         
         
     }
+    
+    
+    
+    /**
+     * Updates local Match object with passed Match object, and then (due to being a GUI) updates the visuals using the new information.
+     * @param inMatch 
+     */
+    public void setMatch(Match inMatch)
+    {
+        //TODO
+    }   //END setMatch(Match inMatch)
+    
+    
+    /**
+     * Returns local Match object.
+     * @return 
+     */
+    public Match getMatch()
+    {
+        return match1;
+    }   //END getMatch()
     
 
     /**
