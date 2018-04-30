@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
  * @author Darwin
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/30 -     Client works. Just need to finish passing Match object back and forth and transmit win codes/etc. -JSS5783
+ * 
  * 2018/04/29 -     Made asynchronous LocalThread class. -JSS5783
  * 
  * 2018/04/29 -     Major changes:
@@ -186,7 +188,7 @@ private class LocalThread extends Thread
 //                sendData(ClientConnection.USERNAME_CODE + strUsername);
 
 
-                Object objInput = new Object();
+//                Object objInput = new Object();
                 String strCode = "";
                 sendData(ClientConnection.LOBBY_CODE);  //entering lobby
 //                jfClient guiClient = new jfClient();
@@ -199,9 +201,19 @@ private class LocalThread extends Thread
                     // read message and display it
                     try
                     {
-                        
-                        //TODO: handle specific codes and such
-                        if (objInput.getClass().getSimpleName() instanceof String)
+                        Object objInput = OIS.readObject();     //DO NOT TOUCH - must declare object INSIDE for some reason for ClientConnection only
+                        System.out.println("[DEBUG] objInput.getClass=" + objInput.getClass() + " == match.class=" + Match.class + "?");
+                        if (objInput.getClass() == Match.class)
+                        {
+                            //TODO: store in Match object(s)
+                            if (jfClient.getCurrentScreen() == jfClient.LOBBY)
+                            {
+                                sendData(ClientConnection.MATCH_CODE);
+                                jfClient.nextCard();
+                            }
+                            System.out.println( "\nSERVER sent a Match object.");
+                        }
+                        else if (objInput.getClass().getSimpleName() instanceof String)    //TODO: handle specific codes and such
                         {
                             strCode = (String) OIS.readObject();
                             if (strCode.contains(ServerConnection.MATCH_LOST_CODE) )
@@ -224,15 +236,7 @@ private class LocalThread extends Thread
                             }
                             System.out.println( "\nSERVER sent \"" + strCode + "\".");
                         }
-                        else if (objInput.getClass() == Match.class)
-                        {
-                            //TODO: store in Match object(s)
-                            if (jfClient.getCurrentScreen() == jfClient.LOBBY)
-                            {
-                                jfClient.nextCard();
-                            }
-                            System.out.println( "\nSERVER sent a Match object.");
-                        }
+                        
                         
                         
                     }
@@ -280,6 +284,7 @@ private class LocalThread extends Thread
            catch (Exception ex)
            {
                System.err.println(ex.toString() );
+               ex.printStackTrace();
            }
 
          // server closed connection
@@ -320,10 +325,11 @@ private class LocalThread extends Thread
         if (PVar.DEBUG_MODE == true)
         {
             System.out.println("Reached sendData(Object obj)");
-            if (obj.getClass().getSimpleName() instanceof String)
-            {
-                System.out.println( "(String) obj=" + (String) obj);
-            }
+            System.out.println("[DEBUG] obj.getClass()=" + obj.getClass() );
+//            if (obj.getClass().getSimpleName() instanceof String) //seems to throw errors if not actually a String
+//            {
+//                System.out.println( "(String) obj=" + (String) obj);
+//            }
         }
         
         OOS.writeObject(obj);

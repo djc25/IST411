@@ -19,6 +19,8 @@ import static jdk.nashorn.tools.ShellFunctions.input;
  * @author Darwin
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/30 -     Server works. Just need to finish passing Match object back and forth and transmit win codes/etc. -JSS5783
+ * 
  * 2018/04/29 -     Major changes:
  *                      Added codes.
  *                      Added client-server code modified from already-modified code from Deitel's Cryptography assignment.
@@ -47,6 +49,9 @@ public class ServerConnection
     ObjectOutputStream OOS;
     
     boolean test = true; 
+    
+    boolean bClient1Exists = false;
+    boolean bClient2Exists = false;
    
     
     
@@ -69,26 +74,28 @@ public class ServerConnection
                     {
                         System.out.println("[DEBUG] Connecting as Client1 . . .");
                         client1 = new ClientThread(server.accept(), 1);     //just hard-code client number for now, in case it needs to be referenced
+                        bClient1Exists = true;
                         client1.start();
                     }
                     else if (client2 == null)    //if client2 isn't occupied
                     {
                         System.out.println("[DEBUG] Connecting as Client2 . . .");
                         client2 = new ClientThread(server.accept(), 2);     //just hard-code client number for now, in case it needs to be referenced
+                        bClient2Exists = true;
                         client2.start();
                     }
                    else     //TODO: just here to see if I can see anything else while this isn't spamming for new connections; leaving this here will result in connections after the first two failing to connect if one leaves
                     {
-                        if (client1.getStatus() == jfClient.LOBBY & client2.getStatus() == jfClient.LOBBY)
-                        {
-                            System.out.println("[DEBUG] 2 clients in lobby. Ready to pair!");
-                            //TODO: somehow get server to blast both clients with MATCH MADE in a cleaner way
-                            match = new Match(client1.getUsername(), client2.getUsername() );    //TODO: should use primary IDs, but usernames will do for now... use unique usernames when testing
-                            System.out.println("[DEBUG] match.getWhoseTurn()=" + match.getWhoseTurn() );
-//                                    client1.sendData(ServerConnection.MATCH_MADE);
-                            client1.sendData(match);
-                            client2.sendData(match);
-                        }
+//                        if (client1.getStatus() == jfClient.LOBBY & client2.getStatus() == jfClient.LOBBY)
+//                        {
+//                            System.out.println("[DEBUG] 2 clients in lobby. Ready to pair!");
+//                            //TODO: somehow get server to blast both clients with MATCH MADE in a cleaner way
+//                            match = new Match(client1.getUsername(), client2.getUsername() );    //TODO: should use primary IDs, but usernames will do for now... use unique usernames when testing
+//                            System.out.println("[DEBUG] match.getWhoseTurn()=" + match.getWhoseTurn() );
+////                                    client1.sendData(ServerConnection.MATCH_MADE);
+//                            client1.sendData(match);
+//                            client2.sendData(match);
+//                        }
 //                        break;
                     }
 //                    listenForConnection();
@@ -247,6 +254,7 @@ public class ServerConnection
         {
             // send object to client
             System.out.println("[DEBUG] Reached sendData(Object obj)");
+            System.out.println("[DEBUG] obj.getClass()=" + obj.getClass() );
         
             try
             {
@@ -322,6 +330,8 @@ public class ServerConnection
 
                     try
                     {
+                        objInput = input.readObject();  //DO NOT TOUCH - must declare object OUTSIDE for some reason for ServerConnection only
+                        
                         //TODO: handle specific codes and such
                         if (objInput.getClass().getSimpleName() instanceof String)
                         {
@@ -338,15 +348,16 @@ public class ServerConnection
                             {
                                 setStatus(LOBBY);
 //                                if (client1.getStatus() == LOBBY & client2.getStatus() == LOBBY)
-//                                {
-//                                    System.out.println("[DEBUG] 2 clients in lobby. Ready to pair!");
-//                                    //TODO: somehow get server to blast both clients with MATCH MADE in a cleaner way
-//                                    match = new Match(client1.getUsername(), client2.getUsername() );    //TODO: should use primary IDs, but usernames will do for now... use unique usernames when testing
-//                                    System.out.println("[DEBUG] match.getWhoseTurn()=" + match.getWhoseTurn() );
-////                                    client1.sendData(ServerConnection.MATCH_MADE);
-//                                    client1.sendData(match);
-//                                    client2.sendData(match);
-//                                }
+                                if (bClient1Exists == true && bClient2Exists == true)
+                                {
+                                    System.out.println("[DEBUG] 2 clients in lobby. Ready to pair!");
+                                    //TODO: somehow get server to blast both clients with MATCH MADE in a cleaner way
+                                    match = new Match(client1.getUsername(), client2.getUsername() );    //TODO: should use primary IDs, but usernames will do for now... use unique usernames when testing
+                                    System.out.println("[DEBUG] match.getWhoseTurn()=" + match.getWhoseTurn() );
+//                                    client1.sendData(ServerConnection.MATCH_MADE);
+                                    client1.sendData(match);
+                                    client2.sendData(match);
+                                }
                             }
                             else if (strCode.contains(ClientConnection.MATCH_CODE) == true)
                             {
