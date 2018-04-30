@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
  * @author Darwin
  * 
  * ----------[CHANGELOG]----------
+ * 2018/04/29 -     Made asynchronous LocalThread class. -JSS5783
+ * 
  * 2018/04/29 -     Major changes:
  *                      Added codes.
  *                      Added client-server code modified from already-modified code from Deitel's Cryptography assignment. -JSS5783
@@ -40,6 +42,7 @@ public class ClientConnection
     boolean tconn = true;
     
     String strUsername = "";    //TODO: not sure what else the client needs to know
+    LocalThread thread;
     
     //client codes for sending key words to the server
     //general format for commands is "CLIENT_CODE_" + command phrase
@@ -80,11 +83,26 @@ public class ClientConnection
     public ClientConnection(String strInUsername) throws UnknownHostException, ConnectException, IOException
     {
         strUsername = strInUsername;
-        connect();
+//        connect();
+        thread = new LocalThread();
+        thread.start();
     }   //END ClientConnection()
     
     
+    /**
+     * Wrapper class for LocalThread.
+     * @throws IOException 
+     */
+    public void disconnect() throws IOException
+    {
+        System.out.println("[DEBUG] Reached disconnect()");
+        thread.disconnect();
+        System.out.println("[DEBUG] Disconnected.");
+    }
     
+    
+private class LocalThread extends Thread
+   {
     /**
      * Connects to the server.
      * 
@@ -128,6 +146,7 @@ public class ClientConnection
             //TODO: wait for acknowledgment from the server
             sendData(ClientConnection.USERNAME_CODE + strUsername);
             //TODO: wait for the server to report that the client-server connection is complete
+//            run();
 
         }
         catch(IOException ioexception)
@@ -138,6 +157,7 @@ public class ClientConnection
     
     
     
+
     // connect to server, get streams, process connection
     /**
      * From Deitel's code, modified by JSS5783 for the Cryptography assignment, and then modified further.
@@ -146,6 +166,8 @@ public class ClientConnection
       {
             try
             {
+                connect();
+                System.out.println("[DEBUG] Reached ClientConnection.run()");
 
 //                System.out.println( "Connected to server");
 
@@ -167,6 +189,8 @@ public class ClientConnection
                 Object objInput = new Object();
                 String strCode = "";
                 sendData(ClientConnection.LOBBY_CODE);  //entering lobby
+//                jfClient guiClient = new jfClient();
+//                guiClient.setVisible(true);
                 
                 // process messages sent from server
                 do
@@ -177,7 +201,7 @@ public class ClientConnection
                     {
                         
                         //TODO: handle specific codes and such
-                        if (objInput instanceof String)
+                        if (objInput.getClass().getSimpleName() instanceof String)
                         {
                             strCode = (String) OIS.readObject();
                             if (strCode.contains(ServerConnection.MATCH_LOST_CODE) )
@@ -200,7 +224,7 @@ public class ClientConnection
                             }
                             System.out.println( "\nSERVER sent \"" + strCode + "\".");
                         }
-                        else if (objInput instanceof Match)
+                        else if (objInput.getClass() == Match.class)
                         {
                             //TODO: store in Match object(s)
                             if (jfClient.getCurrentScreen() == jfClient.LOBBY)
@@ -278,9 +302,9 @@ public class ClientConnection
     {
         sendData(ClientConnection.DISCONNECT_CODE);
          // close streams and socket
-          OOS.close();
-          OIS.close();
-          clientConn.close();
+        OOS.close();
+        OIS.close();
+        clientConn.close();
         //TODO: disconnect
     }   //END disconnect()
     
@@ -296,11 +320,16 @@ public class ClientConnection
         if (PVar.DEBUG_MODE == true)
         {
             System.out.println("Reached sendData(Object obj)");
+            if (obj.getClass().getSimpleName() instanceof String)
+            {
+                System.out.println( "(String) obj=" + (String) obj);
+            }
         }
         
         OOS.writeObject(obj);
         OOS.flush();
     }   //END sendData(Object obj)
+}   //END LocalThread
         
     
     

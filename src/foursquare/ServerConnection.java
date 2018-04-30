@@ -63,7 +63,7 @@ public class ServerConnection
             {
                 try
                 {
-                    System.out.println("[DEBUG] Waiting for connection . . .");
+//                    System.out.println("[DEBUG] Waiting for connection . . .");
                     
                    if (client1 == null)    //if client1 isn't occupied  TODO: when client closes, does this work?
                     {
@@ -76,6 +76,20 @@ public class ServerConnection
                         System.out.println("[DEBUG] Connecting as Client2 . . .");
                         client2 = new ClientThread(server.accept(), 2);     //just hard-code client number for now, in case it needs to be referenced
                         client2.start();
+                    }
+                   else     //TODO: just here to see if I can see anything else while this isn't spamming for new connections; leaving this here will result in connections after the first two failing to connect if one leaves
+                    {
+                        if (client1.getStatus() == jfClient.LOBBY & client2.getStatus() == jfClient.LOBBY)
+                        {
+                            System.out.println("[DEBUG] 2 clients in lobby. Ready to pair!");
+                            //TODO: somehow get server to blast both clients with MATCH MADE in a cleaner way
+                            match = new Match(client1.getUsername(), client2.getUsername() );    //TODO: should use primary IDs, but usernames will do for now... use unique usernames when testing
+                            System.out.println("[DEBUG] match.getWhoseTurn()=" + match.getWhoseTurn() );
+//                                    client1.sendData(ServerConnection.MATCH_MADE);
+                            client1.sendData(match);
+                            client2.sendData(match);
+                        }
+//                        break;
                     }
 //                    listenForConnection();
 //                    getStreams();
@@ -188,7 +202,7 @@ public class ServerConnection
         private ObjectInputStream input;
         private String strUsername;
         private boolean bInLobby;
-        int intStatus;
+        int intStatus = 0;
         
         final static int LOBBY = 1;
         final static int MATCH = 2;
@@ -226,8 +240,8 @@ public class ServerConnection
         
         
         /**
-         * Send message to client.
-         * @param message - String to send
+         * Send Object to client.
+         * @param obj - Object to send
          */
         public void sendData(Object obj)
         {
@@ -295,6 +309,7 @@ public class ServerConnection
         // control thread's execution
         public void run()
         {
+            System.out.println("[DEBUG] Reached run() for client " + intClientNumber);
             Object objInput = new Object();
             String strCode = "";
 
@@ -302,12 +317,13 @@ public class ServerConnection
            {
 
                 do  //read message from client
+                    
                 {
 
                     try
                     {
                         //TODO: handle specific codes and such
-                        if (objInput instanceof String)
+                        if (objInput.getClass().getSimpleName() instanceof String)
                         {
                             strCode = (String) input.readObject();
                             System.out.println( "\nCLIENT CONNECTION " + intClientNumber + " sent \"" + strCode + "\".");
@@ -321,14 +337,16 @@ public class ServerConnection
                             if (strCode.contains(ClientConnection.LOBBY_CODE) == true)
                             {
                                 setStatus(LOBBY);
-                                if (client1.getStatus() == LOBBY & client2.getStatus() == LOBBY)
-                                {
-                                    //TODO: somehow get server to blast both clients with MATCH MADE in a cleaner way
-                                    match = new Match(client1.getUsername(), client2.getUsername() );    //TODO: should use primary IDs, but usernames will do for now... use unique usernames when testing
-//                                    client1.sendData(ServerConnection.MATCH_MADE);
-                                    client1.sendData(match);
-                                    client2.sendData(match);
-                                }
+//                                if (client1.getStatus() == LOBBY & client2.getStatus() == LOBBY)
+//                                {
+//                                    System.out.println("[DEBUG] 2 clients in lobby. Ready to pair!");
+//                                    //TODO: somehow get server to blast both clients with MATCH MADE in a cleaner way
+//                                    match = new Match(client1.getUsername(), client2.getUsername() );    //TODO: should use primary IDs, but usernames will do for now... use unique usernames when testing
+//                                    System.out.println("[DEBUG] match.getWhoseTurn()=" + match.getWhoseTurn() );
+////                                    client1.sendData(ServerConnection.MATCH_MADE);
+//                                    client1.sendData(match);
+//                                    client2.sendData(match);
+//                                }
                             }
                             else if (strCode.contains(ClientConnection.MATCH_CODE) == true)
                             {
@@ -349,7 +367,7 @@ public class ServerConnection
                                 setStatus(SCOREBOARD);
                             }
                         }
-                        else if (objInput instanceof Match)
+                        else if (objInput.getClass() == Match.class)    //testing for whether or not obj is a Match - can't seem to test as objInput.getClass().getSimpleName() instanceof Match for some reason
                         {
                             match = (Match) objInput;
                             

@@ -6,6 +6,7 @@
 
 package foursquare;
 
+import java.io.Serializable;
 import java.util.Random;
 
 /**
@@ -15,6 +16,8 @@ import java.util.Random;
  * For now, keep both client and server match code together.
  *
  * ----------CHANGELOG----------
+ * 2018/04/29 -     Made Serializable. -JSS5783
+ * 
  * 2018/04/29 -     Added Match(String strUsername1, String strUsername2). Doesn't set primary IDs, but getting things working is more important. -JSS5783
  * 
  * 2018/04/25 -     Added getters/setters (auto-generated, and then cleaned up method signatures). -JSS5783
@@ -22,7 +25,7 @@ import java.util.Random;
  * 2018/04/18 -     Created. -JSS5783
  *
  */
-public class Match
+public class Match implements Serializable
 {
     private final static int PLAYER_1_TURN = 1;
     private final static int PLAYER_2_TURN = 2;

@@ -201,7 +201,7 @@ public class jpLogIn extends javax.swing.JPanel {
                 try
                 {
                     jfClient.client = new ClientConnection(strUsername);    //try to connect with the server (passing relevant data like username, password TODO: implement later, etc.)
-                    jfClient.client.run();
+//                    jfClient.client.run();
                     jfClient.nextCard();                                    //then switch to the lobby after connecting
                 }
                 catch (UnknownHostException uhe)    //if the given IP address for the server doesn't work
