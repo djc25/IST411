@@ -133,10 +133,10 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlLower = new javax.swing.JLabel();
         jlUpper = new javax.swing.JLabel();
         jlPersonal = new javax.swing.JLabel();
-        jlArtist = new javax.swing.JLabel();
         jlThanks = new javax.swing.JLabel();
         jlRank = new javax.swing.JLabel();
         jlPersonal2 = new javax.swing.JLabel();
+        jlPicture = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(960, 540));
 
@@ -219,8 +219,6 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlPersonal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlPersonal.setText("x");
 
-        jlArtist.setText("Ladfa-B");
-
         jlThanks.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jlThanks.setText("Thanks for Playing!");
 
@@ -229,6 +227,8 @@ public class jpScoreboard extends javax.swing.JPanel {
 
         jlPersonal2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlPersonal2.setText("X");
+
+        jlPicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foursquare/images/pixabay-creative_common.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -282,7 +282,8 @@ public class jpScoreboard extends javax.swing.JPanel {
                                             .addComponent(jlThanks)
                                             .addGap(91, 91, 91)))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlArtist)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlPicture)
                                 .addContainerGap())))))
         );
         layout.setVerticalGroup(
@@ -291,6 +292,8 @@ public class jpScoreboard extends javax.swing.JPanel {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlPicture)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlRank)
                             .addComponent(jlPersonal2))
@@ -324,11 +327,7 @@ public class jpScoreboard extends javax.swing.JPanel {
                                 .addComponent(jl10))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jlArtist))
-                                    .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
@@ -368,10 +367,10 @@ public class jpScoreboard extends javax.swing.JPanel {
     private javax.swing.JLabel jl7;
     private javax.swing.JLabel jl8;
     private javax.swing.JLabel jl9;
-    private javax.swing.JLabel jlArtist;
     private javax.swing.JLabel jlLower;
     private javax.swing.JLabel jlPersonal;
     private javax.swing.JLabel jlPersonal2;
+    private javax.swing.JLabel jlPicture;
     private javax.swing.JLabel jlRank;
     private javax.swing.JLabel jlScoreboard;
     private javax.swing.JLabel jlThanks;
