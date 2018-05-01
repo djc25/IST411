@@ -278,6 +278,7 @@ public class ServerConnection
         public void setUsername(String strInUsername)
         {
             strUsername = strInUsername;
+            System.out.println("strInUsername = " + strInUsername);
         }   //END setUsername(String strInUsername)
         
         

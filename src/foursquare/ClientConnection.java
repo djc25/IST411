@@ -11,6 +11,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.*;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +20,8 @@ import javax.swing.JOptionPane;
  * @author Darwin, JSS5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/05/01 -     Now sends match. Wrapper method added for sendData().   -JSS5783
+ * 
  * 2018/04/30 -     Added win/lose/draw messages. Match objects are now passed to the client.   -JSS5783
  * 
  * 2018/04/30 -     Client works. Just need to finish passing Match object back and forth and transmit win codes/etc. -JSS5783
@@ -105,6 +109,23 @@ public class ClientConnection
     }
     
     
+    
+    /**
+     * Wrapper for LocalThread's sendData(Object obj) method.
+     * @param obj 
+     */
+    public void sendData(Object obj)
+    {
+        try {
+            OOS.writeObject(obj);
+            OOS.flush();
+        } //END sendData(Object obj)
+        catch (IOException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 private class LocalThread extends Thread
    {
     /**
@@ -149,6 +170,7 @@ private class LocalThread extends Thread
 //            sendData(ClientConnection.CONNECT_CODE);    //request to be connected to the server
             //TODO: wait for acknowledgment from the server
             sendData(ClientConnection.USERNAME_CODE + strUsername);
+            System.out.println("strUsername = " + strUsername);
             //TODO: wait for the server to report that the client-server connection is complete
 //            run();
 

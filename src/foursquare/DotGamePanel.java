@@ -6,9 +6,17 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.IOException;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 
@@ -25,6 +33,8 @@ import java.util.ArrayList;
  * 
  * 
  * ----------[CHANGELOG]----------
+ * 2018/05/01 -     Added scoring, updated colors, and added match complete check.
+ * 
  * 2018/05/01 -     Updated game logic to taking extra turns if box is closed.
  * 2018/04/30 -     Added setMatch(Match inMatch), getMatch(), and match1, though they still need to be fully implemented. -JSS5783
  * 
@@ -43,12 +53,17 @@ public class DotGamePanel extends javax.swing.JPanel
     ArrayList<Lines> myLines = new ArrayList();
     ArrayList<Boxes> myBoxes = new ArrayList();
     Match match1;
+    boolean bIsMatchComplete = false;
     
     
     @Override
     public void paintComponent(Graphics g){
         
         super.paintComponent(g);
+        bIsMatchComplete = true;    //testing for false
+        
+//        match1.setPlayer1Score(0);
+//        match1.setPlayer2Score(0);
         for(int i = 0; i< myLines.size(); i++)
         {
             
@@ -60,27 +75,123 @@ public class DotGamePanel extends javax.swing.JPanel
             myBoxes.get(i).isClosed();
             if(myBoxes.get(i).getClosed() == true && myBoxes.get(i).getMyColor() == null)
             {
-                player =!player;
+                if ((match1.getWhoseTurn() == Match.PLAYER_2_TURN) )    //increment player 1's points (already switched to player 2's turn here)
+                {
+                    match1.setPlayer1Score(match1.getPlayer1Score() + 1);
+                    match1.setWhoseTurn(Match.PLAYER_1_TURN);
+                }
+                else
+                {
+                    match1.setPlayer2Score(match1.getPlayer2Score() + 1);   //increment player 2's points (already switched to player 1's turn here)
+                    match1.setWhoseTurn(Match.PLAYER_2_TURN);
+                }
+            }
+            else if (myBoxes.get(i).getClosed() == false && myBoxes.get(i).getMyColor() == null)
+            {
+                bIsMatchComplete = false;   //at least one empty box
             }
             if(myBoxes.get(i).getClosed() == true)
             {
                 myBoxes.get(i).setMyColor(currColor);
+//                if (currColor == PVar.PLAYER_1_COLOR)   //count boxes of each color (each player)
+//                {
+//                    match1.setPlayer1Score(match1.getPlayer1Score() + 1);
+//                }
+//                else if (currColor == PVar.PLAYER_2_COLOR)
+//                {
+//                    match1.setPlayer2Score(match1.getPlayer2Score() + 1);
+//                }
                 myBoxes.get(i).drawBox(g);
+                
+//                if ((match1.getWhoseTurn() == Match.PLAYER_1_TURN) )    //made box; increment current player's score
+//                {
+//                    match1.setPlayer1Score(match1.getPlayer1Score() + 1);
+//                    jfClient.updateLabels();
+//                }
+//                else
+//                {
+//                    match1.setPlayer2Score(match1.getPlayer2Score() + 1);
+//                    jfClient.updateLabels();
+//                    
+//                }
+//                repaint();
                 
             }
             
             
             
         }
+        
         for(int i = 0; i< myDots.size(); i++)
         {
             myDots.get(i).createDot(g);
             
         }
+        
+        jfClient.updateLabels();    //then update score
+        if (bIsMatchComplete == true)
+        {
+            if (match1.getPlayer1Score() > match1.getPlayer2Score() )
+            {
+                JOptionPane.showMessageDialog(null, "Player 1 wins!");
+            }
+            else if (match1.getPlayer1Score() < match1.getPlayer2Score() )
+            {
+                JOptionPane.showMessageDialog(null, "Player 2 wins!");
+            }
+            else if (match1.getPlayer1Score() == match1.getPlayer2Score() )
+            {
+                JOptionPane.showMessageDialog(null, "Neither player wins. It's a draw!");
+            }
+            jfClient.nextCard();
+            
+            
+//            //TODO: from Queries test
+//            // Get connection from SQLiteConnection
+//            try
+//            {
+//        Connection connect;
+//        SQLiteConnection sc;
+//        sc = new SQLiteConnection();
+//        connect = sc.getConnection();
+//        
+//        // Initialize output
+//        ResultSet top10;
+//        ResultSet personalRank;
+//        int rankLabel;
+//
+//        // Get queries from connection
+//        Queries q;
+//        q = new Queries(connect);
+//        //q.setEntryInfo("Jackie",45);
+//        //q.updateEntryInfo(20);
+//        
+//        //rankLabel = q.getLastEntryRank();
+//        rankLabel = 6; // testing purposes
+//        personalRank = q.getLastEntryInfo(rankLabel);
+//        
+//        top10 = q.getTopTen();
+//    
+//        // Temporary JFrame, Panel object
+//        jpScoreboard panel = new jpScoreboard(top10, personalRank, rankLabel);
+//        //jpScoreboard panel = new jpScoreboard();
+//
+//        JFrame frame = new JFrame();
+//        frame.add(panel);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setBounds(500, 250, 960, 600);
+//        frame.setVisible(true);
+//        
+//            } catch (SQLException ex) {
+//                Logger.getLogger(DotGamePanel.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//                    
+        }
     }
     
     public DotGamePanel() {
         initComponents();
+        match1 = new Match("Player 1", "Player 2");   //TODO; using as placeholder names
         Handlerclass mouseHandler = new Handlerclass();
         this.addMouseListener(mouseHandler);
         this.addMouseMotionListener(mouseHandler);
@@ -171,23 +282,49 @@ public class DotGamePanel extends javax.swing.JPanel
                            && (event.getY()> (myLines.get(i).getyStart()))
                            && (event.getY()< (myLines.get(i).getyEnd())))
                     {       
-                            if(player)
+                            if (match1.getWhoseTurn() == Match.PLAYER_1_TURN )
                             {
-                                currColor = Color.RED;
+                                currColor = PVar.PLAYER_1_COLOR;
                                 myLines.get(i).setMyColor(currColor);
+//                                try
+//                                {
+//                                    jfClient.client.sendData(match1);
+//                                }
+//                                catch (IOException ioe)
+//                                {
+//                                    System.err.println(ioe.toString() );
+//                                }
                                 //System.out.println(myLines.get(i).getMyColor());
                             }
                             else
                             {
-                                currColor = Color.BLUE;
+                                currColor = PVar.PLAYER_2_COLOR;
                                 myLines.get(i).setMyColor(currColor);
+//                                try
+//                                {
+//                                    jfClient.client.sendData(match1);
+//                                }
+//                                catch (IOException ioe)
+//                                {
+//                                    System.err.println(ioe.toString() );
+//                                }
                                 //System.out.println(myLines.get(i).getMyColor());
                             }
                             repaint();
                             System.out.println(colorChange(myLines.get(i), prevLine));
-                            if(colorChange(myLines.get(i), prevLine))
+                            
+                            if(colorChange(myLines.get(i), prevLine))   //if color changed (i.e., turn succeeded), set to other player's turn
                             {
-                                player = !player;
+                                if ((match1.getWhoseTurn() == Match.PLAYER_2_TURN) )
+                                {
+                                    match1.setWhoseTurn(Match.PLAYER_1_TURN);
+                                    jfClient.client.sendData(match1);
+                                }
+                                else
+                                {
+                                    match1.setWhoseTurn(Match.PLAYER_2_TURN);
+                                    jfClient.client.sendData(match1);
+                                }
                             }
                     }
                 }
@@ -198,22 +335,31 @@ public class DotGamePanel extends javax.swing.JPanel
                            && (event.getX()> (myLines.get(i).getxStart()))
                            && (event.getX()< (myLines.get(i).getxEnd())))
                     {
-                       if(player)
+                            if (match1.getWhoseTurn() == Match.PLAYER_1_TURN )
                             {
-                                currColor = Color.red;
-                                myLines.get(i).setMyColor(Color.red);
+                                currColor = PVar.PLAYER_1_COLOR;
+                                myLines.get(i).setMyColor(currColor);
+                                //System.out.println(myLines.get(i).getMyColor());
                             }
                             else
                             {
-                                currColor = Color.blue;
-                                myLines.get(i).setMyColor(Color.blue);
+                                currColor = PVar.PLAYER_2_COLOR;
+                                myLines.get(i).setMyColor(currColor);
+                                //System.out.println(myLines.get(i).getMyColor());
                             }
                        
                             repaint();
                             System.out.println(colorChange(myLines.get(i), prevLine));
                             if(colorChange(myLines.get(i), prevLine))
                             {
-                                player = !player;
+                                if ((match1.getWhoseTurn() == Match.PLAYER_2_TURN) )
+                                {
+                                    match1.setWhoseTurn(Match.PLAYER_1_TURN);
+                                }
+                                else
+                                {
+                                    match1.setWhoseTurn(Match.PLAYER_2_TURN);
+                                }
                             }
                             
                     }
@@ -223,19 +369,19 @@ public class DotGamePanel extends javax.swing.JPanel
             }
         }
         public void mousePressed(MouseEvent event){
-            System.out.println("mouse pressed");
+//            System.out.println("mouse pressed");
         }
         public void mouseReleased(MouseEvent event){
-            System.out.println("Mouse Released");
+//            System.out.println("Mouse Released");
         }
         public void mouseEntered(MouseEvent event){
-            System.out.println("Mouse Entered");
+//            System.out.println("Mouse Entered");
         }
         public void mouseExited(MouseEvent event){
-            System.out.println("Mouse Exited");
+//            System.out.println("Mouse Exited");
         }
         public void mouseDragged(MouseEvent event){
-            System.out.println("Mouse Dragged");
+//            System.out.println("Mouse Dragged");
         }
         public void mouseMoved(MouseEvent event){
             //System.out.println("Mouse Moved");
@@ -253,7 +399,8 @@ public class DotGamePanel extends javax.swing.JPanel
      */
     public void setMatch(Match inMatch)
     {
-        //TODO
+        match1 = inMatch;
+        repaint();
     }   //END setMatch(Match inMatch)
     
     

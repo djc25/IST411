@@ -8,6 +8,8 @@ package foursquare;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -20,7 +22,7 @@ import javax.swing.JOptionPane;
  Player returns to jpLobby after being disconnected on during a match, or after a match is fully concluded (win, lose, or draw, all go to the scoreboard).
  
  ----------[CHANGELOG]----------
- * 2018/04/30 -     Added updateGame(Match inMatch). -JSS5783
+ * 2018/04/30 -     Added updateGame(Match inMatch) and jpMatch updateLabels() wrapper. -JSS5783
  * 
  * 2018/04/29 -     Added getCurrentScreen() and associated constants. Updated bare integers to their constant versions. -JSS5783
  * 
@@ -61,6 +63,17 @@ public class jfClient extends javax.swing.JFrame {
     static final int MATCH = 2;
     static final int SCOREBOARD = 3;
     public static ClientConnection client;     //public for now
+//    Connection connect;
+//        SQLiteConnection sc = new SQLiteConnection();
+//        connect = sc.getConnection();
+//        
+//        // Initialize output
+//        ResultSet top10;
+//        ResultSet personalRank;
+//        int rankLabel;
+//
+//        // Get queries from connection
+//        Queries q = new Queries(connect);
 
     /**
      * Creates new form ClientLobby
@@ -290,8 +303,21 @@ public class jfClient extends javax.swing.JFrame {
      */
     public static void updateGame(Match inMatch)
     {
+        System.out.println("Reached updateGame(Match inMatch)");
         jpMatch1.getDotGamePanel().setMatch(inMatch);
+        jpMatch1.updateLabels();
     }   //END updateGame(Match inMatch)
+    
+    
+    
+    /**
+     * Wrapper for updating dotGamePanel1's labels.
+     */
+    public static void updateLabels()
+    {
+        System.out.println("Reached updateLabels()");
+        jpMatch1.updateLabels();
+    }   //END updateLabels()
     
     
 

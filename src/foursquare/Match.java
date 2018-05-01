@@ -7,6 +7,7 @@
 package foursquare;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -16,6 +17,8 @@ import java.util.Random;
  * For now, keep both client and server match code together.
  *
  * ----------CHANGELOG----------
+ * 2018/05/01 -     Fixed setPlayer2Score(int intInPlayer2Score) name.   -JSS5783
+ * 
  * 2018/04/29 -     Made Serializable. -JSS5783
  * 
  * 2018/04/29 -     Added Match(String strUsername1, String strUsername2). Doesn't set primary IDs, but getting things working is more important. -JSS5783
@@ -27,8 +30,8 @@ import java.util.Random;
  */
 public class Match implements Serializable
 {
-    private final static int PLAYER_1_TURN = 1;
-    private final static int PLAYER_2_TURN = 2;
+    final static int PLAYER_1_TURN = 1;
+    final static int PLAYER_2_TURN = 2;
     
     private String strPlayer1Username;
     private String strPlayer2Username;
@@ -39,6 +42,9 @@ public class Match implements Serializable
     private int intWhoseTurn;
     private boolean bHasExtraTurn;
     private boolean bAlreadyObtainedExtraTurn;
+    ArrayList<Dots> myDots = new ArrayList();
+    ArrayList<Lines> myLines = new ArrayList();
+    ArrayList<Boxes> myBoxes = new ArrayList();
     
     /**
      * Initializes variables and determines who is player 1 (who always goes first).
@@ -115,6 +121,7 @@ public class Match implements Serializable
      */
     public String getPlayer1Username()
     {
+        System.out.println("strPlayer1Username = " + strPlayer1Username);
         return strPlayer1Username;
     }
 
@@ -211,7 +218,7 @@ public class Match implements Serializable
     /**
      * @param intInPlayer2Score
      */
-    public void setIntPlayer2Score(int intInPlayer2Score)
+    public void setPlayer2Score(int intInPlayer2Score)
     {
         intPlayer2Score = intInPlayer2Score;
     }

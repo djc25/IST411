@@ -16,6 +16,8 @@ import javax.swing.JPanel;
  * @author JSS5783
  * 
  * ----------[CHANGELOG]----------
+ * 2018/05/01 -     Added updateLabels().   -JSS5783
+ * 
  * 2018/04/30 -     Added getDotGamePanel() and comments.   -JSS5783
  * 
  * 2018/04/18 -     Hide jbtnDebugGoToScoreboard if DEBUG_MODE not enabled.
@@ -235,6 +237,20 @@ public class jpMatch extends javax.swing.JPanel {
     {
         return dotGamePanel1;
     }   //END getDotGamePanel()
+    
+    
+    
+    /**
+     * Updates the player username and score labels.
+     */
+    public void updateLabels()
+    {
+        jlblPlayer1Username.setText(dotGamePanel1.match1.getPlayer1Username() );
+        jlblPlayer1Score.setText(Integer.toString( dotGamePanel1.match1.getPlayer1Score() ) );
+        
+        jlblPlayer2Username.setText(dotGamePanel1.match1.getPlayer2Username() );
+        jlblPlayer2Score.setText(Integer.toString( dotGamePanel1.match1.getPlayer2Score() ) );
+    }   //END updateLabels()
     
     
 
