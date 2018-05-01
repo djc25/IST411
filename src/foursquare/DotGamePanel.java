@@ -25,6 +25,7 @@ import java.util.ArrayList;
  * 
  * 
  * ----------[CHANGELOG]----------
+ * 2018/05/01 -     Updated game logic to taking extra turns if box is closed.
  * 2018/04/30 -     Added setMatch(Match inMatch), getMatch(), and match1, though they still need to be fully implemented. -JSS5783
  * 
  */
@@ -50,27 +51,26 @@ public class DotGamePanel extends javax.swing.JPanel
         super.paintComponent(g);
         for(int i = 0; i< myLines.size(); i++)
         {
+            
             myLines.get(i).drawLines(g);
             
         }
         for(int i = 0; i<myBoxes.size();i++)
         {
             myBoxes.get(i).isClosed();
+            if(myBoxes.get(i).getClosed() == true && myBoxes.get(i).getMyColor() == null)
+            {
+                player =!player;
+            }
             if(myBoxes.get(i).getClosed() == true)
             {
-                myBoxes.get(i).drawBox(g);
-            }
-            else{
                 myBoxes.get(i).setMyColor(currColor);
-            /*if(player)
-                myBoxes.get(i).setMyColor(Color.RED);
+                myBoxes.get(i).drawBox(g);
+                
+            }
             
-            else{
-                myBoxes.get(i).setMyColor(Color.BLUE);
             
-            }*/
-            //myBoxes.get(i).isClosed();
-        }
+            
         }
         for(int i = 0; i< myDots.size(); i++)
         {
@@ -125,17 +125,7 @@ public class DotGamePanel extends javax.swing.JPanel
             }
         }
         
-        for (int i = 0; i< sqrt(myDots.size()); i++)
-        {
-            for (int j = 0; j<sqrt(myDots.size())-1; j++)
-            {
-                int index1 = (int) (j*sqrt(myDots.size())+i);
-                int index2 = (int) ((j+1)*sqrt(myDots.size())+i);
-                //System.out.println(index);
-                Lines myLine = new Lines(myDots.get(index1), myDots.get(index2));
-                myLines.add(myLine);
-            }
-        }
+       
         
         /*BOXES*/
         for(int i = 0; i<pow(sqrtOfList-1,2);i++)
@@ -210,10 +200,12 @@ public class DotGamePanel extends javax.swing.JPanel
                     {
                        if(player)
                             {
+                                currColor = Color.red;
                                 myLines.get(i).setMyColor(Color.red);
                             }
                             else
                             {
+                                currColor = Color.blue;
                                 myLines.get(i).setMyColor(Color.blue);
                             }
                        

@@ -248,7 +248,14 @@ public class Boxes
     }
     public void setMyColor(Color thisColor)
     {
-        myColor = thisColor;
+        if(myColor ==null)
+        {
+            myColor = thisColor;
+        }
+    }
+    public Color getMyColor ()
+    {
+        return myColor;
     }
     public void drawBox(Graphics g)
     {
