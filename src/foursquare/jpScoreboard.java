@@ -137,7 +137,6 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlThanks = new javax.swing.JLabel();
         jlRank = new javax.swing.JLabel();
         jlPersonal2 = new javax.swing.JLabel();
-        jlPicture = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(960, 540));
 
@@ -231,8 +230,6 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlPersonal2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlPersonal2.setText("X");
 
-        jlPicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foursquare/images/chibi_bunny_girl__rosa_by_ladf.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -269,10 +266,9 @@ public class jpScoreboard extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 45, Short.MAX_VALUE)
+                                .addGap(0, 63, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jlRank)
@@ -286,9 +282,7 @@ public class jpScoreboard extends javax.swing.JPanel {
                                             .addComponent(jlThanks)
                                             .addGap(91, 91, 91)))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jlArtist)
-                                    .addComponent(jlPicture))
+                                .addComponent(jlArtist)
                                 .addContainerGap())))))
         );
         layout.setVerticalGroup(
@@ -332,8 +326,7 @@ public class jpScoreboard extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlPicture)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(6, 6, 6)
                                         .addComponent(jlArtist))
                                     .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,7 +372,6 @@ public class jpScoreboard extends javax.swing.JPanel {
     private javax.swing.JLabel jlLower;
     private javax.swing.JLabel jlPersonal;
     private javax.swing.JLabel jlPersonal2;
-    private javax.swing.JLabel jlPicture;
     private javax.swing.JLabel jlRank;
     private javax.swing.JLabel jlScoreboard;
     private javax.swing.JLabel jlThanks;

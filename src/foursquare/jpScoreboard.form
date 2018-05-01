@@ -63,7 +63,7 @@
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="0" pref="45" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="63" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <Component id="jlRank" min="-2" max="-2" attributes="0"/>
@@ -83,10 +83,7 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jlArtist" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jlPicture" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jlArtist" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -139,8 +136,7 @@
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jlPicture" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                       <Component id="jlArtist" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPanel" min="-2" pref="323" max="-2" attributes="0"/>
@@ -414,13 +410,6 @@
           <Font name="Tahoma" size="18" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="X"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jlPicture">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/foursquare/images/chibi_bunny_girl__rosa_by_ladf.png"/>
-        </Property>
       </Properties>
     </Component>
   </SubComponents>
