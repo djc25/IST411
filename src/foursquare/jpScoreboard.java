@@ -136,7 +136,6 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlThanks = new javax.swing.JLabel();
         jlRank = new javax.swing.JLabel();
         jlPersonal2 = new javax.swing.JLabel();
-        jlPicture = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(960, 540));
 
@@ -228,8 +227,6 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlPersonal2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlPersonal2.setText("X");
 
-        jlPicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foursquare/images/pixabay-creative_common.png"))); // NOI18N
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -266,25 +263,19 @@ public class jpScoreboard extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 63, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 63, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jlRank)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jlPersonal2))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jbtnReturnToLobby)
-                                            .addGap(100, 100, 100))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(jlThanks)
-                                            .addGap(91, 91, 91)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jlPicture)
-                                .addContainerGap())))))
+                                .addComponent(jlRank)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jlPersonal2))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jbtnReturnToLobby)
+                                    .addGap(100, 100, 100))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jlThanks)
+                                    .addGap(91, 91, 91)))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,8 +283,6 @@ public class jpScoreboard extends javax.swing.JPanel {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlPicture)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlRank)
                             .addComponent(jlPersonal2))
@@ -370,7 +359,6 @@ public class jpScoreboard extends javax.swing.JPanel {
     private javax.swing.JLabel jlLower;
     private javax.swing.JLabel jlPersonal;
     private javax.swing.JLabel jlPersonal2;
-    private javax.swing.JLabel jlPicture;
     private javax.swing.JLabel jlRank;
     private javax.swing.JLabel jlScoreboard;
     private javax.swing.JLabel jlThanks;

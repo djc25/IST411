@@ -33,9 +33,12 @@ import javax.swing.JOptionPane;
  * 
  * 
  * ----------[CHANGELOG]----------
- * 2018/05/01 -     Added scoring, updated colors, and added match complete check.
+ * 2018/05/01 -     Match complete check updates in paintComponent(Graphics g), but the code to complete the match is now in mouseClicked(MouseEvent event). -JSS5783
  * 
- * 2018/05/01 -     Updated game logic to taking extra turns if box is closed.
+ * 2018/05/01 -     Added scoring, updated colors, and added match complete check. -JSS5783
+ * 
+ * 2018/05/01 -     Updated game logic to taking extra turns if box is closed. -DQH5300
+ * 
  * 2018/04/30 -     Added setMatch(Match inMatch), getMatch(), and match1, though they still need to be fully implemented. -JSS5783
  * 
  */
@@ -85,6 +88,14 @@ public class DotGamePanel extends javax.swing.JPanel
                     match1.setPlayer2Score(match1.getPlayer2Score() + 1);   //increment player 2's points (already switched to player 1's turn here)
                     match1.setWhoseTurn(Match.PLAYER_2_TURN);
                 }
+//                if (myBoxes.get(i).getMyColor() == PVar.PLAYER_1_COLOR )
+//                {
+//                    match1.setPlayer1Score(match1.getPlayer1Score() + 1);
+//                }
+//                else if (myBoxes.get(i).getMyColor() == PVar.PLAYER_2_COLOR)
+//                {
+//                    match1.setPlayer2Score(match1.getPlayer2Score() + 1);
+//                }
             }
             else if (myBoxes.get(i).getClosed() == false && myBoxes.get(i).getMyColor() == null)
             {
@@ -129,21 +140,21 @@ public class DotGamePanel extends javax.swing.JPanel
         }
         
         jfClient.updateLabels();    //then update score
-        if (bIsMatchComplete == true)
-        {
-            if (match1.getPlayer1Score() > match1.getPlayer2Score() )
-            {
-                JOptionPane.showMessageDialog(null, "Player 1 wins!");
-            }
-            else if (match1.getPlayer1Score() < match1.getPlayer2Score() )
-            {
-                JOptionPane.showMessageDialog(null, "Player 2 wins!");
-            }
-            else if (match1.getPlayer1Score() == match1.getPlayer2Score() )
-            {
-                JOptionPane.showMessageDialog(null, "Neither player wins. It's a draw!");
-            }
-            jfClient.nextCard();
+//        if (bIsMatchComplete == true)
+//        {
+//            if (match1.getPlayer1Score() > match1.getPlayer2Score() )
+//            {
+//                JOptionPane.showMessageDialog(null, "Player 1 wins!");
+//            }
+//            else if (match1.getPlayer1Score() < match1.getPlayer2Score() )
+//            {
+//                JOptionPane.showMessageDialog(null, "Player 2 wins!");
+//            }
+//            else if (match1.getPlayer1Score() == match1.getPlayer2Score() )
+//            {
+//                JOptionPane.showMessageDialog(null, "Neither player wins. It's a draw!");
+//            }
+//            jfClient.nextCard();
             
             
 //            //TODO: from Queries test
@@ -186,7 +197,7 @@ public class DotGamePanel extends javax.swing.JPanel
 //                Logger.getLogger(DotGamePanel.class.getName()).log(Level.SEVERE, null, ex);
 //            }
 //                    
-        }
+//        }
     }
     
     public DotGamePanel() {
@@ -268,7 +279,26 @@ public class DotGamePanel extends javax.swing.JPanel
     private class Handlerclass implements MouseListener, MouseMotionListener
     {
         public void mouseClicked(MouseEvent event){
-            System.out.println(String.format("Clicked at %d,%d", event.getX() , event.getY() ));
+//            System.out.println(String.format("Clicked at %d,%d", event.getX() , event.getY() ));
+
+        if (bIsMatchComplete == true)   //have to click once with complete game board to get it to register
+        {
+            if (match1.getPlayer1Score() > match1.getPlayer2Score() )
+            {
+                JOptionPane.showMessageDialog(null, "Player 1 wins!");
+            }
+            else if (match1.getPlayer1Score() < match1.getPlayer2Score() )
+            {
+                JOptionPane.showMessageDialog(null, "Player 2 wins!");
+            }
+            else if (match1.getPlayer1Score() == match1.getPlayer2Score() )
+            {
+                JOptionPane.showMessageDialog(null, "Neither player wins. It's a draw!");
+            }
+            jfClient.nextCard();
+        }
+        else
+        {
             
             for(int i = 0; i <myLines.size(); i++)
             {
@@ -366,6 +396,7 @@ public class DotGamePanel extends javax.swing.JPanel
                        
                    
                 }
+            }
             }
         }
         public void mousePressed(MouseEvent event){
