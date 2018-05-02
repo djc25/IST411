@@ -22,6 +22,11 @@ public class Lines {
     private Color myColor = Color.BLACK;
     private boolean isConnected = false;
     
+    /**
+     * Constructor That takes two dots and creates a line between them
+     * @param dot1
+     * @param dot2 
+     */
     public Lines (Dots dot1, Dots dot2)
     {
         xStart = dot1.getIntX_coord();
@@ -30,6 +35,14 @@ public class Lines {
         yEnd = dot2.getIntY_coord();
         
     }
+    /**
+     * Constructor that takes 4 values. the purpose of this constructor is
+     * to take starting point of a line and the end point of a line.
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
     public Lines (int x1, int y1, int x2, int y2)
     {
         xStart = x1;
@@ -38,6 +51,11 @@ public class Lines {
         yEnd = y2;
         
     }
+    /**
+     * Draws the line using graphics, setting color to the current color of the
+     * line object
+     * @param g 
+     */
     public void drawLines (Graphics g)
     {
         g.setColor(myColor);

@@ -41,6 +41,15 @@ import javax.swing.JOptionPane;
  * 
  * 2018/04/30 -     Added setMatch(Match inMatch), getMatch(), and match1, though they still need to be fully implemented. -JSS5783
  * 
+ * B4 Change log:   Added Graphics, and basic turn based functionality,  and created objects for the purpose of making the program
+ *                  more flexible to work with. These objects are of three types, DOTS, LINES, AND BOXES. the DOTS are used for the 
+ *                  LINES, and the LINES are used for the BOXES. Wanted to use a 2D array for these objects, but their were some 
+ *                  complexities in using that so I settled for ArrayLists due to some time constraints.
+ *                  After figuring out where these will be place I created MouseEvents that would change the lines when they were clicked
+ *                  creating reasonable bounds. There is currently an issue with this that is yet to be resolved, and that is if you click the
+ *                  corner it well select two lines at one, I felt it was best to push some of these issues back to help on other aspects of
+ *                  the project.
+ * 
  */
 public class DotGamePanel extends javax.swing.JPanel
 {
@@ -68,12 +77,15 @@ public class DotGamePanel extends javax.swing.JPanel
 //        match1.setPlayer1Score(0);
 //        match1.setPlayer2Score(0);
         for(int i = 0; i< myLines.size(); i++)
+        // lines drawn first for cosmetic purposes
         {
             
             myLines.get(i).drawLines(g);
             
         }
         for(int i = 0; i<myBoxes.size();i++)
+         //Boxes being drawn and logic for whether the box is being a filled, or
+         // if they were to recieve an extra turn
         {
             myBoxes.get(i).isClosed();
             if(myBoxes.get(i).getClosed() == true && myBoxes.get(i).getMyColor() == null)
@@ -134,6 +146,7 @@ public class DotGamePanel extends javax.swing.JPanel
         }
         
         for(int i = 0; i< myDots.size(); i++)
+        // Dots drawn last for cosmetic purposes
         {
             myDots.get(i).createDot(g);
             
@@ -203,12 +216,12 @@ public class DotGamePanel extends javax.swing.JPanel
     public DotGamePanel() {
         initComponents();
         match1 = new Match("Player 1", "Player 2");   //TODO; using as placeholder names
-        Handlerclass mouseHandler = new Handlerclass();
-        this.addMouseListener(mouseHandler);
+        Handlerclass mouseHandler = new Handlerclass(); // handles mouse events
+        this.addMouseListener(mouseHandler);            //adds mouse listener to panel
         this.addMouseMotionListener(mouseHandler);
        
         /* for loop to create grid of dots*/
-        for(int i = 50; i < 400; i = i+100)
+        for(int i = 50; i < 400; i = i+100)     
         {
             for(int j = 50; j < 400; j = j+100)
             {
@@ -219,8 +232,9 @@ public class DotGamePanel extends javax.swing.JPanel
            
             
         }
-         sqrtOfList = (int) sqrt(myDots.size());
-       /*VERTICAL LINES*/
+         sqrtOfList = (int) sqrt(myDots.size()); // Many values are used through power and square root of objects that exist
+         
+       /* Creates Vertical lines by connecting dots, and then adds them to an array list*/
         for (int i = 0; i< sqrtOfList; i++)
         {
             for (int j = 0; j<sqrtOfList-1; j++)
@@ -234,7 +248,7 @@ public class DotGamePanel extends javax.swing.JPanel
         
         
        
-         /*HORIZONTAL LINES*/
+       /* Creates Horizontal lines by connecting dots, and then adds them to an array list*/
         for (int i = 0; i< sqrtOfList; i++)
         {
             for (int j = 0; j<sqrtOfList-1; j++)
@@ -249,7 +263,7 @@ public class DotGamePanel extends javax.swing.JPanel
         
        
         
-        /*BOXES*/
+        /* Creates Boxes, setting their right and left sides and adding that box to an array list*/
         for(int i = 0; i<pow(sqrtOfList-1,2);i++)
         {
             Boxes myBox = new Boxes();
@@ -257,12 +271,21 @@ public class DotGamePanel extends javax.swing.JPanel
             myBox.setRightLine(myLines.get(i+(sqrtOfList-1)));
             myBoxes.add(myBox);
         }
+        
+        /* Sets Top and Bottom line of a box*/
         for(int i = 0; i<sqrtOfList-1; i++)
         {
             
             for(int j = 0; j<sqrtOfList -1; j++)
             {
-               myBoxes.get(i+j*(sqrtOfList-1)).setTopLine(myLines.get(i*(sqrtOfList-1)+j+sqrtOfList*(sqrtOfList-1)));
+               /**
+                *   [0][3][6]
+                *   [1][4][7]
+                *   [2][5][8]
+                *   This is how the boxes are organized and formula below is how we set the top lines of the boxes.
+                *   Trust me it works
+                */
+               myBoxes.get(i+j*(sqrtOfList-1)).setTopLine(myLines.get(i*(sqrtOfList-1)+j+sqrtOfList*(sqrtOfList-1))); 
                myBoxes.get(i+j*(sqrtOfList-1)).setBotLine(myLines.get((i+1)*(sqrtOfList-1)+j+sqrtOfList*(sqrtOfList-1)));
             }
         }
@@ -272,11 +295,16 @@ public class DotGamePanel extends javax.swing.JPanel
         
     }
     public boolean colorChange (Lines line1, Lines line2)
+    //Checks if a color change has occurred, returning true if it has
     {
         return line1.getMyColor() != line2.getMyColor();
     }
     
     private class Handlerclass implements MouseListener, MouseMotionListener
+    /**
+     *  MouseEvents found here,additional mouse methods were added in case they were needed
+     * 
+     */
     {
         public void mouseClicked(MouseEvent event){
 //            System.out.println(String.format("Clicked at %d,%d", event.getX() , event.getY() ));
@@ -301,6 +329,11 @@ public class DotGamePanel extends javax.swing.JPanel
         {
             
             for(int i = 0; i <myLines.size(); i++)
+            /**
+             * Goes through each line if screen was clicked, and changes the color 
+             * if it was clicked within the bounds i've created.
+             * 
+             */
             {
                 Lines prevLine = new Lines(myLines.get(i).getxStart(),myLines.get(i).getyStart(),
                 myLines.get(i).getxEnd(),
@@ -399,6 +432,10 @@ public class DotGamePanel extends javax.swing.JPanel
             }
             }
         }
+        /**
+         * Nothing to see here
+         * @param event 
+         */
         public void mousePressed(MouseEvent event){
 //            System.out.println("mouse pressed");
         }

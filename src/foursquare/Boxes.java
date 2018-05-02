@@ -246,6 +246,10 @@ public class Boxes
             bIsClosed = false;
         }
     }
+    /**
+     * changes the color of this particular box in preparation for it to filled
+     * @param thisColor 
+     */
     public void setMyColor(Color thisColor)
     {
         if(myColor ==null)
@@ -253,10 +257,18 @@ public class Boxes
             myColor = thisColor;
         }
     }
+    /**
+     * Gets the color of the box and then returns that color
+     * @return 
+     */
     public Color getMyColor ()
     {
         return myColor;
     }
+    /**
+     * Fills a box using graphics, and sets the color to that of the player
+     * @param g 
+     */
     public void drawBox(Graphics g)
     {
         g.setColor(myColor);
