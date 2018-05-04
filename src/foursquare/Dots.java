@@ -10,22 +10,19 @@ package foursquare;
 import java.awt.*;
 
 /**
- *
+ * Creates Dots component.
  * @author DRACOX
  * 
  * ----------CHANGELOG----------
  * 2018/04/25 -     Added DOT_COLOR variable.
  *                  Renamed variables and added comments to comply with coding conventions. -JSS5783
  */
-
 public class Dots
 {
     private static final int DIAMETER = 10;
     private static final Color DOT_COLOR = Color.BLACK;
     private int intPosX;
     private int intPosY;
-    
-    
     
     /**
      * Dots constructor.
@@ -40,11 +37,9 @@ public class Dots
         intPosY = intInPosY;
     }   //END Dots(int intInPosX, int intInPosY)
     
-    
-    
     /**
      * Draws a dot at the Dots's coordinates.
-     * @param g 
+     * @param g Graphics g used to call Graphics class methods.
      */
     public void createDot(Graphics g)
     {
@@ -52,8 +47,6 @@ public class Dots
         g.fillOval(intPosX, intPosY, DIAMETER, DIAMETER);
     }   //END createDot(Graphics g)
  
-    
-
     /**
      * Gets the x coordinate for the center of the Dots.
      * @return intPosX
@@ -72,8 +65,6 @@ public class Dots
         intPosX = intInPosX;
     }   //END setIntX_coord(int intInPosX)
 
-    
-    
     /**
      * Gets the y coordinate for the center of the Dots.
      * @return intPosY
@@ -91,7 +82,5 @@ public class Dots
     {
         intPosY = intInPosY;
     }   //END setIntY_coord(int intInPosY)
-    
-    
-    
+
 }   //END Dots

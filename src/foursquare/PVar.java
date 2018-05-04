@@ -8,7 +8,7 @@ package foursquare;
 import java.awt.Color;
 
 /**
- *
+ * Creates the graphical components of players for use in jpMatch.
  * @author JSS5783
  * 
  * Public variables.

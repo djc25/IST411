@@ -16,10 +16,9 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
- *
+ * SQLite queries for use with jpScoreboard.
  * @author Jason
- *
- *
+ * 
  ************************** MODIFICATION LOG ********************************
  * 4/13/18- Created Class and supporting PreparedStatements and Methods 
  * 4/16/18-Added more PreparedStatements 
@@ -32,6 +31,13 @@ import javax.swing.JFrame;
  */
 public class Queries {
 
+    /**
+     * Temporary main, will need to integrate into main program.
+     * Will run jpScoreboard with supporting functionality remotely from main
+     * program.
+     * @param args
+     * @throws SQLException
+     */
     public static void main(String[] args) throws SQLException 
     {
         // Get connection from SQLiteConnection
@@ -46,18 +52,22 @@ public class Queries {
 
         // Get queries from connection
         Queries q = new Queries(connect);
-        //q.setEntryInfo("Jackie",45);
-        //q.updateEntryInfo(20);
+        q.setEntryInfo("Jackie",45);
+        q.updateEntryInfo(20);
         
-        //rankLabel = q.getLastEntryRank();
-        rankLabel = 6; // testing purposes
+        rankLabel = q.getLastEntryRank();
+        //rankLabel = 6; // testing purposes
         personalRank = q.getLastEntryInfo(rankLabel);
         
         top10 = q.getTopTen();
     
         // Temporary JFrame, Panel object
-        jpScoreboard panel = new jpScoreboard(top10, personalRank, rankLabel);
-        //jpScoreboard panel = new jpScoreboard();
+        //jpScoreboard panel = new jpScoreboard(top10, personalRank, rankLabel);
+        jpScoreboard panel = new jpScoreboard();
+        panel.populateTopTen(top10);
+        panel.populatePersonal(personalRank);
+        panel.setRankLabel(rankLabel);
+        
 
         JFrame frame = new JFrame();
         frame.add(panel);
@@ -65,7 +75,7 @@ public class Queries {
         frame.setBounds(500, 250, 960, 600);
         frame.setVisible(true);
 
-    } // main (Temporary will need to integrate into main program)
+    } // main
 
     private final Connection connect;
     private final Date datex;
@@ -78,6 +88,11 @@ public class Queries {
     private final PreparedStatement getTopTenEntry;
     private final PreparedStatement getAllEntry;
     
+    /**
+     * Establishes connection with SQLite database and sets PreparedStatements.
+     * @param connectIn Connection connectIn will be inherited by Class connect variable
+     * @throws SQLException
+     */
     public Queries(Connection connectIn) throws SQLException
     {
         // Make connection via SQLiteConnection
@@ -121,6 +136,14 @@ public class Queries {
 
     } // constructor
 
+    /**
+     * Creates new entry row after first game ends in a session.
+     * @param NameIn String NameIn will be set within setString parameter for
+     * use in newEntry query
+     * 
+     * @param ScoreIn int ScoreIN will be set within setInt parameter for use in
+     * newEntry query
+     */
     public void setEntryInfo(String NameIn, int ScoreIn) 
     {
         try 
@@ -142,6 +165,12 @@ public class Queries {
     
     } // setEntryInfo
 
+    /**
+     * Update entry row in the current session based on keyID by adding to 
+     * previous score in session.
+     * @param ScoreIn int ScoreIn will be set within setInt parameter for use in
+     * updateEntry query
+     */
     public void updateEntryInfo(int ScoreIn) 
     {
         try 
@@ -157,6 +186,12 @@ public class Queries {
     
     } // updateEntryInfo
     
+    /**
+     * Returns information on entry row and the rows above and below based on rank
+     * @param intRank int intRank will be set within setInt to be used in getEntry
+     * query. Obtained from getLastEntryRank result.
+     * @return result 
+     */
     public ResultSet getLastEntryInfo(int intRank) 
     {
         try 
@@ -172,6 +207,11 @@ public class Queries {
         return result;
     } // getLastEntryInfo
     
+    /**
+     * Returns the rank of the player based on row index after rows have been sorted
+     * from highest score to lowest score.
+     * @return intRowCount
+     */
     public int getLastEntryRank() 
     {
         int intRowCount = -1;
@@ -209,6 +249,10 @@ public class Queries {
         return intRowCount;
     } // getLastEntryRank
 
+    /**
+     * Returns top ten entries ordered from high to lowest score.
+     * @return result
+     */
     public ResultSet getTopTen() 
     {
         try 

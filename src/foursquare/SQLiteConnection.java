@@ -14,16 +14,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Establishes connection with SQLite database.
  * @author jqj5405
-*
-*Modified Class Template
+ *
+ *************************MODIFICATION LOG ************************************
+ * 4/13/18- Created LeaderBoard.db3 and made connection
+ * 
  */
-
-/************************MODIFICATION LOG ************************************
-4/13/18- Created LeaderBoard.db3 and made connection
-
-*****************************************************************************/
 
 public final class SQLiteConnection 
 {    
@@ -35,6 +32,10 @@ public final class SQLiteConnection
     final String strDBClass = "org.sqlite.JDBC";
     final String strJDBCString = "jdbc:sqlite:";
     
+    /**
+     * Default constructor to run connectSQLiteDB method.
+     * @throws SQLException
+     */
     public SQLiteConnection() throws SQLException
     {
         connectSQLiteDB();
@@ -42,6 +43,11 @@ public final class SQLiteConnection
     
     
 /////////////////////////CONNECT TO DATABASE////////////////////////////////////       
+
+    /**
+     * Connects to SQLite database.
+     * @throws SQLException
+     */
     public void connectSQLiteDB() throws SQLException 
     {
         // Get Leaderboard.db3 file location relative to absolute path
@@ -64,6 +70,11 @@ public final class SQLiteConnection
     } // connectSQLiteDB
     
 /////////////////////////RETRIEVE DATABASE CONNECTION///////////////////////////      
+
+    /**
+     * Returns the established SQLite database connection to use with queries.
+     * @return connect
+     */
     public Connection getConnection()
     {
         return connect;

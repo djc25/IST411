@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Starts the client side connection.
  * @author JSS5783
  
  (Client)
@@ -99,7 +99,8 @@ public class jfClient extends javax.swing.JFrame {
         this.add(jpLobby1);
         this.add(jpMatch1);
         this.add(jpScoreboard1);
-    }
+        
+    } // jfClient
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,9 +174,8 @@ public class jfClient extends javax.swing.JFrame {
                 if (PVar.DEBUG_MODE == true)
                 {
                     System.out.println("[DEBUG] Error: Unhandled screen. Please report to the repository on Github.");
-                }
-                
-        }
+                } // if
+        } // switch
         
         if (intResult == JOptionPane.YES_OPTION)
         {
@@ -184,20 +184,20 @@ public class jfClient extends javax.swing.JFrame {
             {
                 client.disconnect();
                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            }
+            } // try
             catch (IOException ioe)
             {
                 JOptionPane.showMessageDialog(this, ioe.toString(), "Error", JOptionPane.ERROR_MESSAGE);    //TODO: not sure what would trigger an error here, so just pop the stack-trace... maybe better to dump to console then
-            }
+            } // catch
             catch (Exception ex)
             {
                 System.err.println(ex.toString() );
-            }
-        }
+            } // catch
+        } // if
         else
         {
             this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        }
+        } // else
         
     }//GEN-LAST:event_formWindowClosing
 
@@ -235,9 +235,9 @@ public class jfClient extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new jfClient().setVisible(true);
-            }
+            } // run
         });
-    }
+    } // main
     
     
     /**
@@ -252,14 +252,13 @@ public class jfClient extends javax.swing.JFrame {
         if (intCurrentScreen == SCOREBOARD)  //overflow from end of "card deck" to beginning
         {
             intCurrentScreen = LOGIN;
-        }
+        } // if
         else
         {
             intCurrentScreen++;
-        }
+        } // else
     }   //END nextCard()
-    
-    
+      
     
     /**
      * Changes to the previous panel. Tracks which card is active.
@@ -273,17 +272,14 @@ public class jfClient extends javax.swing.JFrame {
         if (intCurrentScreen == LOGIN)  //overflow from beginning of "card deck" to end
         {
             intCurrentScreen = SCOREBOARD;
-        }
+        } // if
         else
         {
             intCurrentScreen--;
-        }
+        } // else
     }   //END previousCard()
     
-    
-    
         
-    
     /**
      * Returns the current screen as an integer.
      * @return 
@@ -293,10 +289,7 @@ public class jfClient extends javax.swing.JFrame {
         return intCurrentScreen;
     }   //END getCurrentScreen()
     
-    
-    
-    
-    
+
     /**
      * Updates dotGamePanel1 with the passed Match.
      * @param inMatch
@@ -319,9 +312,7 @@ public class jfClient extends javax.swing.JFrame {
         jpMatch1.updateLabels();
     }   //END updateLabels()
     
-    
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-}
+} // jfClient

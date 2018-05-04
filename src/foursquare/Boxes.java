@@ -11,7 +11,7 @@ import java.awt.Graphics;
  */
 
 /**
- *
+ * Sets and gets in creating and checking for boxes using lines.
  * @author DRACOX
  * 
  * ----------CHANGELOG----------
@@ -19,9 +19,6 @@ import java.awt.Graphics;
  * 
  * 2018/04/23 -     Started renaming variables and adding comments to comply with coding conventions. -JSS5783
  */
-
-
-
 public class Boxes
 {
     /*
@@ -43,7 +40,6 @@ public class Boxes
     private Color myColor;
     
     
-    
     /**
      * Default Box constructor.
      * 
@@ -56,8 +52,6 @@ public class Boxes
         bIsClosed = false;
     }   //END Boxes()
 
-    
-    
     /**
      * Returns true if the Box's top side is checked, and false if not.
      * @return bTopSide
@@ -76,8 +70,6 @@ public class Boxes
         bTopSide = bInTopLine;
     }   //END setTop(boolean bInTopLine)
 
-    
-    
     /**
      * Returns true if the Box's bottom side is checked, and false if not.
      * @return bBottomSide
@@ -96,8 +88,6 @@ public class Boxes
         bBottomSide = bInBottomLine;
     }   //END setBot(boolean bInBottomLine)
 
-    
-    
     /**
      * Returns true if the Box's left side is checked, and false if not.
      * @return bLeftSide
@@ -116,8 +106,6 @@ public class Boxes
         bLeftSide = bInLeftLine;
     }   //END setLeft(boolean bInLeftLine)
 
-    
-    
     /**
      * Returns true if the Box's right side is checked, and false if not.
      * @return bRightSide
@@ -135,8 +123,6 @@ public class Boxes
     {
         bRightSide = bInRightLine;
     }   //END setRight(boolean bInRightLine)
-
-    
     
     /**
      * Gets the game grid Line that is stored as the Box's top line.
@@ -156,8 +142,6 @@ public class Boxes
         lineTop = lineInTop;
     }   //END setTopLine(Lines lineInTop)
 
-    
-    
     /**
      * Gets the game grid Line that is stored as the Box's bottom line.
      * @return lineBottom
@@ -176,8 +160,6 @@ public class Boxes
         lineBottom = lineInBottom;
     }   //END setBotLine(Lines lineInBottom)
 
-    
-    
     /**
      * Gets the game grid Line that is stored as the Box's left line.
      * @return lineLeft
@@ -196,8 +178,6 @@ public class Boxes
         lineLeft = lineInLeft;
     }   //END setLeftLine(Lines lineInLeft)
 
-    
-    
     /**
      * Gets the game grid Line that is stored as the Box's right line.
      * @return lineRight
@@ -212,9 +192,7 @@ public class Boxes
      */
     public void setRightLine(Lines lineInRight) {
         lineRight = lineInRight;
-    }
-    
-    
+    }   //END setRightLine
     
     /**
      * Returns true if the Box is closed, and false if it is not.
@@ -229,23 +207,20 @@ public class Boxes
      * Checks if the Box is closed.
      * If closed, then the box graphic is filled in.
      * Sets bIsClosed to true if the Box is closed, and false if it is not.
-     * TODO: Should probably be split into setClosed and drawClosed methods or something to cut down on unnecessary redraws.
-     * @param g 
+     * TODO: Should probably be split into setClosed and drawClosed methods or something to cut down on unnecessary redraws. 
      */
     public void isClosed()
     {
-        
         if(lineTop.isIsConnected() && lineBottom.isIsConnected() && lineLeft.isIsConnected() && lineRight.isIsConnected() )   //if all lines are checked
         {
-            
             bIsClosed = true;
-            
-        }
+        } // if
         else
         {
             bIsClosed = false;
-        }
-    }
+        } // else
+    }   //END isClosed
+    
     /**
      * changes the color of this particular box in preparation for it to filled
      * @param thisColor 
@@ -255,8 +230,9 @@ public class Boxes
         if(myColor ==null)
         {
             myColor = thisColor;
-        }
-    }
+        } // if
+    }   //END setMyColor
+    
     /**
      * Gets the color of the box and then returns that color
      * @return 
@@ -264,7 +240,7 @@ public class Boxes
     public Color getMyColor ()
     {
         return myColor;
-    }
+    }   //END getMyColor
     /**
      * Fills a box using graphics, and sets the color to that of the player
      * @param g 
@@ -273,7 +249,6 @@ public class Boxes
     {
         g.setColor(myColor);
         g.fillRect(lineTop.getxStart(), lineTop.getyStart(), 100, 100);
-    }
+    }   //END drawBox
     
-    
-}
+}   // end of class Boxes

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
+ * Sets and gets of the match's score and player turn information.
  * @author jss5783
  * 
  * For now, keep both client and server match code together.
@@ -65,14 +65,14 @@ public class Match implements Serializable
             intPlayer1ID = intUserID1;
             strPlayer2Username = strUsername2;
             intPlayer2ID = intUserID2;
-        }
+        } // if
         else
         {
             strPlayer1Username = strUsername2;
             intPlayer1ID = intUserID2;
             strPlayer2Username = strUsername1;
             intPlayer2ID = intUserID1;
-        }
+        } // else
         
         intPlayer1Score = 0;
         intPlayer2Score = 0;
@@ -99,12 +99,12 @@ public class Match implements Serializable
             //So set User 1 as Player 1
             strPlayer1Username = strUsername1;
             strPlayer2Username = strUsername2;
-        }
+        } // if
         else
         {
             strPlayer1Username = strUsername2;
             strPlayer2Username = strUsername1;
-        }
+        } // else
         
         intPlayer1Score = 0;
         intPlayer2Score = 0;
@@ -136,12 +136,13 @@ public class Match implements Serializable
     
     
     /**
+     * Returns Player 2's username.
      * @return strPlayer2Username
      */
     public String getPlayer2Username() 
     {
         return strPlayer2Username;
-    }
+    }   //END getPlayer2Username
 
     /**
      * @param strInPlayer2Username
@@ -149,17 +150,18 @@ public class Match implements Serializable
     public void setPlayer2Username(String strInPlayer2Username)
     {
         strPlayer2Username = strInPlayer2Username;
-    }
+    }   //END setPlayer2Username
 
-    
+   
     
     /**
+     * Returns Player 1's ID.
      * @return intPlayer1ID
      */
     public int getPlayer1ID()
     {
         return intPlayer1ID;
-    }
+    }   //END getPlayer1ID
 
     /**
      * @param intInPlayer1ID
@@ -167,17 +169,18 @@ public class Match implements Serializable
     public void setPlayer1ID(int intInPlayer1ID)
     {
         intPlayer1ID = intInPlayer1ID;
-    }
+    }   //END setPlayer1ID
 
     
     
     /**
+     * Returns Player 2's ID.
      * @return intPlayer2ID
      */
     public int getPlayer2ID()
     {
         return intPlayer2ID;
-    }
+    }   //END getPlayer2ID
 
     /**
      * @param intInPlayer2ID
@@ -185,17 +188,18 @@ public class Match implements Serializable
     public void setPlayer2ID(int intInPlayer2ID)
     {
         intPlayer2ID = intInPlayer2ID;
-    }
+    }   //END setPlayer2ID
 
     
     
     /**
+     * Returns Player 1's score.
      * @return the intPlayer1Score
      */
     public int getPlayer1Score()
     {
         return intPlayer1Score;
-    }
+    }   //END getPlayer1Score
 
     /**
      * @param intInPlayer1Score
@@ -203,17 +207,18 @@ public class Match implements Serializable
     public void setPlayer1Score(int intInPlayer1Score)
     {
         intPlayer1Score = intInPlayer1Score;
-    }
+    }   //END setPlayer1Score
 
     
     
     /**
+     * Returns Player 2's score.
      * @return intPlayer2Score
      */
     public int getPlayer2Score()
     {
         return intPlayer2Score;
-    }
+    }   //END getPlayer2Score
 
     /**
      * @param intInPlayer2Score
@@ -221,17 +226,18 @@ public class Match implements Serializable
     public void setPlayer2Score(int intInPlayer2Score)
     {
         intPlayer2Score = intInPlayer2Score;
-    }
+    }   //END setPlayer2Score
 
     
     
     /**
+     * Returns the player of the current turn.
      * @return intWhoseTurn
      */
     public int getWhoseTurn()
     {
         return intWhoseTurn;
-    }
+    }   //END getWhoseTurn
 
     /**
      * @param intInWhoseTurn
@@ -239,17 +245,18 @@ public class Match implements Serializable
     public void setWhoseTurn(int intInWhoseTurn)
     {
         intWhoseTurn = intInWhoseTurn;
-    }
+    }   //END setWHoseTurn
 
     
     
     /**
+     * Returns true/false whether extra turn was made yet.
      * @return bHasExtraTurn
      */
     public boolean getHasExtraTurn()
     {
         return bHasExtraTurn;
-    }
+    }   //END getHasExtraTurn
 
     /**
      * @param bInHasExtraTurn
@@ -257,17 +264,18 @@ public class Match implements Serializable
     public void setHasExtraTurn(boolean bInHasExtraTurn)
     {
         bHasExtraTurn = bInHasExtraTurn;
-    }
+    }   //END setHasExtraTurn
 
     
     
     /**
+     * Returns true/false whether extra turn was already made.
      * @return bAlreadyObtainedExtraTurn
      */
     public boolean getAlreadyObtainedExtraTurn()
     {
         return bAlreadyObtainedExtraTurn;
-    }
+    }   //END getAlreadyObtainedExtraTurn
 
     /**
      * @param bInAlreadyObtainedExtraTurn
@@ -275,6 +283,6 @@ public class Match implements Serializable
     public void setAlreadyObtainedExtraTurn(boolean bInAlreadyObtainedExtraTurn)
     {
         bAlreadyObtainedExtraTurn = bInAlreadyObtainedExtraTurn;
-    }
+    }   //END setAlreadyObtainedExtraTurn
 
 }   //END Match

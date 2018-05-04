@@ -14,11 +14,9 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * (Client) Login screen. Player chooses username (currently a non-unique nickname) before connecting to the server.
  * @author JSS5783
- 
- (Client) Login screen. Player chooses username (currently a non-unique nickname) before connecting to the server.
- 
+ *
  ----------[CHANGELOG]----------
  * 2018/04/29 -     [FIX] Fixed message pop-up errors (JptionPane.ERROR was used instead of JOptionPane.ERROR_MESSAGE). -JSS5783
  * 
@@ -50,7 +48,7 @@ public class jpLogIn extends javax.swing.JPanel {
      */
     public jpLogIn() {
         initComponents();                
-    }
+    } // jpLogIn
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,7 +177,7 @@ public class jpLogIn extends javax.swing.JPanel {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER)  //if key pressed is Enter
         {
             logIn();
-        }
+        } // if
     }//GEN-LAST:event_jtxtfUsernameKeyPressed
 
     
@@ -203,35 +201,35 @@ public class jpLogIn extends javax.swing.JPanel {
                     jfClient.client = new ClientConnection(strUsername);    //try to connect with the server (passing relevant data like username, password TODO: implement later, etc.)
 //                    jfClient.client.run();
                     jfClient.nextCard();                                    //then switch to the lobby after connecting
-                }
+                } // try
                 catch (UnknownHostException uhe)    //if the given IP address for the server doesn't work
                 {
                     JOptionPane.showMessageDialog(this, "Could not connect to the server.\nIs the IP address for the server correct?", "Invalid Server Address", JOptionPane.ERROR_MESSAGE);
     //                System.err.println(uhe.toString() );
-                }
+                } // catch
                 catch (ConnectException ce)         //if the server isn't running when the client tries to connect
                 {
                     JOptionPane.showMessageDialog(this, "Connection refused.\nIs the server running and accepting connections?", "Invalid Server Address", JOptionPane.ERROR_MESSAGE);
     //                System.err.println(ce.toString() );
-                }
+                } // catch
                 catch (IOException ioe)             //if could not connect to the server for other reasons
                 {
                     JOptionPane.showMessageDialog(this, "Could not connect to the server.\n" + ioe.toString(), "Error", JOptionPane.ERROR_MESSAGE);   //more of a warning, but also user input error
-                }
+                } // catch
                 catch (IllegalArgumentException iae)    //if somehow a connection is attempted without a username being passed
                 {
                     JOptionPane.showMessageDialog(this, iae.toString(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+                } // catch
+            } // if
             else
             {
                 JOptionPane.showMessageDialog(this, "Enter a username 1 to 8 characters in length. Characters must all be alphanumeric (A-Z, 0-9).", "Error", JOptionPane.WARNING_MESSAGE);   //more of a warning, but also user input error
-            }
-        }
+            } // else
+        } // try
         catch (Exception ex)
         {
             System.err.println(ex.toString() );
-        }
+        } // catch
     }   //END logIn()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -242,4 +240,4 @@ public class jpLogIn extends javax.swing.JPanel {
     private javax.swing.JTextField jtxtfUsername;
     private javax.swing.JLabel lblUsername;
     // End of variables declaration//GEN-END:variables
-}
+} // jpLogIn

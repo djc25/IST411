@@ -6,8 +6,9 @@
 package foursquare;
 
 /**
- *
+ * 
  * @author jss5783
+ * @deprecated Never implemented in running the server, use ServerConnection.
  * 
  * ----------[CHANGELOG]----------
  * 2018/04/23 -     Finished designing GUI.
@@ -24,7 +25,7 @@ public class jfServer extends javax.swing.JPanel {
      */
     public jfServer() {
         initComponents();
-    }
+    } // jfServer
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -346,7 +347,7 @@ public class jfServer extends javax.swing.JPanel {
     public static void main(String args[]) {
         
                 new jfServer().setVisible(true);
-    }
+    } // main
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,9 +8,8 @@ package foursquare;
 import javax.swing.JFrame;
 
 /**
- *
+ * Alternative main class for running jfClient.
  * @author Jason
- *
  *
  ************************** MODIFICATION LOG ********************************
  * 4/30/2018 - Centered program window and got rid of original dark-gray color

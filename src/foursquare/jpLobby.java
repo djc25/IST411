@@ -8,10 +8,8 @@ package foursquare;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author JSS5783
- * 
  * (Client) Player idles here while waiting for a match to be be made. Client can disconnect (log out) from here.
+ * @author JSS5783
  * 
  * ----------[CHANGELOG]----------
  * 2018/04/23 -     Added jlblTitle. -JSS5783
@@ -38,8 +36,8 @@ public class jpLobby extends javax.swing.JPanel {
         if (PVar.DEBUG_MODE == false)
         {
             jbtnDebugGoToMatch.setVisible(false);
-        }
-    }
+        } // if
+    } // jpLobby
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,7 +138,7 @@ public class jpLobby extends javax.swing.JPanel {
         if (intResult == JOptionPane.YES_OPTION)
         {
             jfClient.previousCard();
-        }
+        } // if
     }//GEN-LAST:event_jbtnDisconnectActionPerformed
 
     /**
@@ -159,4 +157,4 @@ public class jpLobby extends javax.swing.JPanel {
     private javax.swing.JLabel jlblTitle;
     private javax.swing.JProgressBar jpbMatchmaking;
     // End of variables declaration//GEN-END:variables
-}
+} // jpLobby

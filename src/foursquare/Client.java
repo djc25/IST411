@@ -6,11 +6,9 @@
 package foursquare;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.LayoutManager;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +19,7 @@ import javax.swing.JTextField;
 /**
  *
  * @author Jason, JSS5783
+ * @deprecated GUI built in GUI builder @jpLogIn. Moved public variables to PVar.
  * 
  * ----------[CHANGELOG]----------
  * 2018/04/10 -     (Class DEPRECATED) GUI built in GUI builder now.
@@ -33,9 +32,11 @@ import javax.swing.JTextField;
  */
 public class Client {
     
+    /**
+     * Default Constructor for Client.
+     */
     public Client()
     {    
-        
         JFrame jfClientMain = new JFrame("Project 4Square (CLIENT)");
         JPanel jpClientLogIn = new JPanel();
         jpClientLogIn.setLayout(new BoxLayout(jpClientLogIn, BoxLayout.Y_AXIS) );
@@ -49,8 +50,7 @@ public class Client {
             jtxtfUsername.setMinimumSize(new Dimension(200, 20) );      //TODO: get textfield size working
             jtxtfUsername.setSize(new Dimension(200, 15) );
             jtxtfUsername.setMaximumSize(new Dimension(200, 20) );
- //          jtxtfUsername.setText("          ");
-            
+ //          jtxtfUsername.setText("          "); 
             //registration
             jpClientLogIn.add(jlblTitle);
             jpClientLogIn.add(jlblUsername);
@@ -63,7 +63,6 @@ public class Client {
             //declaration/initialization
             JLabel jlblConnectionMessage = new JLabel("Searching for other person to match you against...");
             JButton jbtnDisconnect = new JButton("Disconnect from Server");
-            
             //registration
             jpClientLobby.add(jlblConnectionMessage);
             jpClientLobby.add(jbtnDisconnect);
@@ -75,16 +74,17 @@ public class Client {
                 jpPlayer1.setBackground(PVar.PLAYER_1_COLOR);
                 jpPlayer1.add(jlblPlayer1Name);
                 jpPlayer1.add(jlblPlayer1Score);
-            DotGamePanel pnlGrid = new DotGamePanel();  //TODO: get this working. Can't get it to find the GUI.
-            JPanel jpPlayer2 = new JPanel();
-                JLabel jlblPlayer2Name = new JLabel("[PLAYER_2_NAME]");
-                JLabel jlblPlayer2Score = new JLabel("[PLAYER_2_SCORE]");
-                jpPlayer2.setBackground(PVar.PLAYER_2_COLOR);
-                jpPlayer2.add(jlblPlayer2Name);
-                jpPlayer2.add(jlblPlayer2Score);
-            jpClientMatch.add(jpPlayer1);
-            jpClientMatch.add(pnlGrid);
-            jpClientMatch.add(jpPlayer2);
+                
+        DotGamePanel pnlGrid = new DotGamePanel();  //TODO: get this working. Can't get it to find the GUI.
+        JPanel jpPlayer2 = new JPanel();
+            JLabel jlblPlayer2Name = new JLabel("[PLAYER_2_NAME]");
+            JLabel jlblPlayer2Score = new JLabel("[PLAYER_2_SCORE]");
+            jpPlayer2.setBackground(PVar.PLAYER_2_COLOR);
+            jpPlayer2.add(jlblPlayer2Name);
+            jpPlayer2.add(jlblPlayer2Score);
+        jpClientMatch.add(jpPlayer1);
+        jpClientMatch.add(pnlGrid);
+        jpClientMatch.add(jpPlayer2);
         
         JFrame jfServerMain = new JFrame("Project 4Square (SERVER)");
         CardLayout cl = new CardLayout();
@@ -92,8 +92,8 @@ public class Client {
         Container cClient = jfClientMain.getContentPane();
         cClient.setLayout(cl);
 //         System.out.println("Content pane layout class - " + cClient.getLayout().getClass().getName() );
-      //  jfClientMain.setLayout(new CardLayout());
-      //    System.out.println("Frame layout class - " + jfClientMain.getLayout().getClass().getName());
+//         jfClientMain.setLayout(new CardLayout());
+//         System.out.println("Frame layout class - " + jfClientMain.getLayout().getClass().getName());
         jfClientMain.setSize(960, 540);
         jpClientLogIn.setSize(200, 100);
 //        jpClientLogIn.setBackground(Color.RED);     //For testing which panel is showing
@@ -116,7 +116,7 @@ public class Client {
       
       //CardLayout myCL = (CardLayout)jfClientMain.getLayout();
       //myCL.next(jfClientMain);
-    }
+    } // constructor
 
     /**
      * @param args the command line arguments
@@ -126,6 +126,6 @@ public class Client {
 //        jfl.setVisible(true);
 
         Client fs = new Client();
-    }
+    } // main
     
-}
+} // end of class Client

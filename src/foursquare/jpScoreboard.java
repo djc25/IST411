@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
 /**
- *
+ * (Client) Scorebaord after match finishes.
  * @author jss5783
  * 
  * ----------[CHANGELOG]----------
@@ -31,12 +31,11 @@ public class jpScoreboard extends javax.swing.JPanel {
 
     int intColumnNo;
     /**
-     * Creates new form jScoreboard
+     * Creates new form jScoreboard with parameters.
      * @param rsTopTen
      * @param rsPersonalRank
      * @param intRank
      */
-    
     public jpScoreboard(ResultSet rsTopTen, ResultSet rsPersonalRank, int intRank) 
     {
         initComponents();
@@ -45,11 +44,18 @@ public class jpScoreboard extends javax.swing.JPanel {
         setRankLabel(intRank);
     } // constructor
     
+    /**
+     * Default constructor.
+     */
     public jpScoreboard()
     {
         initComponents();
     } // alternative constructor
     
+    /**
+     * Populate the top table with top ten players with the highest scores.
+     * @param rsIn
+     */
     public final void populateTopTen(ResultSet rsIn) 
     {
         // set resultset to table
@@ -74,6 +80,11 @@ public class jpScoreboard extends javax.swing.JPanel {
         jtTopTen.doLayout();
     } // populateTable
     
+    /**
+     * Populate the bottom table with the player rank along with ranks above and
+     * below the player.
+     * @param rsIn2
+     */
     public final void populatePersonal(ResultSet rsIn2)
     {
         // set resultset to table
@@ -98,6 +109,10 @@ public class jpScoreboard extends javax.swing.JPanel {
         jtPersonal.doLayout();
     } // populatePersonal
     
+    /**
+     * Sets the X labels with user rank and ranks above and below.
+     * @param intIn
+     */
     public final void setRankLabel(int intIn)
     {
         jlPersonal.setText(Integer.toString(intIn));
@@ -136,6 +151,7 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlThanks = new javax.swing.JLabel();
         jlRank = new javax.swing.JLabel();
         jlPersonal2 = new javax.swing.JLabel();
+        jlPicture = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(960, 540));
 
@@ -227,6 +243,8 @@ public class jpScoreboard extends javax.swing.JPanel {
         jlPersonal2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlPersonal2.setText("X");
 
+        jlPicture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foursquare/images/pixabay-creative_common.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -263,19 +281,25 @@ public class jpScoreboard extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 63, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jlRank)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jlPersonal2))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jbtnReturnToLobby)
-                                    .addGap(100, 100, 100))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jlThanks)
-                                    .addGap(91, 91, 91)))))))
+                                .addGap(0, 63, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jlRank)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jlPersonal2))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jbtnReturnToLobby)
+                                            .addGap(100, 100, 100))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(jlThanks)
+                                            .addGap(91, 91, 91)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jlPicture)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,7 +340,9 @@ public class jpScoreboard extends javax.swing.JPanel {
                                 .addComponent(jl10))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlPicture)
+                                    .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
@@ -328,7 +354,7 @@ public class jpScoreboard extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
     }// </editor-fold>//GEN-END:initComponents
@@ -359,6 +385,7 @@ public class jpScoreboard extends javax.swing.JPanel {
     private javax.swing.JLabel jlLower;
     private javax.swing.JLabel jlPersonal;
     private javax.swing.JLabel jlPersonal2;
+    private javax.swing.JLabel jlPicture;
     private javax.swing.JLabel jlRank;
     private javax.swing.JLabel jlScoreboard;
     private javax.swing.JLabel jlThanks;
@@ -366,4 +393,4 @@ public class jpScoreboard extends javax.swing.JPanel {
     private javax.swing.JTable jtPersonal;
     private javax.swing.JTable jtTopTen;
     // End of variables declaration//GEN-END:variables
-}
+} // jpScoreboard

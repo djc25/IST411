@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import static jdk.nashorn.tools.ShellFunctions.input;
 
 /**
- *
+ * Creates and starts server side connection with client-server communication.
  * @author Darwin, JSS5783
  * 
  * ----------[CHANGELOG]----------
@@ -28,7 +28,6 @@ import static jdk.nashorn.tools.ShellFunctions.input;
  */
 public class ServerConnection 
 {
-    
     static final String RECEIVE_CODE = "SERVER_CODE_READY_TO_RECEIVE";
     static final String SUCCESS_CODE = "SERVER_CODE_SUCCESS";   //used as a positive acknowledgment code
     final static String DISCONNECT_CODE = "SERVER_CODE_INITIATE_DISCONNECT";
@@ -53,9 +52,10 @@ public class ServerConnection
     boolean bClient1Exists = false;
     boolean bClient2Exists = false;
    
-    
-    
-//    
+    /**
+     * Runs the server.
+     * @throws ClassNotFoundException
+     */
     public void runServer() throws ClassNotFoundException
     {
         System.out.println("[DEBUG] Reached runServer() ");
@@ -76,14 +76,14 @@ public class ServerConnection
                         client1 = new ClientThread(server.accept(), 1);     //just hard-code client number for now, in case it needs to be referenced
                         bClient1Exists = true;
                         client1.start();
-                    }
+                    } // if
                     else if (client2 == null)    //if client2 isn't occupied
                     {
                         System.out.println("[DEBUG] Connecting as Client2 . . .");
                         client2 = new ClientThread(server.accept(), 2);     //just hard-code client number for now, in case it needs to be referenced
                         bClient2Exists = true;
                         client2.start();
-                    }
+                    } // else if
                    else     //TODO: just here to see if I can see anything else while this isn't spamming for new connections; leaving this here will result in connections after the first two failing to connect if one leaves
                     {
 //                        if (client1.getStatus() == jfClient.LOBBY & client2.getStatus() == jfClient.LOBBY)
@@ -97,28 +97,27 @@ public class ServerConnection
 //                            client2.sendData(match);
 //                        }
 //                        break;
-                    }
+                    } // else
 //                    listenForConnection();
 //                    getStreams();
 //                    setupConnection();
 //                    processConnection();
-                }
+                } // try
                 catch(EOFException eofExeption)
                 {
-                    System.out.println("\nServer connection ended");
-                            
-                }
+                    System.out.println("\nServer connection ended");      
+                } // catch
 //                finally
 //                {
 //                    endServerConnection();
 //                    ++counter;
 //                } 
             } // Try block 
-        }
+        } // try
         catch(IOException ioException)
         {
             ioException.printStackTrace();
-        }
+        } // catch
         
         
     } // Starts connection method
@@ -236,13 +235,13 @@ public class ServerConnection
 //                sendData(ServerConnection.RECEIVE_CODE);    //ask for username
 
                 System.out.println( "\nConnection " + intClientNumber + " received from: " + connection.getInetAddress().getHostName() );
-           }
+           } // try
 
             // process problems with IO
             catch ( IOException ioException ) {
                  ioException.printStackTrace();
-            }
-    }
+            } // catch
+    } // ClientThread
 
         
         
@@ -260,12 +259,12 @@ public class ServerConnection
             {
                 output.writeObject(obj);
                 output.flush();
-            }
+            } // try
 
             // process problems sending object
             catch ( IOException ioException ) {
                 ioException.printStackTrace();
-            }
+            } // catch
          
         }   //END sendData(Object obj)
         
@@ -324,11 +323,8 @@ public class ServerConnection
 
            try  //process connection
            {
-
                 do  //read message from client
-                    
                 {
-
                     try
                     {
                         objInput = input.readObject();  //DO NOT TOUCH - must declare object OUTSIDE for some reason for ServerConnection only
@@ -344,7 +340,7 @@ public class ServerConnection
                             {
                                 strUsername = strCode.replace(ClientConnection.USERNAME_CODE, "");
                                 System.out.println("[DEBUG] strUsername=" + strUsername);
-                            }
+                            } // if
                             if (strCode.contains(ClientConnection.LOBBY_CODE) == true)
                             {
                                 setStatus(LOBBY);
@@ -358,27 +354,25 @@ public class ServerConnection
 //                                    client1.sendData(ServerConnection.MATCH_MADE);
                                     client1.sendData(match);
                                     client2.sendData(match);
-                                }
-                            }
+                                } // if
+                            } // if
                             else if (strCode.contains(ClientConnection.MATCH_CODE) == true)
                             {
                                 setStatus(MATCH);
-                            }
+                            } // else if
                             else if (strCode.contains(ClientConnection.MATCH_FINISHED_CODE) == true) //if match is concluded (sending client finished)
                             {
                                 //TODO: derive scores
                                 //determine winner (or if both came to a draw and... let's say both lost
                                 //add winner's and loser's scores to database
                                 
-                                //TODO: notify clients who won and who lost (or both "lost", in the case of a draw)
-                                
-                                
-                            }
+                                //TODO: notify clients who won and who lost (or both "lost", in the case of a draw)            
+                            } // else if
                             else if (strCode.contains(ClientConnection.SCOREBOARD_CODE) == true)
                             {
                                 setStatus(SCOREBOARD);
-                            }
-                        }
+                            } // else if
+                        } // if
                         else if (objInput.getClass() == Match.class)    //testing for whether or not obj is a Match - can't seem to test as objInput.getClass().getSimpleName() instanceof Match for some reason
                         {
                             match = (Match) objInput;
@@ -387,13 +381,13 @@ public class ServerConnection
                             if (intClientNumber == 1)
                             {
                                 client2.sendData(match); 
-                            }
+                            } // if
                             else
                             {
                                 client1.sendData(match);
-                            }
+                            } // else
                             System.out.println( "\nCLIENT CONNECTION " + intClientNumber + " sent a Match object.");
-                        }
+                        } // else if
                         
                     }   //handle input stream
 
@@ -401,18 +395,18 @@ public class ServerConnection
                     catch ( ClassNotFoundException classNotFoundException )
                     {
                         System.out.println( "\n[ERROR] Unknown object type received." );
-                    }
+                    } // catch
 
                 } while (strCode.equals(ClientConnection.DISCONNECT_CODE) == false);
 
                 sendData(ServerConnection.SUCCESS_CODE);    //send acknowledgment
                 System.out.println( "\nCLIENT CONNECTION " + intClientNumber + " terminated its connection." );
-           }
+           } // while
            // process problems with I/O
            catch ( IOException ioException )
            {
                 System.out.println("\nCLIENT CONNECTION " + intClientNumber + " unexpectedly terminated its connection.\n"   + ioException.toString() );
-           }
+           } // catch
 
            // close streams and socket
             finally
@@ -422,24 +416,28 @@ public class ServerConnection
                     output.close();
                     input.close();
                     connection.close();
-                }
+                } // try
 
                 // process problems with I/O
                 catch ( IOException ioException )
                 {
                     ioException.printStackTrace();
-                }
+                } // catch
 
 //                clients.remove( this );
                 //TODO: not sure if any extra cleanup is needed due to not being in a Vector
-            }
+            } // finally
 
         }  // end method run
 
    }  // end class ClientThread
     
-    
-   
+    /**
+     * Starts the server.
+     * @param args
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException 
     {
 //        int svrQ = 10;

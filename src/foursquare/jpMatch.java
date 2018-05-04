@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- *
+ * (Client) Consolidates all game layout.
  * @author JSS5783
  * 
  * ----------[CHANGELOG]----------
@@ -43,7 +43,7 @@ public class jpMatch extends javax.swing.JPanel {
         if (PVar.DEBUG_MODE == false)
         {
             jbtnDebugGoToScoreboard.setVisible(false);
-        }
+        } // if
         
 //        grid = new DotGamePanel();
 ////        jpGrid = grid;
@@ -265,4 +265,4 @@ public class jpMatch extends javax.swing.JPanel {
     private javax.swing.JPanel jpPlayer1;
     private javax.swing.JPanel jpPlayer2;
     // End of variables declaration//GEN-END:variables
-}
+} // jpMatch
